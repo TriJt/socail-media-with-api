@@ -69,6 +69,7 @@
 }
 
 .loginRegisterButton{
+    width: 100%;
     border: none; 
     height: 50px;
     border-radius: 10px;

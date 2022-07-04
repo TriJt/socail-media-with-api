@@ -42,8 +42,12 @@ export const DeleteUser = async(req, res) => {
 
 //get user 
 export const GetUser = async(req,res, next) =>{ 
+  const userId = req.query.userId; 
+  const username = req.query.username ; 
     try {
-        const user = await User.findById(req.params.id); 
+        const user = userId 
+        ? await User.findById(userId)
+        : await User.findOne({username: username}); 
         const {password, updatedAt, ...orther}  = user._doc; 
         res.status(200).json(orther); 
 
@@ -51,6 +55,38 @@ export const GetUser = async(req,res, next) =>{
         return res.status(500).json(err);
     }
 }
+
+//get all user 
+export const GetAllUser = async(req, res)=>{ 
+  try{ 
+    const Users = await User.find() ;
+    res.status(200).json(Users);
+  }catch(err){ 
+    return res.status(500).json(err)
+  }
+}
+
+//get Friends
+
+export const GetFriends = async(req, res) =>{ 
+  try {
+      const user  = await User.findById(req.params.userId)
+      const friends = await Promise.all(
+        user.followings.map(friendId =>{ 
+          return User.findById(friendId)
+        })
+      )
+      let friendList = []; 
+      friends.map((friend) =>{ 
+        const {_id, username, profilePicture} = friend; 
+        friendList.push({_id, username, profilePicture})
+      });
+      res.status(200).json(friendList)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
 
 //follow user 
 export const FollowUser  = async(req, res) => { 
@@ -73,7 +109,7 @@ export const FollowUser  = async(req, res) => {
     }
 }
 
-//infollow user 
+//unfollow user 
 export const UnFollowUser = async(req, res) => { 
     if(req.body.userId !== req.params.id){ 
         try {

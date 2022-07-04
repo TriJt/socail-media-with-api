@@ -1,80 +1,27 @@
 export const Users = [
     { 
         id: 1, 
-        profilePicture: "person/authur.jpg", 
+        profilePicture: "https://i.pinimg.com/564x/6b/03/49/6b0349df53d95862928fa10c8916a9fc.jpg", 
         username: "Jashed Mia"
     }, 
     { 
         id: 2, 
-        profilePicture: "person/authur.jpg", 
+        profilePicture: "https://i.pinimg.com/474x/db/e9/a2/dbe9a2d8dcf5bf4c61ddfdded6d3145f.jpg", 
         username: "Saad Thomas"
     },
     { 
         id: 3, 
-        profilePicture: "person/authur.jpg", 
+        profilePicture: "https://i.pinimg.com/474x/25/18/8c/25188cbdc287dd09179d883f5be7b79f.jpg", 
         username: "James Tran"
     },
     { 
         id: 4, 
-        profilePicture: "person/sad.jpg", 
+        profilePicture: "https://i.pinimg.com/474x/e3/ac/e8/e3ace85e1aab7c2cb0bd8d099ea5e94f.jpg", 
         username: "Henry La"
     },
     { 
         id: 5, 
-        profilePicture: "person/hoanghon.jpg", 
+        profilePicture: "https://i.pinimg.com/474x/92/89/c5/9289c575b7d5fb7ae9b90a7206b71d6f.jpg", 
         username: "Alvid Le"
     }
-];
-
-export const Posts = [
-    { 
-        id: 1,
-        desc: "Thank you may family", 
-        photo: "post/5-6-2022.jpg", 
-        date: "5 mins ago", 
-        userId: 1, 
-        like: 32, 
-        comment: 10
-
-    },
-    { 
-        id: 2,
-        desc: "Thank you may family", 
-        photo: "post/5-6-2022.jpg", 
-        date: "5 mins ago", 
-        userId: 2, 
-        like: 32, 
-        comment: 10
-
-    },
-    { 
-        id: 3,
-        desc: "ahgdahgsfdasd", 
-        photo: "post/5-6-2022.jpg", 
-        date: "10 mins ago", 
-        userId: 3, 
-        like: 32, 
-        comment: 10
-
-    },
-    { 
-        id: 4,
-        desc: "adasdaterq", 
-        photo: "post/5-6-2022.jpg", 
-        date: "20 mins ago", 
-        userId: 4, 
-        like: 32, 
-        comment: 10
-
-    },
-    { 
-        id: 5,
-        desc: "Thank you may family", 
-        photo: "post/5-6-2022.jpg", 
-        date: "5 mins ago", 
-        userId: 5, 
-        like: 32, 
-        comment: 10
-
-    },
 ];

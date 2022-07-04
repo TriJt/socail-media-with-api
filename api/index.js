@@ -3,11 +3,19 @@ import mongoose from "mongoose";
 import dotenv from "dotenv"; 
 import helmet from "helmet";
 import morgan from "morgan";
+import cors from "cors";
 const app = express(); 
 import UserRoute from "./routes/users.js"
 import AuthRoute from "./routes/auth.js"
 import PostRoute from "./routes/post.js"
 dotenv.config(); 
+
+const corsOptions = {
+    
+    credentials: true, // This is important.
+    origin: true,
+  }
+app.use(cors(corsOptions)); 
 
 mongoose 
  .connect(process.env.MONGO_PROD_URI, {
@@ -17,10 +25,13 @@ mongoose
  .catch(err => console.log(err));
 
 
+
+
 //middleware 
 app.use(express.json()); 
 app.use(helmet()); 
 app.use(morgan("common"))
+
 
 // route for page 
 app.use("/api/auth",AuthRoute); 
