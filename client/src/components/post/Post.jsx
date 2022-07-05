@@ -11,7 +11,6 @@ export default function Post({post}) {
   const [like, setLike] = useState(post.likes.length);
   const [user, setUser] = useState({})
   const [isLiked, setIsLiked] = useState(false); 
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER ;
   const {user:currentUser} = useContext(AuthContext)
 
   useEffect(()=>{ 
@@ -50,7 +49,7 @@ export default function Post({post}) {
             alt="" 
             className="postProfileImg" />
             </Link>
-            <span className="postUsername">{user.username}</span>
+            <span className="postUsername">{user.firstName} {user.lastName}</span>
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">

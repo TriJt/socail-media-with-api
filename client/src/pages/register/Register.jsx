@@ -12,6 +12,8 @@ export default function Register() {
   const toggleBtn = ()=> { 
     setPass(prevState => !prevState)
   }
+  const firstName = useRef();
+  const lastName = useRef(); 
   const username  = useRef(); 
   const email  = useRef(); 
   const password = useRef(); 
@@ -26,6 +28,8 @@ export default function Register() {
     }
     else{ 
       const user = { 
+        firstName: firstName.current.value, 
+        lastName: lastName.current.value,
         username : username.current.value, 
         email : email.current.value, 
         password : password.current.value
@@ -49,7 +53,9 @@ export default function Register() {
             </span>
         </div>
         <div className="loginRight">
-          <form className="loginBox" onSubmit={handleClick}>
+          <form className="loginBox" >
+            <input type="text" placeholder='First Name'required ref={firstName} className="loginInput" />
+            <input type="text" placeholder='Last Name'required ref={lastName}  className="loginInput" />
             <input type="text" placeholder='Username'required ref={username} className="loginInput" />
             <input type="email" placeholder='Email'required ref={email}  className="loginInput" />
             <div className="passwordDiv">
@@ -65,9 +71,9 @@ export default function Register() {
               <input type="password" required ref={passwordAgain} placeholder='Password Again' className="passwordInput" />
               
             </div>
-            <button className="loginButton" type="submit">Sign Up</button>
+            <button className="loginButton" type="submit" onClick={handleClick}>Sign Up</button>
             <Link to ="/login" > 
-            <button className="loginRegisterButton">Log into Account</button>
+            <button className="loginRegisterButton" >Log into Account</button>
             </Link>
             
           </form>

@@ -9,6 +9,8 @@ export const Register = async(req, res, next) => {
         //create new user 
         try{ 
             const newUser =  new User({
+                firstName: req.body.firstName, 
+                lastName: req.body.lastName, 
                 username: req.body.username, 
                 email: req.body.email, 
                 password: hashPassword,
@@ -34,9 +36,9 @@ export const Login  = async(req, res, next) => {
 
         const validPassword = await bcryptjs.compare(req.body.password,user.password);
         !validPassword && res.status(400).json("Wrong password"); 
-        // Create and assign a token
-        const token  = jwt.sign({_id: user._id},process.env.JWT ); 
-        res.header('auth-token', token).send(token); 
+        // // Create and assign a token
+        // const token  = jwt.sign({_id: user._id},process.env.JWT ); 
+        // res.header('auth-token', token).send(token); 
         res.status(200).json(user) ;
     }
     catch(err){ 

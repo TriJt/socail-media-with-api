@@ -2,12 +2,24 @@ import './topbar.css'
 import {Search, Person, Chat} from "@mui/icons-material"
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import {Link} from "react-router-dom"
-import { useContext } from 'react';
-import {AuthContext} from "../../context/AuthContext"
+import { useContext,useState } from 'react';
+import {AuthContext} from "../../context/AuthContext";
+import axios from 'axios' ; 
+
 export default function Topbar() {
 
-  const {user} = useContext(AuthContext); 
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER; 
+  const {user:currentUser} = useContext(AuthContext); 
+  const [user, setUser]  = useState(currentUser)
+  
+  // const [filteredData,setFilteredData] = useState([])
+  // const handleFilter = async (e)=> { 
+  //   const searchWord =  e.target.value; 
+  //   const newFilter = await axios.get("http://localhost:8800/api/users?fullName="+ searchWord).filter(
+  //     (value)=> { 
+  //       return value.
+  //     }
+  //   )
+  // }
 
 
   return (
@@ -21,6 +33,7 @@ export default function Topbar() {
         <div className="searchbar">
           <Search className='searchIcon'/>
           <input type="text" placeholder='Search for friend, post' className="searchInput" />
+          <div className="dataResult"> </div>
         </div>
       </div>
       <div className="topbarRight">

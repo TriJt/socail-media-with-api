@@ -7,7 +7,8 @@ import axios from 'axios' ;
 
 
 export default function Share() {
-  const {user} = useContext(AuthContext); 
+  const {user:currentUser} = useContext(AuthContext); 
+  const [user, setUser]  = useState(currentUser)
   const desc = useRef()
   const [files, setFiles] = useState("")
 
@@ -30,7 +31,7 @@ export default function Share() {
       );
 
       const newPost = {
-        userId: user._id,
+        userId: currentUser._id,
         desc:desc.current.value,
         img: list,
       };
@@ -40,7 +41,6 @@ export default function Share() {
     } catch (err) {console.log(err)}
 
   }
-
   return (
     <div className='share'>
       <div className="shareWrapper">
@@ -50,7 +50,7 @@ export default function Share() {
             : "https://docsach24.co/no-avatar.png" }
              alt="" className='shareProfileImg' />
           <input type="text"
-          placeholder={"what 's in your mind " +user.username +"?" }
+          placeholder={"what 's in your mind " +user.firstName +" "+ user.lastName +"?" }
           className="shareInput"
           ref = {desc} />
         </div>

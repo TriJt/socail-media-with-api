@@ -17,7 +17,7 @@ export const UpdateUser = async (req, res) => {
         const user = await User.findByIdAndUpdate(req.params.id, {
           $set: req.body,
         });
-        res.status(200).json("Account has been updated");
+        res.status(200).json(user);
       } catch (err) {
         return res.status(500).json(err);
       }
@@ -55,6 +55,24 @@ export const GetUser = async(req,res, next) =>{
         return res.status(500).json(err);
     }
 }
+// search user
+export const SearchUser = async(req, res) => { 
+  const search  = req.query.fullName; 
+  try{ 
+    const data = await User.find(
+      { 
+        fullName: { 
+          $regex: search,$options: '$i'
+        }
+      }
+    )
+    res.status(200).json(data);
+  }catch(err){ 
+    res.status(500).json(err); 
+  }
+  
+}
+
 
 //get all user 
 export const GetAllUser = async(req, res)=>{ 
