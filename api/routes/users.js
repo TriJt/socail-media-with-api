@@ -10,7 +10,7 @@ import {UpdateUser,
         SearchUser
     } from "../controllers/user.js"
 // Search user 
-router.get("/", SearchUser)
+router.get("/search", SearchUser)
 // Update user
 router.put("/:id", UpdateUser); 
 // Delete user 

@@ -5,6 +5,10 @@ import axios from "axios"
 import {format} from "timeago.js"
 import {Link} from "react-router-dom"
 import { AuthContext } from '../../context/AuthContext'
+import Comment from '../comment/Comment'
+import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
+import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
 
 export default function Post({post}) {
 
@@ -43,13 +47,13 @@ export default function Post({post}) {
         <div className="postTop">
           <div className="postTopLeft">
             <Link to = {`profile/${user.username}`}> 
-            <img src={user.profilePicture 
+            <img src={user.profilePicture  
             ? user.profilePicture 
             : "https://docsach24.co/no-avatar.png" } 
             alt="" 
             className="postProfileImg" />
             </Link>
-            <span className="postUsername">{user.firstName} {user.lastName}</span>
+            <span className="postUsername">{user.fullName} </span>
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">
@@ -70,6 +74,24 @@ export default function Post({post}) {
           <div className="postBottomRight"> 
           <span className="postCommentText">{post.comment} comments</span>
           </div>
+        </div>
+        <hr className='hrPost'/>
+        <div className="likeAndCommentPost">
+            <div className="likePostIcon" onClick={likeHandler}><ThumbUpOutlinedIcon className='likeIcon'/>Like</div>
+            <div className="likePostIcon"><ChatBubbleOutlineOutlinedIcon className='likeIcon'/>Comment</div>
+        </div>
+        <hr className='hrPost'/>
+        <div className="postComment">
+        <img src={user.profilePicture 
+            ? user.profilePicture 
+            : "https://docsach24.co/no-avatar.png" } 
+            alt="" 
+            className="postProfileImg" />
+        <div className="comment">
+            <input type="text" className="commentInput" placeholder='Write a comment' />
+            <CameraAltIcon className=''/>
+        </div>
+          
         </div>
       </div>
     </div>

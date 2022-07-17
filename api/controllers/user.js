@@ -57,14 +57,9 @@ export const GetUser = async(req,res, next) =>{
 }
 // search user
 export const SearchUser = async(req, res) => { 
-  const search  = req.query.fullName; 
+
   try{ 
     const data = await User.find(
-      { 
-        fullName: { 
-          $regex: search,$options: '$i'
-        }
-      }
     )
     res.status(200).json(data);
   }catch(err){ 

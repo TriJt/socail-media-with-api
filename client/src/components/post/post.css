@@ -7,7 +7,7 @@
 }
 
 .postWrapper{ 
-    padding: 10px;
+    padding: 0px;
 }
 
 .postTop{ 
@@ -19,6 +19,7 @@
 .postTopLeft{ 
     display: flex;
     align-items: center;
+    padding: 10px;
 }
 
 .postProfileImg{ 
@@ -40,6 +41,7 @@
 
 .postCenter{ 
     margin: 20px 0 ;
+    
 }
 
 .postImg{ 
@@ -48,11 +50,15 @@
     max-height: 500px;
     object-fit: contain;
 }
+.postText{ 
+    padding: 10px;
+}
 
 .postBottom{ 
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 10px;
 }
 
 .postBottomLeft{ 
@@ -75,4 +81,54 @@
     font-size: 14px;
     cursor: pointer;
     border-bottom: 1px dashed gray;
+}
+.hrPost{ 
+    margin: 10px;
+    border: none;
+    border-bottom: 1px solid gray;
+}
+.likeAndCommentPost{ 
+    display: flex;
+    height: 30px;
+}
+.likePostIcon:hover{ 
+    background-color: gray;
+    color: white;
+}
+.likePostIcon{ 
+    width: 50%;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    margin: 0 10px  0 10px  ;
+    align-items: center;
+    border-radius: 5px;
+}
+.postComment{ 
+    padding: 10px;
+    display: flex;
+    align-items: center;
+
+}
+.comment{ 
+    display: flex;
+    width: 100%;
+    margin-left: 5px;
+    border-radius: 50px;
+    height: 30px;
+    align-items: center;
+    border: none;
+    background-color: rgb(215, 212, 212);
+    
+}
+.commentInput{ 
+    border: none ;
+    background-color: rgb(215, 212, 212);
+    margin-left: 10px;
+    align-items: center;
+    width: 80%;
+    cursor: pointer;
+}
+.commentInput:focus{ 
+    outline: 0;
 }

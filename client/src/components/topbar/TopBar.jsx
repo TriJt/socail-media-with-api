@@ -1,26 +1,43 @@
 import './topbar.css'
-import {Search, Person, Chat} from "@mui/icons-material"
+import {Search, Person, Chat, Remove} from "@mui/icons-material"
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import {Link} from "react-router-dom"
-import { useContext,useState } from 'react';
+import { useContext,useState, useEffect } from 'react';
 import {AuthContext} from "../../context/AuthContext";
 import axios from 'axios' ; 
+
 
 export default function Topbar() {
 
   const {user:currentUser} = useContext(AuthContext); 
   const [user, setUser]  = useState(currentUser)
-  
-  // const [filteredData,setFilteredData] = useState([])
-  // const handleFilter = async (e)=> { 
-  //   const searchWord =  e.target.value; 
-  //   const newFilter = await axios.get("http://localhost:8800/api/users?fullName="+ searchWord).filter(
-  //     (value)=> { 
-  //       return value.
-  //     }
-  //   )
-  // }
+  const [filteredData, setFilteredData] = useState([]);
+  const [wordEntered, setWordEntered] = useState("");
+  const [data, setData] = useState([]); 
 
+  useEffect(() => {
+    const loadData = async()=>{ 
+      const res = await axios.get("http://localhost:8800/api/users/search"); 
+      setData(res.data)
+    }
+    loadData(); 
+
+  }, [])
+  
+
+const handleFilter = async (e)=> { 
+  const searchWord =  e.target.value; 
+  setWordEntered(searchWord); 
+  const newFilter =   data.filter(
+    (value)=> { 
+      return value.fullName.toLowerCase().includes(searchWord.toLowerCase()); 
+    }); 
+  if(searchWord === ""){ 
+    setFilteredData([])
+  }else{ 
+    setFilteredData(newFilter)
+  }
+}; 
 
   return (
     <div className='topbarContainer'>
@@ -31,11 +48,25 @@ export default function Topbar() {
       </div>
       <div className="topbarCenter">
         <div className="searchbar">
-          <Search className='searchIcon'/>
-          <input type="text" placeholder='Search for friend, post' className="searchInput" />
-          <div className="dataResult"> </div>
+          <Search className="searchIcon" />
+          <input type="text" placeholder='Search for friend, post' className="searchInput" value={wordEntered}
+          onChange={handleFilter} />
         </div>
-      </div>
+          {filteredData.length !== 0 && (
+        <div className="dataResult">
+          {filteredData.map((value, key) => {
+            return (
+              <Link  to={`profile/${value.username}`} className = "search-link">
+                <img className='img-search' src={value.profilePicture}  alt=""/>
+                <p className='data'>{value.fullName} </p>
+              </Link>
+            );
+          })}
+        </div>
+      )}
+        </div>
+      
+
       <div className="topbarRight">
         <div className="topbarLinks">
             <span className="topbarLink">Home</span>
@@ -66,5 +97,4 @@ export default function Topbar() {
     </div>
   )
 }
-
 
