@@ -9,6 +9,7 @@ import axios from 'axios' ;
 
 export default function Topbar() {
 
+  const [open , useOpen ] = useState(false); 
   const {user:currentUser} = useContext(AuthContext); 
   const [user, setUser]  = useState(currentUser)
   const [filteredData, setFilteredData] = useState([]);
@@ -65,13 +66,9 @@ const handleFilter = async (e)=> {
         </div>
       )}
         </div>
-      
+      {/* phần này làm về các icon gắn link của các commponent vào  */}
 
       <div className="topbarRight">
-        <div className="topbarLinks">
-            <span className="topbarLink">Home</span>
-            <span className="topbarLink">Timeline</span>
-        </div>
         <div className="topbarIcons">
             <div className="topbarIconItem">
               <Person />
@@ -85,13 +82,21 @@ const handleFilter = async (e)=> {
               <NotificationsNoneIcon />
               <span className="topbarIconBadge">1</span>
             </div>
+          {/* Chỗ này là sử dụng dropdown để show ra các thông tin như
+            - Trang cá nhân 
+            - Trợ giúp
+            - Log out
+            - Ghi chú nguồn  */}
 
+            {/* <div className="dropdownLink"> */}
             <Link to={`profile/${user.username}`}> 
             <img src={user.profilePicture 
             ? user.profilePicture 
             : "https://docsach24.co/no-avatar.png"} className="topbarImage" 
               alt='topbarimage' />
             </Link>
+            {/* </div> */}
+            
         </div>
       </div>
     </div>
