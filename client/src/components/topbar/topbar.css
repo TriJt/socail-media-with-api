@@ -14,6 +14,9 @@
     font-weight: bold;
     color: white;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: left;
 }
 .topbarCenter{ 
     display:grid;
@@ -94,11 +97,7 @@
     justify-content: space-around;
     color: white ;
 }
-.topbarLink{ 
-    margin-right: 10px;
-    font-size: 14px;
-    cursor: pointer;
-}
+
 .topbarIcons{ 
     display: flex;
 }
@@ -141,4 +140,23 @@
     border-radius: 50%;
     object-fit: cover ;
     cursor: pointer;
+}
+.navbar-ul{ 
+    padding: 0;
+  margin: 0;
+  padding-left: 1em;
+  background: #ffffff;
+  border: 2px solid #e5e5e5;
+  box-sizing: border-box;
+  color: #3faffa;
+  font-size: 1.3rem;
+  font-weight: 500;
+  
+}
+.navbar-ul:first-child {
+    padding-top: 0.8em;
+  }
+.navbar-li{ 
+    list-style: none ;
+    margin-bottom: 5px;
 }

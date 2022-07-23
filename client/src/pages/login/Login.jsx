@@ -29,7 +29,7 @@ export default function Login() {
     <div className='login'>
       <div className="loginWrapper">
         <div className="loginLeft">
-            <h3 className="loginLogo">Heavensocial</h3>
+            <h3 className="loginLogo">heaven</h3>
             <span className="loginDesc">
               Connect with friends and the world around you on Heavensocial.
             </span>
@@ -57,7 +57,9 @@ export default function Login() {
               </button>
             </div>
             <button className="loginButton" type ="submit" disabled ={isFetching}>{isFetching ? (<CircularProgress color="white" size= "20px" /> ) : ("Log In")}</button>
-            <span className="loginForgot">Forgot Password? </span>
+            <Link to={"/forgot"} className='forgotPass'><p className="loginForgot">Forgot Password? </p> </Link>
+            
+            <hr  className='hr-login'/>
             <Link to="/register" >  
             <button className="loginRegisterButton">{isFetching ? (
                 <CircularProgress color="white" size="20px" />
@@ -66,6 +68,7 @@ export default function Login() {
               )}</button>
               </Link>
           </form>
+          <span className="content-login"> Create a Page for a celebrity, brand, or business.</span>
         </div>
       </div>
       

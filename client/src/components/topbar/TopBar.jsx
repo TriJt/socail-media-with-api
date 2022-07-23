@@ -44,7 +44,7 @@ const handleFilter = async (e)=> {
     <div className='topbarContainer'>
       <div className="topbarLeft">
         <Link to = "/" style={{textDecoration: 'none'}}>
-        <span className="logo">Heavensocial</span>
+        <span className="logo">Heaven</span>
         </Link>
       </div>
       <div className="topbarCenter">
@@ -66,7 +66,7 @@ const handleFilter = async (e)=> {
         </div>
       )}
         </div>
-      {/* phần này làm về các icon gắn link của các commponent vào  */}
+      {/* Icon của các phần trong navbar  */}
 
       <div className="topbarRight">
         <div className="topbarIcons">
@@ -87,16 +87,13 @@ const handleFilter = async (e)=> {
             - Trợ giúp
             - Log out
             - Ghi chú nguồn  */}
+          <Link to={`profile/${user.username}`}> 
+                  <img src={user.profilePicture 
+                  ? user.profilePicture 
+                  : "https://docsach24.co/no-avatar.png"} className="topbarImage" 
+                    alt='topbarimage' />
+                  </Link>
 
-            {/* <div className="dropdownLink"> */}
-            <Link to={`profile/${user.username}`}> 
-            <img src={user.profilePicture 
-            ? user.profilePicture 
-            : "https://docsach24.co/no-avatar.png"} className="topbarImage" 
-              alt='topbarimage' />
-            </Link>
-            {/* </div> */}
-            
         </div>
       </div>
     </div>

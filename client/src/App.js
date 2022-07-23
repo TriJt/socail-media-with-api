@@ -2,6 +2,7 @@ import Home from "./pages/home/Home"
 import Profile from "./pages/profile/Profile";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
+import Forgot from "./pages/forgot/Forgot";
 import React, { useContext } from "react";
 import {
   BrowserRouter as Router,
@@ -25,6 +26,7 @@ function App() {
         <Route path="/profile/:username" element ={ <Profile />}/>
         <Route path="/login" element ={user ? <Navigate to="/"/> :<Login />} />
         <Route path="/register" element={user ? <Navigate to="/"/> :<Register />} />
+        <Route path="/forgot" element={user ? <Navigate to="/"/> :<Forgot />} />
       </Routes>
     </Router>
   );
