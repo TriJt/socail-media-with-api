@@ -118,6 +118,22 @@
 .inputForgot:focus{ 
     outline: none;
 }
+.error_msg, .success_msg{ 
+    width: 380px;
+    padding: 18px;
+    margin: 5px 0 ;
+    font-size: 15px;
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+}
+.success_msg{ 
+    background-color: green;
+}
+
+
+
 .hrForgot{ 
     border: none ;
     border-bottom: 0.5px solid rgb(187, 181, 181, 0.3);

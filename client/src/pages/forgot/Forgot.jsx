@@ -16,22 +16,48 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 
 export default function Forgot() {
-  const [pass, setPass] = useState(false);
 
-  const toggleBtn = ()=> { 
-    setPass(prevState => !prevState)
-  }
-
+  // phần này là các biến để đăng nhập vào trong form đăng nhập 
   const email  = useRef(); 
   const password = useRef(); 
   const {user,isFetching, error, dispatch} = useContext(AuthContext)
 
+  // phần này là để gán vào form đăng nhập 
   const handleClick = (e) => {
     e.preventDefault(); 
     loginCall({
       email: email.current.value,
       password: password.current.value},dispatch )
   }; 
+  // khai báo các biển để hiển thị thông báo lúc check email để rết password 
+  const [emailCheck, setEmail]  = useState("")
+  const [msg, setMsg] = useState("")
+  const [error_msg, setError] = useState("")
+
+  // phần tác động vào trong chỗ nhập email để gửi về database 
+  const handleSubmit = async(e) => { 
+    e.preventDefault(); 
+    try {
+      
+      const url = `http:/localhost:5000/api/password-reset`; 
+      const {data} = await axios.post(url,{email}); 
+      setMsg(data.message); 
+      setError("")
+
+    } catch (error) {
+      // bắt sự kiện khi email bị sai 
+      if(error_msg.response && 
+        error_msg.response.status >= 400 &&
+        error_msg.response.status <=500 
+        ){ 
+          setError(error.response.data.message); 
+          setMsg(""); 
+        }
+    }
+
+  }
+
+
  
 
   return (
@@ -59,8 +85,19 @@ export default function Forgot() {
         <div className="forgotBox">
           <h4 className="forgotHeader"> Find your Account</h4>
           <hr  className='hrForgot'/>
+          <form onSubmit={this.handleSubmit}>
           <p className="forgotContent">Please enter your email to find your account </p>
-          <input type="text" className="InputForgot" placeholder='Email' />
+        
+          <input 
+              type="text" 
+              className="InputForgot" 
+              placeholder='Email' 
+              value={emailCheck}
+              required
+              onChange={(e) => setEmail(e.target.value)}/>
+          {/* phần hiện thông báo kết quả kiểm tra email */}
+          { error_msg && <div className="error_msg">{error_msg}</div>}
+          { msg && <div className="success_msg">{msg}</div>}
           <hr  className='hrForgot'/>
           {/* phần này là các button để đưa các tác vụ vào trong form */}
           <div className="buttonForgot">
@@ -69,6 +106,7 @@ export default function Forgot() {
             {/* Tim kiếm tài khoản trong back-end và check để hiển thị  */}
             <button className="Find">Find</button>
           </div>
+          </form>
         </div>
       </div>
     </div>

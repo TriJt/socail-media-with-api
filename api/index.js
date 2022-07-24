@@ -8,6 +8,11 @@ const app = express();
 import UserRoute from "./routes/users.js"
 import AuthRoute from "./routes/auth.js"
 import PostRoute from "./routes/post.js"
+import passwordResetRoutes from "./routes/passwordReset.js"
+
+
+
+
 dotenv.config(); 
 
 const corsOptions = {
@@ -39,6 +44,9 @@ app.use("/api/auth",AuthRoute);
 app.use("/api/users",UserRoute); 
 //route for post 
 app.use("/api/posts",PostRoute); 
+//route for reset password
+app.use("/api/password-reset",passwordResetRoutes); 
+
 
 
 app.listen(8800, ()=> { 
