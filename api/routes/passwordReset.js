@@ -1,9 +1,10 @@
 // phần này là để thể hiện các router của reset password 
+import express from "express"
 const router = express.Router(); 
 import User from "../models/User.js";
 import Token from "../models/Token.js"; 
 import crypto from "crypto"; 
-import sendEmail from "../utils/sendEmail"; 
+import sendEmail from "../utils/sendEmail.js"; 
 import Joi from "joi"; 
 import passwordComplexity from "joi-password-complexity"; 
 import bcryptjs from "bcryptjs" 

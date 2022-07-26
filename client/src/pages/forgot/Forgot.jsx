@@ -85,7 +85,7 @@ export default function Forgot() {
         <div className="forgotBox">
           <h4 className="forgotHeader"> Find your Account</h4>
           <hr  className='hrForgot'/>
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={handleSubmit}>
           <p className="forgotContent">Please enter your email to find your account </p>
         
           <input 
@@ -104,7 +104,7 @@ export default function Forgot() {
             {/* chuyển về trang login */}
             <button className="Exit"><Link to={"/login"} className="linkExit"> Exit</Link></button>
             {/* Tim kiếm tài khoản trong back-end và check để hiển thị  */}
-            <button className="Find">Find</button>
+            <button className="Find" type ="submit">Find</button>
           </div>
           </form>
         </div>

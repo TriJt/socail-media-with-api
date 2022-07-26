@@ -3,6 +3,7 @@ import Profile from "./pages/profile/Profile";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import Forgot from "./pages/forgot/Forgot";
+import PasswordReset from "./pages/resetpass/ResetPass"
 import React, { useContext } from "react";
 import {
   BrowserRouter as Router,
@@ -27,6 +28,7 @@ function App() {
         <Route path="/login" element ={user ? <Navigate to="/"/> :<Login />} />
         <Route path="/register" element={user ? <Navigate to="/"/> :<Register />} />
         <Route path="/forgot" element={user ? <Navigate to="/"/> :<Forgot />} />
+        <Route path="/password-reset/:id/:token" element={user ? <Navigate to="/"/> :<PasswordReset />} />
       </Routes>
     </Router>
   );
