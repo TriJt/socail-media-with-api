@@ -10,9 +10,6 @@ import AuthRoute from "./routes/auth.js"
 import PostRoute from "./routes/post.js"
 import passwordResetRoutes from "./routes/passwordReset.js"
 
-
-
-
 dotenv.config(); 
 
 const corsOptions = {
@@ -36,6 +33,7 @@ mongoose
 app.use(express.json()); 
 app.use(helmet()); 
 app.use(morgan("common"))
+// send email for reset password 
 
 
 // route for page 
@@ -46,6 +44,8 @@ app.use("/api/users",UserRoute);
 app.use("/api/posts",PostRoute); 
 //route for reset password
 app.use("/api/password-reset",passwordResetRoutes); 
+
+
 
 
 

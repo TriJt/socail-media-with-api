@@ -31,7 +31,7 @@ export default function Login() {
         <div className="loginLeft">
             <h3 className="loginLogo">heaven</h3>
             <span className="loginDesc">
-              Connect with friends and the world around you on Heavensocial.
+              Connect with friends and the world around you on Heaven.
             </span>
         </div>
         <div className="loginRight">
@@ -43,12 +43,14 @@ export default function Login() {
               className="loginInput"
               ref ={email} />
             <div className="passwordDiv">
+
               <input 
               type={pass ? "text" :"password"} 
               required
               minLength={8}
               placeholder='Password' className="passwordInput" 
               ref = {password}/>
+              
               <button className='btnPassword' onClick={toggleBtn}> 
                 {
                   pass ? <VisibilityOffIcon /> : <VisibilityIcon/>

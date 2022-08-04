@@ -93,6 +93,7 @@ export default function Forgot() {
               className="InputForgot" 
               placeholder='Email' 
               value={emailCheck}
+
               required
               onChange={(e) => setEmail(e.target.value)}/>
           {/* phần hiện thông báo kết quả kiểm tra email */}
@@ -104,7 +105,7 @@ export default function Forgot() {
             {/* chuyển về trang login */}
             <button className="Exit"><Link to={"/login"} className="linkExit"> Exit</Link></button>
             {/* Tim kiếm tài khoản trong back-end và check để hiển thị  */}
-            <button className="Find" type ="submit">Find</button>
+            <button className="Find" type ="submit">Submit  </button>
           </div>
           </form>
         </div>
