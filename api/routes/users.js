@@ -7,8 +7,17 @@ import {UpdateUser,
         FollowUser, 
         UnFollowUser,
         GetAllUser,
-        SearchUser
+        SearchUser,
+        SendEmail,
+        ChangePassword
     } from "../controllers/user.js"
+
+
+
+//Send email 
+router.post("/send_email", SendEmail)
+//Change password 
+router.post("/changePassword", ChangePassword)
 // Search user 
 router.get("/search", SearchUser)
 // Update user
@@ -21,7 +30,7 @@ router.get("/", GetUser)
 router.get("/friends/:userId", GetFriends);
 // follow a user
 router.put("/:id/follow", FollowUser)
-//unfollow a user
+//un follow a user
 router.put("/:id/unfollow", UnFollowUser)
 // router get all user 
 router.get("/all", GetAllUser)

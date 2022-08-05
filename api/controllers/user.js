@@ -1,7 +1,7 @@
 import User from "../models/User.js"; 
 import bcryptjs from 'bcryptjs';
-
-
+import Otp from "../models/Otp"; 
+import nodemailer from "nodemailer"
 //update user
 export const UpdateUser = async (req, res) => {
     if (req.body.userId === req.params.id || req.body.isAdmin) {
@@ -142,3 +142,80 @@ export const UnFollowUser = async(req, res) => {
         res.status(403).json("You can unfollow yourself!!")
     }
 }
+
+
+// Send email 
+export const SendEmail = async(req,res)=>{ 
+    let data = await User.findOne({email: req.body.email}); 
+    const response = {}; 
+    if(data){ 
+      let otpcode = Math.floor((Math.random() * 10000) + 1 ); 
+      let otpData = new Otp({ 
+        email: req.body.email, 
+        code: otpcode, 
+        expireIn: new Date().getTime() + 300 *1000
+      })
+      let otpResponse = await otpData.save(); 
+      responseType.statusText = 'Success'; 
+      responseType.message = 'Please check Your Email  ID'; 
+    }else{ 
+      responseType.statusText = 'Error'; 
+      responseType.message = 'Email id not exist';
+      }
+    
+}
+
+
+
+
+// Change password 
+export const ChangePassword = async(req,res)=>{ 
+  let data = await Otp.find({email: req.body.email, code: rea.body.code}); 
+  const response = {}; 
+  if(data){ 
+    let currentTime = new Date().getTime(); 
+    let diff = data.expireIn - currentTime ; 
+    if(diff < 0 ){ 
+      response.message = 'Token Expire'; 
+      response.statusText = 'error'
+    }else{ 
+      let user = await User.findOne({email: req.body.email}); 
+      user.password = req.body.password; 
+      user.save(); 
+      response.message = 'Password change success';
+      response.statusText = 'Success'; 
+    }
+  }else{ 
+    responseType.statusText = 'Error'; 
+    responseType.message = 'Invalid';
+    }
+}
+
+
+// nodemailer
+
+
+let transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 2525,
+    secure: false,
+    requireTLS: true,
+    auth: {
+        user: '8063cc66eee552',
+        pass: 'cdadffc3f45ab0'
+    }
+});
+
+let mailOptions = {
+    from: 'thanhtri6776@gmail.com',
+    to: 'trib1809201@student.ctu.edu.vn',
+    subject: 'Test',
+    text: 'Hello World!'
+};
+
+transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+        return console.log(error.message);
+    }
+    console.log('success');
+});
