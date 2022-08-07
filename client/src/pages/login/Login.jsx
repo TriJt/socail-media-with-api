@@ -43,13 +43,12 @@ export default function Login() {
               className="loginInput"
               ref ={email} />
             <div className="passwordDiv">
-
               <input 
               type={pass ? "text" :"password"} 
               required
               minLength={8}
               placeholder='Password' className="passwordInput" 
-              ref = {password}/>
+              ref = {password} />
               
               <button className='btnPassword' onClick={toggleBtn}> 
                 {

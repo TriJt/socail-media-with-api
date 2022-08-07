@@ -3,33 +3,33 @@ import mongoose from "mongoose"
 const UserSchema = new mongoose.Schema({ 
     fullName: { 
         type:String, 
-        required: true
+        required: [true,"Please enter your full Name!!"],
     },
     username: { 
         type: String, 
-        required: true, 
+        required: [true,"Please enter your username!!"], 
         min: 8,
         max: 50, 
         unique: true
     },
     email:{ 
         type: String, 
-        required: true,
+        required: [true,"Please enter your email!!"],
         max: 50, 
         unique: true
     }, 
     password: { 
         type: String, 
-        required: true, 
+        required: [true,"Please enter your password!!"],
         min: 8
     }, 
     profilePicture:{ 
         type:String, 
-        default: ""
+        default: "https://docsach24.co/no-avatar.png"
     }, 
     coverPicture: { 
         type : String, 
-        default: ""
+        default: "https://docsach24.co/no-avatar.png"
     }, 
     followers: { 
         type: Array,

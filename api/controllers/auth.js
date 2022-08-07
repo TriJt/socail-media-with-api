@@ -9,8 +9,7 @@ export const Register = async(req, res) => {
         //create new user 
         try{ 
             const newUser =  new User({
-                firstName: req.body.firstName, 
-                lastName: req.body.lastName, 
+                fullName: req.body.fullName, 
                 username: req.body.username, 
                 email: req.body.email, 
                 password: hashPassword,
@@ -33,11 +32,25 @@ export const Login  = async(req, res, next) => {
     try{ 
 
         const user = await User.findOne({email: req.body.email}); 
-        !user && res.status(404).json("Email not found"); 
+        const responseType = {
+            message:'ok'
+        }
+        if(user){ 
+            
+            const match =  await bcryptjs.compare(req.body.password,user.password);
+            if(match){ 
+                responseType.message ='Login Successfully'; 
+                responseType.token = 'ok'
+                
+            }else{ 
+                responseType.message ='Invalid Password'; 
+            }
+        }else{ 
+            responseType.message ='Invalid Email';
+        
+        }
+        res.status(200).json(user)
 
-        const validPassword = await bcryptjs.compare(req.body.password,user.password);
-        !validPassword && res.status(500).json("Wrong password"); 
-        res.status(200).json(user) ;
     }
     catch(err){ 
         res.status(500).json(err); 

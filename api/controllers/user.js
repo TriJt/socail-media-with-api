@@ -1,6 +1,6 @@
 import User from "../models/User.js"; 
 import bcryptjs from 'bcryptjs';
-import Otp from "../models/Otp"; 
+import Otp from "../models/Otp.js"; 
 import nodemailer from "nodemailer"
 //update user
 export const UpdateUser = async (req, res) => {

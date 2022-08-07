@@ -17,7 +17,6 @@
     font-size: 24px;
     margin-left: 20px;
     font-weight: bold;
-    color: #1877F2;
     display: flex;
     align-items: center;
     padding-top: 10px;
@@ -116,7 +115,7 @@
     
 }
 .inputForgot:focus{ 
-    outline: none;
+    outline: none; 
 }
 .error_msg, .success_msg{ 
     width: 380px;

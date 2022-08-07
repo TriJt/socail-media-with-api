@@ -83,3 +83,10 @@
     cursor: pointer;
     margin-bottom: 10px;
 }
+
+.error{
+    padding: 0 0  5px 0 ;
+    color: red;
+    font-size: 14px;
+    text-align: left;
+}
