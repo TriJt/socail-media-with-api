@@ -5,12 +5,22 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import axios from 'axios';
 import {useNavigate } from "react-router"
 import {Link} from "react-router-dom"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Register() {
-  const [pass, setPass] = useState(false);
 
-  const toggleBtn = ()=> { 
+  // check show pass before add
+  const [pass, setPass] = useState(false);
+  const [repass, setRePass] = useState(false);
+  const toggleBtnPass = (e)=> {
+    e.preventDefault() 
     setPass(prevState => !prevState)
+  }
+  const toggleBtnRePass = (e)=> {
+    e.preventDefault() 
+   
+    setRePass(prevState => !prevState)
   }
 //declaration fields in form 
   const [inputField, setInputField] = useState({ 
@@ -34,27 +44,30 @@ export default function Register() {
     repasswordErr:''
   })
 // click button to submit form 
-  const handleSubmit = async() => {
-    
+  const handleSubmit = async(e) => {
+    e.preventDefault();
     if(validateForm()){ 
-      console.log("nosuccessasdasd")
-    
-    // if(password.current.value !== password.current.value){ 
-    //   passwordAgain.current.setCustomValidity("Passwords don't match!!")
-    // }
-    // else{ 
-    //   const user = { 
-    //     fullName: fullName.current.value, 
-    //     username : username.current.value, 
-    //     email : email.current.value, 
-    //     password : password.current.value
-    //   }; 
-    //   try { 
-    //      await axios.post("http://localhost:8800/api/auth/register", user)
-    //     history("/login")
-    //   } catch (err) {
-    //     console.log(err);
-    //   }}
+      const user = {
+        fullName : inputField.fullName, 
+        username: inputField.username, 
+        email: inputField.email, 
+        password:inputField.password
+      }
+      try { 
+        const response = await axios.post('http://localhost:8800/api/auth/register', user)
+        if(response.status === 200){ 
+          toast.success("Added Successfully !");
+          setTimeout(()=>{ 
+            history("/login")
+          },1500)
+        }
+        
+        
+      } catch (err) {
+        toast.error("Something went wrong!");
+      }
+  }else{ 
+    toast.error("Form Invalid!");
   }
   }; 
 // validate form before handClick action
@@ -85,6 +98,7 @@ export default function Register() {
         ...prevState,emailErr: 'Please Enter Your Email !!'
       }))
     }
+
     if(inputField.password === '' ){ 
       formValid =false ; 
       setErrField(prevState=> ({ 
@@ -104,6 +118,7 @@ export default function Register() {
   return (
     <div className='login'>
       <div className="loginWrapper">
+
         <div className="loginLeft">
             <h3 className="loginLogo">heaven</h3>
             <span className="loginDesc">
@@ -111,6 +126,7 @@ export default function Register() {
             </span>
         </div>
         <div className="loginRight">
+        <ToastContainer />
           <form className="loginBox" >
             <input type="text" 
               placeholder='Full Name'   
@@ -148,7 +164,7 @@ export default function Register() {
                 value={inputField.password} 
                 onChange = {InputHandler}
                 className="passwordInput" />
-              <button className='btnPassword' onClick={toggleBtn}> 
+              <button className='btnPassword' onClick={toggleBtnPass}> 
                 {
                   pass ? <VisibilityOffIcon /> : <VisibilityIcon/>
                 }
@@ -159,13 +175,18 @@ export default function Register() {
               errField.passwordErr.length > 0  && <span className='error'>{errField.passwordErr} </span>
             }
             <div className="passwordDiv">
-              <input type="password"  
+              <input type={repass ? "text" :"password"} 
                 name='repassword' 
                 value={inputField.repassword} 
                 onChange = {InputHandler}
                 placeholder='Password Again' 
                 className="passwordInput" />
+              <button className='btnPassword' onClick={toggleBtnRePass}> 
+                {
+                  repass ? <VisibilityOffIcon /> : <VisibilityIcon/>
+                }
               
+              </button>
             </div>
             { 
               errField.repasswordErr.length > 0  && <span className='error'>{errField.repasswordErr} </span>

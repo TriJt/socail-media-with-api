@@ -6,25 +6,76 @@ import { loginCall } from '../../apiCalls';
 import {AuthContext} from '../../context/AuthContext';
 import CircularProgress from '@mui/material/CircularProgress';
 import {Link} from "react-router-dom"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {useNavigate } from "react-router"
 
 export default function Login() {
+  // check show password text
   const [pass, setPass] = useState(false);
 
-  const toggleBtn = ()=> { 
+  const toggleBtn = (e)=> { 
+    e.preventDefault();
     setPass(prevState => !prevState)
   }
 
-  const email  = useRef(); 
-  const password = useRef(); 
+  //declaration fields in form 
+  const [inputField, setInputField] = useState({  
+    email:'', 
+    password:'', 
+  })
+  const InputHandler  = (e)=>{ 
+    setInputField({...inputField, [e.target.name] :e.target.value })
+  }
+
+  const history = useNavigate()
+//declaration field error of form 
+  const [errField, setErrField] = useState({ 
+    emailErr: '', 
+    passwordErr:''
+  })
+
   const {user,isFetching, error, dispatch} = useContext(AuthContext)
 
   const handleClick = (e) => {
     e.preventDefault(); 
-    loginCall({
-      email: email.current.value,
-      password: password.current.value},dispatch )
+    if(validateForm()){ 
+      try{ 
+        loginCall({
+          email: inputField.email,
+          password: inputField.password},dispatch )
+      }catch(err){ 
+        toast.error("Something went wrong!");
+      }
+    }else{ 
+      toast.error("Form Invalid!");
+    }
+
   }; 
 
+  // validate form before handClick action
+  const validateForm =  ()=>{ 
+    let formValid = true; 
+    setInputField({
+      emailErr: '', 
+      passwordErr:'', 
+    })
+    if(inputField.email === '' ){ 
+      formValid =false ; 
+      setErrField(prevState=> ({ 
+        ...prevState,emailErr: 'Please Enter Your Email !!'
+      }))
+    }
+
+    if(inputField.password === '' ){ 
+      formValid =false ; 
+      setErrField(prevState=> ({ 
+        ...prevState,passwordErr: 'Please Enter Your Password !!'
+      }))
+    }
+    return formValid ; 
+
+  }
   return (
     <div className='login'>
       <div className="loginWrapper">
@@ -35,20 +86,25 @@ export default function Login() {
             </span>
         </div>
         <div className="loginRight">
-          <form className="loginBox" onSubmit={handleClick}>
+        <ToastContainer />
+          <form className="loginBox" >
             <input 
               type="email"
-              required 
+              name="email"
               placeholder='Email' 
-              className="loginInput"
-              ref ={email} />
+              onChange={InputHandler}
+              value={inputField.email}
+              className="loginInput" />
+                          { 
+              errField.emailErr.length > 0  && <span className='error'>{errField.emailErr} </span>
+            }
             <div className="passwordDiv">
               <input 
               type={pass ? "text" :"password"} 
-              required
-              minLength={8}
-              placeholder='Password' className="passwordInput" 
-              ref = {password} />
+              name ='password'
+              onChange={InputHandler}
+              value={inputField.password}
+              placeholder='Password' className="passwordInput"  />
               
               <button className='btnPassword' onClick={toggleBtn}> 
                 {
@@ -57,10 +113,17 @@ export default function Login() {
               
               </button>
             </div>
-            <button className="loginButton" type ="submit" disabled ={isFetching}>{isFetching ? (<CircularProgress color="white" size= "20px" /> ) : ("Log In")}</button>
+            { 
+              errField.passwordErr.length > 0  && <span className='error'>{errField.passwordErr} </span>
+            }
+            <button className="loginButton" type ="submit" disabled ={isFetching} onClick = {handleClick}>{isFetching ? (<CircularProgress color="white" size= "20px" /> ) : ("Log In")}</button>
+            </form>
+
+            {/* Link to forgot page */}
             <Link to={"/forgot"} className='forgotPass'><p className="loginForgot">Forgot Password? </p> </Link>
             
             <hr  className='hr-login'/>
+            {/* Link to register page */}
             <Link to="/register" >  
             <button className="loginRegisterButton">{isFetching ? (
                 <CircularProgress color="white" size="20px" />
@@ -68,7 +131,7 @@ export default function Login() {
                 "Create a New Account"
               )}</button>
               </Link>
-          </form>
+          
           <span className="content-login"> Create a Page for a celebrity, brand, or business.</span>
         </div>
       </div>

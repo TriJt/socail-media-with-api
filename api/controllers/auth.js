@@ -4,8 +4,9 @@ import jwt from "jsonwebtoken"
 //REGISTER 
 export const Register = async(req, res) => { 
     try{ 
-        const salt = bcryptjs.genSaltSync(10); 
-        const hashPassword = bcryptjs.hashSync(req.body.password, salt); 
+        const salt = await bcryptjs.genSaltSync(10); 
+        const pass = await req.body.password 
+        const hashPassword = bcryptjs.hashSync(pass, salt); 
         //create new user 
         try{ 
             const newUser =  new User({
@@ -22,7 +23,7 @@ export const Register = async(req, res) => {
         }
     }
     catch(err){ 
-        next(err)
+        console.log(err)
     }
 }
 
@@ -49,11 +50,13 @@ export const Login  = async(req, res, next) => {
             responseType.message ='Invalid Email';
         
         }
-        res.status(200).json(user)
+         res.status(200).json(user)
+         return
 
     }
     catch(err){ 
-        res.status(500).json(err); 
+         res.status(500).json(err); 
+         return
     }
 
 }

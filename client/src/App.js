@@ -26,7 +26,7 @@ function App() {
         <Route exact path="/" element ={ user ? <Home />: <Register/>} />
         <Route path="/profile/:username" element ={ <Profile />}/>
         <Route path="/login" element ={user ? <Navigate to="/"/> :<Login />} />
-        <Route path="/register" element={user ? <Navigate to="/"/> :<Register />} />
+        <Route path="/register" element={ <Register />} />
         <Route path="/forgot" element={user ? <Navigate to="/"/> :<Forgot />} />
         <Route path="/password-reset/:id/:token" element={user ? <Navigate to="/"/> :<PasswordReset />} />
       </Routes>
