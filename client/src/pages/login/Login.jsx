@@ -92,6 +92,7 @@ export default function Login() {
               type="email"
               name="email"
               placeholder='Email' 
+              autoComplete='off'
               onChange={InputHandler}
               value={inputField.email}
               className="loginInput" />
@@ -102,6 +103,7 @@ export default function Login() {
               <input 
               type={pass ? "text" :"password"} 
               name ='password'
+              autoComplete='off'
               onChange={InputHandler}
               value={inputField.password}
               placeholder='Password' className="passwordInput"  />
@@ -117,7 +119,7 @@ export default function Login() {
               errField.passwordErr.length > 0  && <span className='error'>{errField.passwordErr} </span>
             }
             <button className="loginButton" type ="submit" disabled ={isFetching} onClick = {handleClick}>{isFetching ? (<CircularProgress color="white" size= "20px" /> ) : ("Log In")}</button>
-            </form>
+            
 
             {/* Link to forgot page */}
             <Link to={"/forgot"} className='forgotPass'><p className="loginForgot">Forgot Password? </p> </Link>
@@ -131,7 +133,7 @@ export default function Login() {
                 "Create a New Account"
               )}</button>
               </Link>
-          
+              </form>
           <span className="content-login"> Create a Page for a celebrity, brand, or business.</span>
         </div>
       </div>
