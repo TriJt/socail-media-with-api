@@ -29,8 +29,8 @@
 }
 .inputLoginEmail{ 
     height: 26px;
-    width: 188px;
-    margin-left: 250px;
+    max-width: 188px;
+    margin-left: 50px;
     border-radius: 8px;
     padding: 8px 12px 10px;
     border: 0.5px solid rgb(199, 195, 195);
@@ -44,7 +44,7 @@
 }
 .inputLoginPass{ 
     height: 26px;
-    width: 188px;
+    max-width: 188px;
     margin-left: 10px;
     border-radius: 8px;
     padding: 8px 12px 10px;
@@ -89,7 +89,7 @@
 .forgotBox{ 
     -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
     box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
-    width: 500px;
+    max-width: 500px;
     height: auto;
     margin: 80px 0 100px 0 ;
     background-color: white;
@@ -115,7 +115,11 @@
     margin: 0 0 20px 16px;
     
 }
-.inputForgot:focus{ 
+.InputForgot:hover{ 
+    border: 0.5px solid #1877F2;
+}
+
+.InputForgot:focus{ 
     outline: none; 
 }
 .error_msg, .success_msg{ 

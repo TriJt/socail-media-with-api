@@ -17,7 +17,7 @@ import {UpdateUser,
 //Send email 
 router.post("/send_email", SendEmail)
 //Change password 
-router.post("/changePassword", ChangePassword)
+router.post("/change-password", ChangePassword)
 // Search user 
 router.get("/search", SearchUser)
 // Update user

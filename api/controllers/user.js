@@ -2,6 +2,7 @@ import User from "../models/User.js";
 import bcryptjs from 'bcryptjs';
 import Otp from "../models/Otp.js"; 
 import nodemailer from "nodemailer"
+
 //update user
 export const UpdateUser = async (req, res) => {
     if (req.body.userId === req.params.id || req.body.isAdmin) {
@@ -147,7 +148,7 @@ export const UnFollowUser = async(req, res) => {
 // Send email 
 export const SendEmail = async(req,res)=>{ 
     let data = await User.findOne({email: req.body.email}); 
-    const response = {}; 
+    const responseType = {}; 
     if(data){ 
       let otpcode = Math.floor((Math.random() * 10000) + 1 ); 
       let otpData = new Otp({ 
@@ -162,7 +163,9 @@ export const SendEmail = async(req,res)=>{
       responseType.statusText = 'Error'; 
       responseType.message = 'Email id not exist';
       }
-    
+      // return responseType to front-end check error
+    res.status(200).json(responseType); 
+
 }
 
 
@@ -170,14 +173,14 @@ export const SendEmail = async(req,res)=>{
 
 // Change password 
 export const ChangePassword = async(req,res)=>{ 
-  let data = await Otp.find({email: req.body.email, code: rea.body.code}); 
+  let data = await Otp.find({email: req.body.email, code: req.body.code}); 
   const response = {}; 
   if(data){ 
     let currentTime = new Date().getTime(); 
     let diff = data.expireIn - currentTime ; 
     if(diff < 0 ){ 
       response.message = 'Token Expire'; 
-      response.statusText = 'error'
+      response.statusText = 'Error'
     }else{ 
       let user = await User.findOne({email: req.body.email}); 
       user.password = req.body.password; 
@@ -186,9 +189,10 @@ export const ChangePassword = async(req,res)=>{
       response.statusText = 'Success'; 
     }
   }else{ 
-    responseType.statusText = 'Error'; 
-    responseType.message = 'Invalid';
+    response.statusText = 'Error'; 
+    response.message = 'Invalid';
     }
+    res.status(200).json(response); 
 }
 
 
@@ -196,20 +200,20 @@ export const ChangePassword = async(req,res)=>{
 
 
 let transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 2525,
+    host: process.env.MAIL_HOST,
+    port: Number(process.env.MAIL_PORT),
     secure: false,
     requireTLS: true,
     auth: {
-        user: '8063cc66eee552',
-        pass: 'cdadffc3f45ab0'
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS
     }
 });
 
 let mailOptions = {
-    from: 'thanhtri6776@gmail.com',
-    to: 'trib1809201@student.ctu.edu.vn',
-    subject: 'Test',
+    from: process.env.MAIL_FROM,
+    to: 'huynhgiao20ct@gmail.com',
+    subject: 'Change Password',
     text: 'Hello World!'
 };
 

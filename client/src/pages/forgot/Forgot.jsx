@@ -1,101 +1,39 @@
 import React, { useState, useRef, useContext } from 'react'
 import './forgot.css'
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import axios from 'axios';
 import {useNavigate } from "react-router"
 import {Link} from "react-router-dom"
-import { loginCall } from '../../apiCalls';
-import {AuthContext} from '../../context/AuthContext';
-import CircularProgress from '@mui/material/CircularProgress';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-// Viết code vào ngày 23 tháng 7 năm 2022
-// Trang này gồm có phần đăng nhập và phần quên mật khẩu 
-// Phần quên mật khẩu sử dụng nodemailer để gửi mã code về cho email rồi check coi code đó có đúng hông
-// Nếu code đó đúng thì cho đổi mật khẩu còn sai thì yêu cầu nhập lại 
-
+import PasswordForm from '../password Form/PasswordForm';
 
 export default function Forgot() {
-
+  const history = useNavigate()
   // phần này là các biến để đăng nhập vào trong form đăng nhập 
-  const email  = useRef(); 
-  const password = useRef(); 
-  const {user,isFetching, error, dispatch} = useContext(AuthContext)
+  const emailRef  = useRef(); 
+  const [OtpForm, showForm] = useState(true); 
+  // phần này là để gửi Otp về gmail
 
-  // phần này là để gán vào form đăng nhập 
-  const handleClick = (e) => {
+  const sendOtp = async(e) =>{ 
     e.preventDefault(); 
-    loginCall({
-      email: email.current.value,
-      password: password.current.value},dispatch )
-  }; 
-  // khai báo các biển để hiển thị thông báo lúc check email để rết password 
-  const [inputField, setInputField] = useState({  
-    email:'', 
-  })
-  const InputHandler  = (e)=>{ 
-    setInputField({...inputField, [e.target.name] :e.target.value })
-  }
-  const [errField, setErrField] = useState({ 
-    emailErr: ''
-  })
+    try {
+      const data = {email : emailRef.current.value}; 
+      const response = await axios.post('http://localhost:8800/api/users/send_email', data); 
+      const record = response.data; 
 
-  const sendButton = (e) =>{ 
-    e.preventDefault(); 
-    if(validateFormForget()){ 
-
-    }else{ 
-      toast.error("Form Invalid!");
+        if(record.statusText === 'Success'){ 
+          toast.success("Record Successfully !");
+          showForm(false); 
+        }else{
+          toast.error(record.message); 
+        }
+    } catch (e) {
+      toast.error("Somethings went wrong")
     }
 
   }
 
-  const validateFormForget = () => { 
-    let formValid = true; 
-    setInputField({
-      emailErr: '', 
-      passwordErr:'', 
-    })
-    if(inputField.email === '' ){ 
-      formValid =false ; 
-      setErrField(prevState=> ({ 
-        ...prevState,emailErr: 'Please Enter Your Email !!'
-      }))
-    }
-    return formValid ;
-  }
 
-  // const [emailCheck, setEmail]  = useState("")
-  // const [msg, setMsg] = useState("")
-  // const [error_msg, setError] = useState("")
-
-  // // phần tác động vào trong chỗ nhập email để gửi về database 
-  // const handleSubmit = async(e) => { 
-  //   e.preventDefault(); 
-  //   try {
-      
-  //     const url = `http:/localhost:5000/api/password-reset`; 
-  //     const {data} = await axios.post(url,{email}); 
-  //     setMsg(data.message); 
-  //     setError("")
-
-  //   } catch (error) {
-  //     // bắt sự kiện khi email bị sai 
-  //     if(error_msg.response && 
-  //       error_msg.response.status >= 400 &&
-  //       error_msg.response.status <=500 
-  //       ){ 
-  //         setError(error.response.data.message); 
-  //         setMsg(""); 
-  //       }
-  //   }
-
-  // }
-
-
- 
 
   return (
     <div className="forgotDiv">
@@ -106,46 +44,33 @@ export default function Forgot() {
         <span className="logo">Heaven</span>
         </Link>
       </div>
-      <div className="forgotTopRight">
-      <form  onSubmit={handleClick}>
-        <input type="email" required ref ={email}className='inputLoginEmail' placeholder='Email'/>
-        <input type="pass" required ref ={password} className='inputLoginPass' placeholder='Password' />
-        <button className="buttonLoginForgot" type ="submit" disabled ={isFetching}>{isFetching ? (<CircularProgress color="white" size= "20px" /> ) : ("Log In")}</button>
-        {/* Link qua trang quên mật khẩu */}
-        <Link to={"/forgot"} className ="linkForgot"> Forgot your account ? </Link>
-        </form>
-      </div>
-      
+      <ToastContainer />
       </div>
       {/* Phần này là phần quên mật khẩu  */}
       <div className="forgotBottom">
         <div className="forgotBox">
-          <h4 className="forgotHeader"> Find your Account</h4>
+       { OtpForm ? 
+        <form autoComplete='false' id='OtpForm' >
+          <h4 className="content-pass"> Find your Account</h4>
           <hr  className='hrForgot'/>
-          <form >
           <p className="forgotContent">Please enter your email to find your account </p>
-        
             <input 
               type="email" 
               autoComplete='off'
               name='email'
+              ref={emailRef}
               className="InputForgot" 
-              placeholder='Email' 
-              value={inputField.email}
-              onChange={InputHandler}/>
-            { 
-              errField.emailErr.length > 0  && <span className='error'>{errField.emailErr} </span>
-            }
-          {/* phần hiện thông báo kết quả kiểm tra email */}
-          <hr  className='hrForgot'/>
-          {/* phần này là các button để đưa các tác vụ vào trong form */}
+              placeholder='Email' />
+              <hr  className='hrForgot'/>
           <div className="buttonForgot">
-            {/* chuyển về trang login */}
+            {/* Link to login page */}
             <button className="Exit"><Link to={"/login"} className="linkExit"> Exit</Link></button>
-            {/* Tim kiếm tài khoản trong back-end và check để hiển thị  */}
-            <button className="Find" type ="submit" onClick={sendButton}>Send OTP  </button>
+            <button className="Find" type ="submit" onClick={sendOtp}>Send OTP  </button>
           </div>
           </form>
+          : 
+          <PasswordForm email = {emailRef.current.value}/>
+          }
         </div>
       </div>
     </div>
