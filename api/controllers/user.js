@@ -2,6 +2,8 @@ import User from "../models/User.js";
 import bcryptjs from 'bcryptjs';
 import Otp from "../models/Otp.js"; 
 import nodemailer from "nodemailer"
+import SMTPTransport from "nodemailer/lib/smtp-transport/index.js";
+import { OAuth2Client } from 'google-auth-library'
 
 //update user
 export const UpdateUser = async (req, res) => {
@@ -145,28 +147,7 @@ export const UnFollowUser = async(req, res) => {
 }
 
 
-// Send email 
-export const SendEmail = async(req,res)=>{ 
-    let data = await User.findOne({email: req.body.email}); 
-    const responseType = {}; 
-    if(data){ 
-      let otpcode = Math.floor((Math.random() * 10000) + 1 ); 
-      let otpData = new Otp({ 
-        email: req.body.email, 
-        code: otpcode, 
-        expireIn: new Date().getTime() + 300 *1000
-      })
-      let otpResponse = await otpData.save(); 
-      responseType.statusText = 'Success'; 
-      responseType.message = 'Please check Your Email  ID'; 
-    }else{ 
-      responseType.statusText = 'Error'; 
-      responseType.message = 'Email id not exist';
-      }
-      // return responseType to front-end check error
-    res.status(200).json(responseType); 
 
-}
 
 
 
@@ -185,7 +166,7 @@ export const ChangePassword = async(req,res)=>{
       let user = await User.findOne({email: req.body.email}); 
       user.password = req.body.password; 
       user.save(); 
-      response.message = 'Password change success';
+      response.message = 'Password change successfully';
       response.statusText = 'Success'; 
     }
   }else{ 
@@ -197,29 +178,66 @@ export const ChangePassword = async(req,res)=>{
 
 
 // nodemailer
+// send mail to get otp 
 
+const GOOGLE_MAILER_CLIENT_ID = process.env.CLIENT_ID; 
+const GOOGLE_MAILER_CLIENT_SECRET = process.env.CLIENT_SECRET; 
+const GOOGLE_MAILER_REFRESH_TOKEN = process.env.REFRESH_TOKEN; 
+const ADMIN_EMAIL_ADDRESS = process.env.EMAIL_FROM; 
 
-let transporter = nodemailer.createTransport({
-    host: process.env.MAIL_HOST,
-    port: Number(process.env.MAIL_PORT),
-    secure: false,
-    requireTLS: true,
-    auth: {
-        user: process.env.MAIL_USER,
-        pass: process.env.MAIL_PASS
+//Initialize(Khởi tạo) OAuth2Client with Client ID and Client Secret
+
+const myOAuth2Client = new OAuth2Client(
+  GOOGLE_MAILER_CLIENT_ID,
+  GOOGLE_MAILER_CLIENT_SECRET
+)
+// Set Refresh Token vào OAuth2Client Credentials
+myOAuth2Client.setCredentials({
+  refresh_token: GOOGLE_MAILER_REFRESH_TOKEN
+})
+
+// Send email 
+export const SendEmail = async(req,res)=>{ 
+  let data = await User.findOne({email: req.body.email}); 
+  const responseType = {}; 
+  if(data){ 
+    let otpcode = Math.floor((Math.random() * 10000) + 1 ); 
+    let otpData = new Otp({ 
+      email: req.body.email, 
+      code: otpcode, 
+      expireIn: new Date().getTime() + 300 *1000
+    })
+    const myAccessTokenObject = await myOAuth2Client.getAccessToken()
+    const myAccessToken = myAccessTokenObject?.token
+    
+    // Tạo một biến Transport từ Nodemailer với đầy đủ cấu hình, dùng để gọi hành động gửi mail
+    const transport = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        type: 'OAuth2',
+        user: ADMIN_EMAIL_ADDRESS,
+        clientId: GOOGLE_MAILER_CLIENT_ID,
+        clientSecret: GOOGLE_MAILER_CLIENT_SECRET,
+        refresh_token: GOOGLE_MAILER_REFRESH_TOKEN,
+        accessToken: myAccessToken
+      }
+    })
+    const mailOptions = {
+      to: req.body.email, // Gửi đến ai?
+      subject: 'OTP for change password', // Tiêu đề email
+      html: `<h3>${otpcode}</h3>` // Nội dung email
     }
-});
+    await transport.sendMail(mailOptions)
 
-let mailOptions = {
-    from: process.env.MAIL_FROM,
-    to: 'huynhgiao20ct@gmail.com',
-    subject: 'Change Password',
-    text: 'Hello World!'
-};
-
-transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-        return console.log(error.message);
+    let otpResponse = await otpData.save();
+    responseType.statusText = 'Success'; 
+    responseType.message = 'Please check Your Email  ID'; 
+  }else{ 
+    responseType.statusText = 'Error'; 
+    responseType.message = 'Email id not exist';
     }
-    console.log('success');
-});
+    // return responseType to front-end check error
+  res.status(200).json(responseType); 
+
+}
+
