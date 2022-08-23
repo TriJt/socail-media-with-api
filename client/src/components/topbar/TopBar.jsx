@@ -1,21 +1,22 @@
 import './topbar.css'
-import {Search, Person, Chat, Remove} from "@mui/icons-material"
+import {Search} from "@mui/icons-material"
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import {Link} from "react-router-dom"
 import { useContext,useState, useEffect } from 'react';
 import {AuthContext} from "../../context/AuthContext";
 import axios from 'axios' ; 
+import ControlPointOutlinedIcon from '@mui/icons-material/ControlPointOutlined';
+import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import {useNavigate } from "react-router"
 
-
-export default function Topbar() {
-
-  const [open , useOpen ] = useState(false); 
+export default function Topbar() { 
   const {user:currentUser} = useContext(AuthContext); 
   const [user, setUser]  = useState(currentUser)
   const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setWordEntered] = useState("");
   const [data, setData] = useState([]); 
-
+  const history = useNavigate()
   useEffect(() => {
     const loadData = async()=>{ 
       const res = await axios.get("http://localhost:8800/api/users/search"); 
@@ -25,6 +26,8 @@ export default function Topbar() {
 
   }, [])
   
+
+  // search user with filter search words 
 
 const handleFilter = async (e)=> { 
   const searchWord =  e.target.value; 
@@ -39,6 +42,15 @@ const handleFilter = async (e)=> {
     setFilteredData(newFilter)
   }
 }; 
+
+  // Log out button 
+  const LogoutHandle =() => { 
+    localStorage.clear(); 
+    history("/login"); 
+    window.location.reload(); 
+  }
+
+
 
   return (
     <div className='topbarContainer'>
@@ -67,36 +79,53 @@ const handleFilter = async (e)=> {
       )}
         </div>
       {/* Icon của các phần trong navbar  */}
-
+        
       <div className="topbarRight">
-        <div className="topbarIcons">
-            <div className="topbarIconItem">
-              <Person />
-              <span className="topbarIconBadge">1</span>
-            </div>
-            <div className="topbarIconItem">
-              <Chat />
-              <span className="topbarIconBadge">2</span>
-            </div>
-            <div className="topbarIconItem">
-              <NotificationsNoneIcon />
-              <span className="topbarIconBadge">1</span>
-            </div>
-          {/* Chỗ này là sử dụng dropdown để show ra các thông tin như
-            - Trang cá nhân 
-            - Trợ giúp
-            - Log out
-            - Ghi chú nguồn  */}
-          <Link to={`profile/${user.username}`}> 
-                  <img src={user.profilePicture 
-                  ? user.profilePicture 
-                  : "https://docsach24.co/no-avatar.png"} className="topbarImage" 
-                    alt='topbarimage' />
-                  </Link>
 
-        </div>
-      </div>
+          <Navbar>
+            <li className='nav-item'> 
+                <Link  to={`/`}>
+                  <ControlPointOutlinedIcon  className='icon-button'/>
+                </Link>
+            </li>
+            <li className='nav-item'> 
+                <Link  to={`/`}>
+                  <MailOutlinedIcon  className='icon-button'/>
+                </Link>
+            </li>
+            <li className='nav-item'> 
+                <Link  to={`/`}>
+                  <NotificationsNoneIcon  className='icon-button'/>
+                </Link>
+            </li>
+            <li className='nav-item'> 
+            <Link  to={`profile/${user.username}`}
+                      
+                      > 
+                      <img src={user.profilePicture 
+                        ? user.profilePicture 
+                        : "https://docsach24.co/no-avatar.png"} className="icon-button" 
+                          alt='topbarimage' />
+                      </Link>
+            </li>
+            <li className='nav-item'> 
+              <button onClick={LogoutHandle} className = "button-logout"><LogoutOutlinedIcon className='icon-button' /></button>  
+            </li>
+          </Navbar>
+      </div> 
     </div>
   )
 }
+
+function Navbar(props){ 
+  return (
+    <nav className='navbar'>
+      <ul className='navbar-nav'>
+        {props.children}
+      </ul>
+    </nav> 
+  )
+}
+
+
 

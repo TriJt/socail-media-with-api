@@ -1,14 +1,13 @@
 import React, { useState, useRef, useContext } from 'react'
 import './forgot.css'
 import axios from 'axios';
-import {useNavigate } from "react-router"
 import {Link} from "react-router-dom"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PasswordForm from '../password Form/PasswordForm';
 
 export default function Forgot() {
-  const history = useNavigate()
+  
   // phần này là các biến để đăng nhập vào trong form đăng nhập 
   const emailRef  = useRef(); 
   const [OtpForm, showForm] = useState(true); 
