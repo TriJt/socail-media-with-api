@@ -73,8 +73,9 @@ export default function RightBar({user}) {
             {followed ? <Remove /> : <Add />}
           </button>
         )}
-          <h4 className="rightbarTitle"> User Information</h4>
+          
           <div className="rightbarInfo"> 
+          <h1 className="rightbarTitle">Intro</h1>
             <div className="rightbarInfoItem">
               <span className="rightbarInfoKey">City:</span>
               <span className="rightbarInfoValue">{user.city}</span>
@@ -92,8 +93,9 @@ export default function RightBar({user}) {
               : "-" }</span>
             </div>
           </div>
-          <h4 className="rightTitle"> User friends</h4>
+          
           <div className="rightbarFollowings">
+          <h4 className="rightTitle"> User friends</h4>
             {friends.map((friend)=> (
             <Link to= {"/profile/" +friend.username} 
               style = {{textDecoration: "none", color:"gray", textAlign: "center"}}>

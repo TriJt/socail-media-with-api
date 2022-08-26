@@ -2,24 +2,16 @@ import User from "../models/User.js";
 import bcryptjs from 'bcryptjs';
 import Otp from "../models/Otp.js"; 
 import nodemailer from "nodemailer"
-import SMTPTransport from "nodemailer/lib/smtp-transport/index.js";
 import { OAuth2Client } from 'google-auth-library'
 
 //update user
 export const UpdateUser = async (req, res) => {
     if (req.body.userId === req.params.id || req.body.isAdmin) {
-      if (req.body.password) {
-        try {
-          const salt = await bcryptjs.genSalt(10);
-          req.body.password = await bcryptjs.hash(req.body.password, salt);
-        } catch (err) {
-          return res.status(500).json(err);
-        }
-      }
       try {
         const user = await User.findByIdAndUpdate(req.params.id, {
           $set: req.body,
         });
+        user.save();
         res.status(200).json(user);
       } catch (err) {
         return res.status(500).json(err);
@@ -28,6 +20,37 @@ export const UpdateUser = async (req, res) => {
       return res.status(403).json("You can update only your account!");
     }
   };
+// update cover image 
+export const updateCoverImage = async(req, res) => {
+  try {
+    const user  = await User.findByIdAndUpdate(req.params.id, { 
+      $set: {coverPicture :  req.body.coverPicture}
+    })
+    user.save(); 
+    res.status(200).json('Update Cover Image Successfully')
+    console.log(user)
+  } catch (error) {
+    res.status(403).json('Can Not Update Cover Image ')
+    console.log(error)
+  }
+
+}
+
+// update cover image 
+export const updateProfileImage = async(req, res) => {
+  try {
+    const user  = await User.findByIdAndUpdate(req.params.id, { 
+      $set: {profilePicture :  req.body.profilePicture}
+    })
+    user.save(); 
+    res.status(200).json('Update Profile Image Successfully')
+  } catch (error) {
+    res.status(403).json('Can Not Update Profile Image ')
+    console.log(error)
+  }
+
+}
+
 
 //delete user
 export const DeleteUser = async(req, res) => { 
@@ -79,6 +102,7 @@ export const GetAllUser = async(req, res)=>{
     res.status(200).json(Users);
   }catch(err){ 
     return res.status(500).json(err)
+    console.log(err)
   }
 }
 
@@ -146,12 +170,6 @@ export const UnFollowUser = async(req, res) => {
     }
 }
 
-
-
-
-
-
-
 // Change password 
 export const ChangePassword = async(req,res)=>{ 
   let data = await Otp.find({email: req.body.email, code: req.body.code}); 
@@ -195,6 +213,9 @@ const myOAuth2Client = new OAuth2Client(
 myOAuth2Client.setCredentials({
   refresh_token: GOOGLE_MAILER_REFRESH_TOKEN
 })
+
+
+
 
 // Send email 
 export const SendEmail = async(req,res)=>{ 
@@ -240,4 +261,3 @@ export const SendEmail = async(req,res)=>{
   res.status(200).json(responseType); 
 
 }
-

@@ -5,17 +5,17 @@ import axios from "axios"
 import {format} from "timeago.js"
 import {Link} from "react-router-dom"
 import { AuthContext } from '../../context/AuthContext'
-import Comment from '../comment/Comment'
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export default function Post({post}) {
 
   const [like, setLike] = useState(post.likes.length);
-  const [user, setUser] = useState({})
-  const [isLiked, setIsLiked] = useState(false); 
+  const [isLiked, setIsLiked] = useState({}); 
   const {user:currentUser} = useContext(AuthContext)
+  const [user, setUser] = useState(currentUser)
 
   useEffect(()=>{ 
     setIsLiked(post.likes.includes(currentUser._id))
@@ -23,14 +23,27 @@ export default function Post({post}) {
 
   useEffect(() => {
     const fetchUser = async() =>{ 
-      // Lấy dữ liệu bài post từ API timeline 
+      // Get data from Api timeline
       const res = await axios.get(`http://localhost:8800/api/users?userId=${post.userId}`); 
       setUser(res.data);
     }
     fetchUser();
   }, [post.userId]) 
 
+  //link to profile 
+  const LinktoProfile = ()=> { 
+    return ( 
+      <Link to = {`profile/${user.username}`}> 
+      <img src={user.profilePicture  
+      ? user.profilePicture 
+      : "https://docsach24.co/no-avatar.png" } 
+      alt="" 
+      className="postProfileImg" />
+      </Link>
+    )
+  }
 
+  // Like post 
   const likeHandler =()=>{ 
     try {
       axios.put("http://localhost:8800/api/posts/"+post._id+"/like", {userId:currentUser._id })
@@ -41,18 +54,14 @@ export default function Post({post}) {
     setIsLiked(!isLiked)
   }
 
+
+
   return (
     <div className='post'>
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
-            <Link to = {`profile/${user.username}`}> 
-            <img src={user.profilePicture  
-            ? user.profilePicture 
-            : "https://docsach24.co/no-avatar.png" } 
-            alt="" 
-            className="postProfileImg" />
-            </Link>
+            <LinktoProfile/>
             <span className="postUsername">{user.fullName} </span>
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
@@ -67,8 +76,8 @@ export default function Post({post}) {
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">
-            <img src="https://i.pinimg.com/564x/c0/d2/16/c0d21611b7e1ef0bf8486900301822a4.jpg" onClick={likeHandler} alt="" className='likeIcon'/>
-            <img src="https://i.pinimg.com/564x/dc/c4/31/dcc431b1556f141a480e28f80abf4ce5.jpg" onClick={likeHandler} alt="" className='likeIcon'/>
+            <ThumbUpOutlinedIcon onClick={likeHandler}  className='likeIcon'/>
+            <FavoriteIcon onClick={likeHandler}  className='likeIcon'/>
             <span className="postLikeCounter"> {like} people like it</span>
           </div>
           <div className="postBottomRight"> 
@@ -82,11 +91,7 @@ export default function Post({post}) {
         </div>
         <hr className='hrPost'/>
         <div className="postComment">
-        <img src={user.profilePicture 
-            ? user.profilePicture 
-            : "https://docsach24.co/no-avatar.png" } 
-            alt="" 
-            className="postProfileImg" />
+        <LinktoProfile/>
         <div className="comment">
             <input type="text" className="commentInput" placeholder='Write a comment' />
             <CameraAltIcon className=''/>
@@ -97,3 +102,4 @@ export default function Post({post}) {
     </div>
   )
 }
+

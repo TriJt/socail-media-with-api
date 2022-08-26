@@ -46,7 +46,7 @@
 .dataResult {
     padding-top: 30px;
     width: 380px;
-    height: 200px;
+    height: auto;
     position: absolute;
     top: 45px;
     background-color: white;

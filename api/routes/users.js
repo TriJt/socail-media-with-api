@@ -9,7 +9,8 @@ import {UpdateUser,
         GetAllUser,
         SearchUser,
         SendEmail,
-        ChangePassword
+        ChangePassword,
+        updateCoverImage
     } from "../controllers/user.js"
 
 
@@ -22,6 +23,8 @@ router.post("/change-password", ChangePassword)
 router.get("/search", SearchUser)
 // Update user
 router.put("/:id", UpdateUser); 
+// Update cover image
+router.put("/:id/cover_image",updateCoverImage)
 // Delete user 
 router.delete("/:id",DeleteUser ); 
 // Get user 
@@ -34,4 +37,5 @@ router.put("/:id/follow", FollowUser)
 router.put("/:id/unfollow", UnFollowUser)
 // router get all user 
 router.get("/all", GetAllUser)
+
 export default router ; 
