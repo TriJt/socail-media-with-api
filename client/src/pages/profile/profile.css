@@ -11,8 +11,8 @@
 
 .profileRightTop{ 
     width: 100%;
-    height: 650px;
-    background: radial-gradient(#484a4d, #484a4d);
+    height: 600px;
+    background: radial-gradient(#9d9fa3, #acafb3);
     
 }
 .profileRightBottom{
@@ -23,8 +23,6 @@
     right: 10%;
     
 }
-
-
 
 .profileCover{ 
     height: 320px;
@@ -41,84 +39,176 @@
     border-bottom-left-radius: 10px ;
 }
 
+.dropdown{
+    position: absolute;
+    border-radius: 5px;
+    text-align: center;
+    justify-content: center;
+    width: auto;
+    border-radius: 5px ;
+    margin: 2px;
+    right: 12%;
+    top: 20px;
+}
+.dropdown:hover .dropdown-list{ 
+    display: block;
+}
+.dropdown-select:hover,.dropdown-item:hover{ 
+    filter: brightness(1.2) ;
+}
+.dropdown-select, .dropdown-item { 
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    width: auto;
+    height: 26px;
+    padding: 3px;
+    font-size: 16px;
+    background-color: #dadce1;
+    cursor: pointer;
+    transform: filter 300ms;
+    transition: border-color 0.2ms linear; 
+}
+.dropdown-select{ 
+    border-radius: 5px;
+}
+.dropdown-list:before{ 
+    content: "";
+    height: 10px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    background-color: transparent ;
+    transform: translateY(-100%);
 
+}
+.dropdown-list{ 
+    margin-top: 10px;
+    padding-inline-start: 0; 
+    position: absolute;
+    top: 100%;
+    left: 0 ;
+    right: 0;
+    display: none;
+}
+.dropdown-item:first-child{
+    border-radius: 4px 4px 0 0 ;
+    position: relative;
+}
+.dropdown-item:first-child:before{ 
+    position: absolute;
+    content: "";
+    top: 0 ;
+    left: 10px;
+    border-left:10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #dadce1;
+    transform: translateY(-100%);
+}
+.dropdown-item:last-child{ 
+    border-radius: 0 0 4px 4px ;
+}
+
+/*  */
+.buttonImageProfile{
+    position: absolute;
+    top: 45%;
+    right: 44%;
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: filter 300ms;
+}
+
+.buttonImageProfile:hover{ 
+    filter: brightness(1.2) ;
+}
+
+.profileInfo{ 
+    width: 100%;
+    z-index: 100;
+    position: absolute;
+    display: flex;
+    text-align: center ;
+    flex-direction: column;
+    align-items: center;
+}
+.avatarProfile{ 
+    width: 160px;
+    height: 160px;
+}
 .profileUserImg{ 
-    min-width: 200px;
-    max-height: 200px;
+    width: 100%;
+    height: 100%;
     border-radius: 50%; 
     object-fit: cover;
-    position: absolute;
     left: 15%;
     margin: auto;
     top: 350px;
+    overflow: hidden;
     border: 3px solid white;
     transition: filter 300ms;
 }
 .profileUserImg:hover{ 
     filter: brightness(1.1) ;
 }
-.button-profile,
-.button-cover{ 
-    position: absolute;
-    background-color: none;
-    object-fit: cover;
-    border: none;
-    cursor: pointer;
-    transition: filter 300ms;
-}
-.button-cover{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: auto;
-    border-radius: 5px ;
-    margin: 2px;
-    right: 12%;
-    top: 350px;
-    background-color: #dadce1;
-}
-
-.button-profile{
-    width: 32px;
-    height: 32px;
-    padding: 4px;
-    margin: 6px;
-    right: 0;
-    left: 27%;
-    top:500px ;
-    border-radius: 50%;
-}
-.button-cover:hover{ 
-    filter: brightness(1.2) ;
-}
-
-.button-profile:hover{ 
-    filter: brightness(1.2) ;
-}
-
-.profileInfo{ 
-    width: 55%;
-    position: absolute;
-    flex-direction: column;
-    left: 34%;
-    top: 480px;
-}
 .buttonEditProfile{ 
     display: flex;
+    width: fit-content;
+    padding: 5px;
     text-align: center ;
     justify-content: center;
-    position: absolute ;
     margin:4px ;
     font-size: 16px;
     font-weight: 500;
-    right: 3%;
     border-radius: 5px;
     background-color: #dadce1;
     border: none ;
-    top: 80px;
     cursor: pointer;
 }
-.fullName{
-    font-size: 30px;
-    color: var(--text-color);
+.nameAndDesc{
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.fullName{ 
+    
+    font-weight: bolder;
+    font-size: 26px;
+    margin: auto;
+}
+.desc{ 
+    font-size: 14px;
+    margin: auto;
+}
+
+/* show page update cover picture */
+
+.updateDiv{ 
+    position: absolute;
+    width: 100% ;
+    height: 100%;
+    background-color: none;
+    display: none ;
+    z-index: 100;
+    opacity: 0.4;
+}
+.containerUpdate{ 
+    
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+
+}
+
+/* popup  */
+.hr-popup{ 
+    border: none;
+    border-bottom: 1px solid rgb(221, 211, 211);
+    margin: 15px;
 }
