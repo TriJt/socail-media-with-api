@@ -106,6 +106,7 @@
 }
   .shareImg{
     width: 100%;
+    max-height: 500px;
     object-fit: cover;
     border-radius: 10px;
   }

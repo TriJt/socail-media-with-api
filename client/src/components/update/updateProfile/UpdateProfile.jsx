@@ -8,6 +8,7 @@ export default function UpdateProfile() {
   const { user: currentUser } = useContext(AuthContext);
   const [user, setUser] = useState(currentUser);
   const username = useParams().username;
+  const [file, setFiles] = useState("");
 
   // cover image
   const CoverImage = () => {

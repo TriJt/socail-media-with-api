@@ -2,10 +2,11 @@ import "./profile.css";
 import TopBar from "../../components/topbar/TopBar";
 import RightBar from "../../components/rightbar/RightBar";
 import Feed from "../../components/feed/Feed";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useCallback } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
+import { Cancel } from "@mui/icons-material";
 import LocalSeeSharpIcon from "@mui/icons-material/LocalSeeSharp";
 import CreateIcon from "@mui/icons-material/Create";
 import Popup from "../../components/Popup/Popup";
@@ -17,7 +18,7 @@ export default function Profile() {
   const username = useParams().username;
   const [files, setFiles] = useState("");
   const [buttonPopup, setButtonPopup] = useState(false);
-  //update file to cloudnary
+  const [popupCover, setPopupCover] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -34,6 +35,20 @@ export default function Profile() {
     return (
       <>
         <img src={user.coverPicture} alt="" className="profileCoverImg" />
+        {/* {files && (
+          <div className="shareImgContainer">
+            <img
+              src={
+                user.coverPicture
+                  ? user.coverPicture
+                  : URL.createObjectURL(files[0])
+              }
+              alt=""
+              className="profileCoverImg"
+            /> */}
+        {/* <Cancel className="shareCancelImg" onClick={() => setFiles(null)} /> */}
+        {/* </div>
+        )} */}
       </>
     );
   };
@@ -48,10 +63,13 @@ export default function Profile() {
         </div>
         <ul className="dropdown-list">
           <li className="dropdown-item">
-            <span className="dropdown-text"> Choose Image</span>
-          </li>
-          <li className="dropdown-item">
-            <span className="dropdown-text"> Reposition</span>
+            <label className="choose-image">
+              <input
+                style={{ display: "none" }}
+                onClick={() => setPopupCover(true)}
+              />
+              Choose Image
+            </label>
           </li>
         </ul>
       </div>
@@ -74,8 +92,7 @@ export default function Profile() {
 
   // update cover image
   const updateCoverPicture = async (e) => {
-    e.preventDefault();
-
+    // e.preventDefault();
     // up load file to cloudinary and update coverPicture in database
     try {
       const list = await Promise.all(
@@ -97,11 +114,15 @@ export default function Profile() {
         coverPicture: list,
       };
 
-      await axios.post(
-        "http://localhost:8800/api/users/" + currentUser._id + "/cover_image",
+      await axios.put(
+        "http://localhost:8800/api/users/" + currentUser._id,
         newCoverPicture
       );
-      window.location.reload();
+      user.coverPicture = list[0];
+      console.log(list);
+      setUser({ ...user });
+      setButtonPopup(false);
+      // window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -126,6 +147,43 @@ export default function Profile() {
           <div className="profileInfo">
             <ProfilePicture />
             <ButtonCoverPicture />
+            <Popup trigger={popupCover} setTrigger={setPopupCover}>
+              <div className="table-update">
+                <h3> Choose Picture</h3>
+                <hr className="hr-popup" />
+                {files && (
+                  <div className="shareImgContainer">
+                    <img
+                      src={URL.createObjectURL(files[0])}
+                      alt=""
+                      className="image-cover-update"
+                    />
+                    <Cancel
+                      className="shareCancelImg"
+                      onClick={() => setFiles(null)}
+                    />
+                  </div>
+                )}
+                <form>
+                  <label htmlFor="file" className="shareOption">
+                    <input
+                      type="file"
+                      id="file"
+                      multiple
+                      onChange={(e) => setFiles(e.target.files)}
+                    />
+                  </label>
+                </form>
+                <button
+                  className="shareButton"
+                  onClick={() => {
+                    updateCoverPicture();
+                  }}
+                >
+                  Save
+                </button>
+              </div>
+            </Popup>
             <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
               <div className="table-update">
                 <h3> Edit profile</h3>

@@ -24,11 +24,11 @@ const UserSchema = new mongoose.Schema({
         min: 8
     },
     profilePicture: {
-        type: String,
+        type: [String],
         default: "https://docsach24.co/no-avatar.png"
     },
     coverPicture: {
-        type: String,
+        type: [String],
         default: "https://docsach24.co/no-avatar.png"
     },
     followers: {
