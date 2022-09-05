@@ -1,0 +1,45 @@
+.profile-update-avatar{ 
+    height: 200px;
+    width: 100%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.profile-update-avatar-label{ 
+    cursor: pointer;
+    position: absolute;
+    top: 70px;
+    right: 40px;
+    color: blue;
+}
+.profile-update-avatar-label:hover{ 
+    text-decoration: underline;
+}
+.profile-update-avatar-div{ 
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    padding-top: 60px;
+}
+.profile-update-avatar-image{ 
+    height: 180px;
+    width: 180px;
+    margin: auto;
+    padding: auto;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid rgb(234, 228, 228);
+    transform: filter 300ms ;
+}
+.profile-update-avatar-image:hover{ 
+    filter: brightness(1.1);
+
+}
+.profile-edit{ 
+    display: flex;
+    margin: 10px;
+    padding: 10px;
+    text-align: left;
+    justify-content: space-between;
+}

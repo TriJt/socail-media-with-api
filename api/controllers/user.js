@@ -8,52 +8,21 @@ import {
 
 //update user
 export const UpdateUser = async (req, res) => {
+  const responseType = {};
   if (req.body.userId === req.params.id) {
-    try {
-      const user = await User.findByIdAndUpdate(req.params.id, {
-        $set: req.body,
-      });
-      user.save();
-      res.status(200).json(user);
-    } catch (err) {
-      return res.status(500).json(err);
-    }
+    const user = await User.findByIdAndUpdate(req.params.id, {
+      $set: req.body,
+    });
+    user.save();
+    responseType.statusText = 'Success';
+    responseType.message = 'Update successfully';
   } else {
-    return res.status(403).json("You can update only your account!");
+    responseType.statusText = 'Error';
+    responseType.message = 'Update Failed ';
   }
+  res.status(200).json(responseType);
 };
-// update cover image 
-export const updateCoverImage = async (req, res) => {
-  try {
-    const user = await User.findByIdAndUpdate(req.params.id, {
-      coverPicture: req.body.coverPicture
-    })
-    user.save();
-    res.status(200).json('Update Cover Image Successfully')
-    res.json(user);
-  } catch (error) {
-    res.status(403).json('Can Not Update Cover Image ')
-    res.json(error)
-  }
 
-}
-
-// update cover image 
-export const updateProfileImage = async (req, res) => {
-  try {
-    const user = await User.findByIdAndUpdate(req.params.id, {
-      $set: {
-        profilePicture: req.body.profilePicture
-      }
-    })
-    user.save();
-    res.status(200).json('Update Profile Image Successfully')
-  } catch (error) {
-    res.status(403).json('Can Not Update Profile Image ')
-    console.log(error)
-  }
-
-}
 
 
 //delete user

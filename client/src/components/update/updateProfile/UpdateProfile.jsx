@@ -3,27 +3,19 @@ import "./updateProfile.css";
 import axios from "axios";
 import { AuthContext } from "../../../context/AuthContext";
 import { useParams } from "react-router";
+import { ToastContainer, toast } from "react-toastify";
+import { Cancel } from "@mui/icons-material";
 
 export default function UpdateProfile() {
   const { user: currentUser } = useContext(AuthContext);
   const [user, setUser] = useState(currentUser);
   const username = useParams().username;
-  const [file, setFiles] = useState("");
-
-  // cover image
-  const CoverImage = () => {
-    return (
-      <>
-        <img src={user.coverPicture} alt="" className="cover-image" />
-      </>
-    );
-  };
+  const [files, setFiles] = useState("");
 
   //declaration fields in form
   const [inputField, setInputField] = useState({
     fullName: "",
     desc: "",
-
     city: "",
     from: "",
     relationship: "",
@@ -31,25 +23,20 @@ export default function UpdateProfile() {
   const InputHandler = (e) => {
     setInputField({ ...inputField, [e.target.name]: e.target.value });
   };
-
-  const UpdateProfile = async (e) => {
-    e.preventDefault();
-  };
+  // update avatar
 
   return (
-    <form>
-      <div className="profile-update">
-        {/* cover image */}
-        <div className="cover-image-div">
-          <button className="button-edit-cover"> Edit cover image</button>
-          <CoverImage />
-        </div>
-        {/* avatar  */}
+    <div className="profile-update">
+      <ToastContainer />
+      {/* cover image */}
+      <div className="profile-update-avatar"></div>
 
-        {/* update Bio  */}
+      {/* avatar  */}
 
-        {/* update profile  */}
+      {/* update Bio  */}
 
+      {/* update profile  */}
+      <form>
         <div className="profile-edit">
           <label className="label-edit"> Full Name:</label>
           <input type="text" className="input-edit" />
@@ -73,7 +60,7 @@ export default function UpdateProfile() {
         <button className="button-update" type="submit" onClick={UpdateProfile}>
           Update profile
         </button>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 }

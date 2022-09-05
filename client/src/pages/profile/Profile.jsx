@@ -2,7 +2,7 @@ import "./profile.css";
 import TopBar from "../../components/topbar/TopBar";
 import RightBar from "../../components/rightbar/RightBar";
 import Feed from "../../components/feed/Feed";
-import { useState, useEffect, useContext, useCallback } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
@@ -11,14 +11,18 @@ import LocalSeeSharpIcon from "@mui/icons-material/LocalSeeSharp";
 import CreateIcon from "@mui/icons-material/Create";
 import Popup from "../../components/Popup/Popup";
 import UpdateProfile from "../../components/update/updateProfile/UpdateProfile";
+import { ToastContainer, toast } from "react-toastify";
+import UpdateCover from "../../components/update/update-cover/UpdateCover";
+import UpdateAvatar from "../../components/update/update-avatar/UpdateAvatar";
 
 export default function Profile() {
   const { user: currentUser } = useContext(AuthContext);
   const [user, setUser] = useState(currentUser);
   const username = useParams().username;
-  const [files, setFiles] = useState("");
+
   const [buttonPopup, setButtonPopup] = useState(false);
   const [popupCover, setPopupCover] = useState(false);
+  const [avatar, setAvatar] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -35,20 +39,6 @@ export default function Profile() {
     return (
       <>
         <img src={user.coverPicture} alt="" className="profileCoverImg" />
-        {/* {files && (
-          <div className="shareImgContainer">
-            <img
-              src={
-                user.coverPicture
-                  ? user.coverPicture
-                  : URL.createObjectURL(files[0])
-              }
-              alt=""
-              className="profileCoverImg"
-            /> */}
-        {/* <Cancel className="shareCancelImg" onClick={() => setFiles(null)} /> */}
-        {/* </div>
-        )} */}
       </>
     );
   };
@@ -82,7 +72,10 @@ export default function Profile() {
       <div className="avatarProfile">
         <img src={user.profilePicture} alt="" className="profileUserImg" />
         <div>
-          <button className="buttonImageProfile">
+          <button
+            className="buttonImageProfile"
+            onClick={() => setAvatar(true)}
+          >
             <LocalSeeSharpIcon />
           </button>
         </div>
@@ -90,54 +83,12 @@ export default function Profile() {
     );
   };
 
-  // update cover image
-  const updateCoverPicture = async (e) => {
-    // e.preventDefault();
-    // up load file to cloudinary and update coverPicture in database
-    try {
-      const list = await Promise.all(
-        Object.values(files).map(async (file) => {
-          const data = new FormData();
-          data.append("file", file);
-          data.append("upload_preset", "social0722");
-          const uploadRes = await axios.post(
-            "https://api.cloudinary.com/v1_1/johnle/image/upload",
-            data
-          );
-          const { url } = uploadRes.data;
-          return url;
-        })
-      );
-
-      const newCoverPicture = {
-        userId: currentUser._id,
-        coverPicture: list,
-      };
-
-      await axios.put(
-        "http://localhost:8800/api/users/" + currentUser._id,
-        newCoverPicture
-      );
-      user.coverPicture = list[0];
-      console.log(list);
-      setUser({ ...user });
-      setButtonPopup(false);
-      // window.location.reload();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  // update profile
-
   return (
     <>
       <TopBar />
       <div className="profile">
         {/* div show update cover image */}
-        <div className="updateDiv" name="updateDiv">
-          <div className="containerUpdate"></div>
-        </div>
+        <ToastContainer />
         <div className="profileRightTop">
           {/* image cover  */}
           <div className="profileCover">
@@ -147,49 +98,22 @@ export default function Profile() {
           <div className="profileInfo">
             <ProfilePicture />
             <ButtonCoverPicture />
+            {/* popup for cover picture */}
             <Popup trigger={popupCover} setTrigger={setPopupCover}>
-              <div className="table-update">
-                <h3> Choose Picture</h3>
-                <hr className="hr-popup" />
-                {files && (
-                  <div className="shareImgContainer">
-                    <img
-                      src={URL.createObjectURL(files[0])}
-                      alt=""
-                      className="image-cover-update"
-                    />
-                    <Cancel
-                      className="shareCancelImg"
-                      onClick={() => setFiles(null)}
-                    />
-                  </div>
-                )}
-                <form>
-                  <label htmlFor="file" className="shareOption">
-                    <input
-                      type="file"
-                      id="file"
-                      multiple
-                      onChange={(e) => setFiles(e.target.files)}
-                    />
-                  </label>
-                </form>
-                <button
-                  className="shareButton"
-                  onClick={() => {
-                    updateCoverPicture();
-                  }}
-                >
-                  Save
-                </button>
-              </div>
+              <UpdateCover />
             </Popup>
+            {/* popup for update profile */}
             <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
               <div className="table-update">
                 <h3> Edit profile</h3>
                 <hr className="hr-popup" />
-                <UpdateProfile />
+                <div className="table-update-cover">
+                  <UpdateProfile />
+                </div>
               </div>
+            </Popup>
+            <Popup trigger={avatar} setTrigger={setAvatar}>
+              <UpdateAvatar />
             </Popup>
 
             <div className="nameAndDesc">

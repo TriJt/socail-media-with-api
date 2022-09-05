@@ -14,13 +14,7 @@
 ::-webkit-scrollbar-thumb{ 
     background-color: rgb(179, 179, 179);
 }
-.profile-edit{ 
-    display: flex;
-    margin: 10px;
-    padding: 10px;
-    text-align: left;
-    justify-content: center;
-}
+
 /* cover image */
 .cover-image-div{ 
     width: 100%;

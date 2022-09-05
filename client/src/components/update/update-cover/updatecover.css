@@ -1,0 +1,57 @@
+/* image update cover */
+
+.update-cover-image{
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+.table-update{ 
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+  }
+.table-update-cover{ 
+    margin-top: 30px;
+      width: 100%;
+      height: 100%;
+      overflow-y:scroll;
+  }
+  
+::-webkit-scrollbar{ 
+      width: 5px; 
+  }
+::-webkit-scrollbar-track{ 
+      background-color: #f1f1f1;
+  }
+::-webkit-scrollbar-thumb{ 
+      background-color: rgb(179, 179, 179);
+  }
+.update-cover-label{ 
+    cursor: pointer;
+    position: absolute;
+    top: 74px;
+    right: 40px;
+    color: blue;
+}
+.update-cover-label:hover{ 
+    text-decoration: underline;
+}
+.update-cover-input{ 
+    display: none;
+}
+.update-cover-button{ 
+    position: absolute;
+    bottom: 30px;
+    right: 60px;
+    float: right;
+    background-color: blue;
+    border: none;
+    height: 30px;
+    border-radius: 5px;
+    align-items: flex-end;
+    width: 60px;
+    color: white;
+    cursor: pointer;
+}

@@ -1,34 +1,43 @@
-import React , {useContext,useRef}from 'react'
-import './share.css'
-import {PermMedia, Label, Room, EmojiEmotions,Cancel} from '@mui/icons-material'
-import {AuthContext} from "../../context/AuthContext"
-import { useState } from 'react';
-import axios from 'axios' ; 
-import {Link} from "react-router-dom"
-
+import React, { useContext, useRef } from "react";
+import "./share.css";
+import {
+  PermMedia,
+  Label,
+  Room,
+  EmojiEmotions,
+  Cancel,
+} from "@mui/icons-material";
+import { AuthContext } from "../../context/AuthContext";
+import { useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function Share() {
-  const {user:currentUser} = useContext(AuthContext); 
-  const [user, setUser]  = useState(currentUser)
-  const desc = useRef()
-  const [files, setFiles] = useState("")
+  const { user: currentUser } = useContext(AuthContext);
+  const [user, setUser] = useState(currentUser);
+  const desc = useRef();
+  const [files, setFiles] = useState("");
 
-  //link to profile 
-  const LinktoProfile = ()=> { 
-    return ( 
-      <Link to = {`profile/${user.username}`}> 
-      <img src={user.profilePicture  
-      ? user.profilePicture 
-      : "https://docsach24.co/no-avatar.png" } 
-      alt="" 
-      className="postProfileImg" />
+  //link to profile
+  const LinktoProfile = () => {
+    return (
+      <Link to={`profile/${user.username}`}>
+        <img
+          src={
+            user.profilePicture
+              ? user.profilePicture
+              : "https://docsach24.co/no-avatar.png"
+          }
+          alt=""
+          className="postProfileImg"
+        />
       </Link>
-    )
-  }
+    );
+  };
 
-  const submitHandler = async(e) => { 
-    e.preventDefault(); 
-    // up load file to cloudinary 
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    // up load file to cloudinary
     try {
       const list = await Promise.all(
         Object.values(files).map(async (file) => {
@@ -47,61 +56,70 @@ export default function Share() {
 
       const newPost = {
         userId: currentUser._id,
-        desc:desc.current.value,
+        desc: desc.current.value,
         img: list,
       };
 
       await axios.post("http://localhost:8800/api/posts/", newPost);
       window.location.reload();
-    } catch (err) {console.log(err)}
-
-  }
-
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
-    <div className='share'>
+    <div className="share">
       <div className="shareWrapper">
         <div className="shareTop">
-          <LinktoProfile/>
-          <input type="text"
-          placeholder={"what 's in your mind " +user.fullName +"?" }
-          className="shareInput"
-          ref = {desc} />
+          <LinktoProfile />
+          <input
+            type="text"
+            placeholder={"what 's in your mind " + user.fullName + "?"}
+            className="shareInput"
+            ref={desc}
+          />
         </div>
         <hr className="shareHr" />
         {files && (
           <div className="shareImgContainer">
-            <img src={URL.createObjectURL(files[0])} alt="" className="shareImg" />
-            <Cancel className='shareCancelImg' onClick ={ () => setFiles(null)} />
+            <img
+              src={URL.createObjectURL(files[0])}
+              alt=""
+              className="shareImg"
+            />
+            <Cancel className="shareCancelImg" onClick={() => setFiles(null)} />
           </div>
         )}
         <div className="uploadFile">
-        <form className="shareBottom" >
-          <span className='contentShareOption'> Add to your post</span>
+          <form className="shareBottom">
+            <span className="contentShareOption"> Add to your post</span>
             <div className="shareOptions">
               <label htmlFor="file" className="shareOption">
-                <PermMedia htmlColor='tomato' className='shareIcon'/>
-                <input style={{display: "none"}}
-                 type="file"  
-                 id ="file" 
-                 multiple
-                onChange ={(e)=> setFiles(e.target.files)} />
+                <PermMedia htmlColor="tomato" className="shareIcon" />
+                <input
+                  style={{ display: "none" }}
+                  type="file"
+                  id="file"
+                  multiple
+                  onChange={(e) => setFiles(e.target.files)}
+                />
               </label>
               <div className="shareOption">
-                <Label htmlColor='blue' className='shareIcon'/>
+                <Label htmlColor="blue" className="shareIcon" />
               </div>
               <div className="shareOption">
-                <Room htmlColor='green' className='shareIcon'/>
+                <Room htmlColor="green" className="shareIcon" />
               </div>
               <div className="shareOption">
-                <EmojiEmotions htmlColor='goldenrod' className='shareIcon'/>
+                <EmojiEmotions htmlColor="goldenrod" className="shareIcon" />
               </div>
             </div>
-        </form>
+          </form>
         </div>
-        <button className="shareButton" onClick={submitHandler}>Post</button>
+        <button className="shareButton" onClick={submitHandler}>
+          Post
+        </button>
       </div>
     </div>
-  )
+  );
 }
-
