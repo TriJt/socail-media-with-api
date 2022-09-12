@@ -44,6 +44,7 @@
     height: 30px;
     border: 1px solid rgb(171, 162, 162);
     border-radius: 10px ;
+    text-align: center;
 }
 .button-update{ 
     background-color: green;

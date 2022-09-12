@@ -5,6 +5,8 @@ import Register from "./pages/register/Register";
 import Forgot from "./pages/forgot/Forgot";
 import PasswordForm
  from "./pages/password Form/PasswordForm";
+import Chat from "./pages/chat/Chat"; 
+import UpdateProfile from "./pages/update/UpdateProfile";
 import React, { useContext } from "react";
 import {
   BrowserRouter as Router,
@@ -14,14 +16,8 @@ import {
 } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
 
-
-
-
-
 function App() {
   const {user} = useContext(AuthContext); 
-
-
   return (
     <Router> 
       <Routes> 
@@ -31,6 +27,8 @@ function App() {
         <Route path="/register" element={ <Register />} />
         <Route path="/forgot" element={user ? <Navigate to="/"/> :<Forgot />} />
         <Route path="/password-reset" element={user ? <Navigate to="/"/> :<PasswordForm />} />
+        <Route path="/settings" element = {<UpdateProfile/>}/>
+        <Route path="/chat" element = {<Chat/>}/>
       </Routes>
     </Router>
   );

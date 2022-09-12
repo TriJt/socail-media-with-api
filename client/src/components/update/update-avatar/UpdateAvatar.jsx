@@ -53,17 +53,9 @@ export default function UpdateAvatar() {
   return (
     <div className="table-update">
       <h3> Update Avatar</h3>
+      <span style={{ color: "gray", fontSize: "13px" }}> Heaven</span>
       <hr className="hr-popup" />
       <div className="table-update-avatar">
-        {files && (
-          <div className="profile-update-avatar-div">
-            <img
-              src={URL.createObjectURL(files[0])}
-              alt=""
-              className="profile-update-avatar-image"
-            />
-          </div>
-        )}
         <form>
           <label htmlFor="file" className="profile-update-avatar-label">
             <input
@@ -76,7 +68,17 @@ export default function UpdateAvatar() {
             Choose image
           </label>
         </form>
-        <button className="shareButton" onClick={UpdateAvatar}>
+        {files && (
+          <div className="profile-update-avatar-div">
+            <img
+              src={URL.createObjectURL(files[0])}
+              alt=""
+              className="profile-update-avatar-image"
+            />
+          </div>
+        )}
+        <hr className="hr-popup" />
+        <button className="update-avatar-button" onClick={UpdateAvatar}>
           Save
         </button>
       </div>

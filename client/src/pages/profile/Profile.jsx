@@ -6,11 +6,8 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
-import { Cancel } from "@mui/icons-material";
-import LocalSeeSharpIcon from "@mui/icons-material/LocalSeeSharp";
-import CreateIcon from "@mui/icons-material/Create";
+import { Link } from "react-router-dom";
 import Popup from "../../components/Popup/Popup";
-import UpdateProfile from "../../components/update/updateProfile/UpdateProfile";
 import { ToastContainer, toast } from "react-toastify";
 import UpdateCover from "../../components/update/update-cover/UpdateCover";
 import UpdateAvatar from "../../components/update/update-avatar/UpdateAvatar";
@@ -70,15 +67,21 @@ export default function Profile() {
   const ProfilePicture = () => {
     return (
       <div className="avatarProfile">
-        <img src={user.profilePicture} alt="" className="profileUserImg" />
-        <div>
-          <button
-            className="buttonImageProfile"
-            onClick={() => setAvatar(true)}
-          >
+        <img
+          src={
+            user.profilePicture
+              ? user.profilePicture
+              : "https://docsach24.co/no-avatar.png"
+          }
+          alt=""
+          className="profileUserImg"
+          onClick={() => setAvatar(true)}
+        />
+        {/* <div>
+          <button className="buttonImageProfile">
             <LocalSeeSharpIcon />
           </button>
-        </div>
+        </div> */}
       </div>
     );
   };
@@ -93,42 +96,40 @@ export default function Profile() {
           {/* image cover  */}
           <div className="profileCover">
             <CoverPicture />
+            <ButtonCoverPicture />
           </div>
           {/* image avatar */}
           <div className="profileInfo">
-            <ProfilePicture />
-            <ButtonCoverPicture />
+            <div className="avatar-profile">
+              <ProfilePicture />
+            </div>
+
             {/* popup for cover picture */}
             <Popup trigger={popupCover} setTrigger={setPopupCover}>
               <UpdateCover />
             </Popup>
             {/* popup for update profile */}
-            <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-              <div className="table-update">
-                <h3> Edit profile</h3>
-                <hr className="hr-popup" />
-                <div className="table-update-cover">
-                  <UpdateProfile />
-                </div>
-              </div>
-            </Popup>
             <Popup trigger={avatar} setTrigger={setAvatar}>
               <UpdateAvatar />
             </Popup>
 
-            <div className="nameAndDesc">
-              <h4 className="fullName"> {user.fullName}</h4>
-              <span className="desc"> {user.desc}</span>
+            <div className="info-profile">
+              <div className="info-profile-f1">
+                <span className="info-username"> {user.username}</span>
+                <button className="info-button">
+                  <Link to={`/settings`} className="dropdown-link">
+                    <span className="info-span">Edit your profile </span>
+                  </Link>
+                </button>
+              </div>
+              {/* Full name and bio */}
+              <div className="info-profile-f1">
+                <h4 className="info-fullName"> {user.fullName}</h4>
+                <span className="info-desc"> {user.desc}</span>
+              </div>
+              <div className="info-profile-f1">51 posts</div>
             </div>
-
-            {/* edit profile */}
-
-            <button
-              className="buttonEditProfile"
-              onClick={() => setButtonPopup(true)}
-            >
-              <CreateIcon /> Edit profile
-            </button>
+            {/* for count a post  */}
           </div>
         </div>
         <div className="profileRightBottom">
