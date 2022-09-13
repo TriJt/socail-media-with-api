@@ -47,16 +47,26 @@ export default function UpdateProfile() {
   return (
     <div>
       <TopBar />
-      <div className="profile-update">
+      <div className="settings-container">
         <ToastContainer />
-        {/* cover image */}
+        <div className="setting">
+          <div className="setting-left">
+            <div className="left-title"> Edit your profile</div>
+            <div className="left-text"> Change password</div>
+            <div className="left-text"> Help</div>
+            <div className="left-text">Email from Heaven</div>
+            <div className="left-textarea">
+              <h4 className="textarea-logo"> Heaven</h4>
+              <span className="textarea-span">
+                Control settings when connecting experiences across Heaven,
+                including sharing stories, posts, and signing in
+              </span>
+            </div>
+          </div>
+          <div className="setting-right"></div>
+        </div>
 
-        {/* avatar  */}
-
-        {/* update Bio  */}
-
-        {/* update profile  */}
-        <form>
+        {/* <form>
           <div className="profile-edit">
             <label className="label-edit"> Full Name:</label>
             <input
@@ -119,7 +129,7 @@ export default function UpdateProfile() {
           >
             Update profile
           </button>
-        </form>
+        </form>  */}
       </div>
     </div>
   );
