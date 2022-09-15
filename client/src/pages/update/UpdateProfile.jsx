@@ -2,47 +2,16 @@ import { useState, useEffect, useContext } from "react";
 import "./updateProfile.css";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
-import { useParams } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import TopBar from "../../components/topbar/TopBar";
+import ChangePassword from "../../components/changePassword/ChangePassword";
+import Email from "../../components/email/Email";
+import Settings from "../../components/settingsProfile/Settings";
+import Help from "../../components/help/Help";
 
 export default function UpdateProfile() {
-  const { user: currentUser } = useContext(AuthContext);
-  const [user, setUser] = useState(currentUser);
-  const username = useParams().username;
-  const [files, setFiles] = useState("");
-
-  //declaration fields in form
-  const [inputField, setInputField] = useState({
-    fullName: "",
-    userId: currentUser._id,
-    desc: "",
-    city: "",
-    from: "",
-    relationship: "",
-  });
-  const InputHandler = (e) => {
-    setInputField({ ...inputField, [e.target.name]: e.target.value });
-  };
-  // update profile
-  const submitUpdate = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.put(
-        "http://localhost:8800/api/users/" + currentUser._id,
-        inputField
-      );
-      const record = response.data;
-      if (record.statusText === "Success") {
-        toast.success(record.message);
-      } else {
-        toast.error(record.message);
-      }
-      setUser({ ...user });
-    } catch (err) {
-      toast.error("Somethings went wrong");
-    }
-  };
+  // render different component with click
+  const [active, setActive] = useState("1");
 
   return (
     <div>
@@ -51,10 +20,18 @@ export default function UpdateProfile() {
         <ToastContainer />
         <div className="setting">
           <div className="setting-left">
-            <div className="left-title"> Edit your profile</div>
-            <div className="left-text"> Change password</div>
-            <div className="left-text"> Help</div>
-            <div className="left-text">Email from Heaven</div>
+            <div className="left-title" onClick={() => setActive("1")}>
+              Edit your profile
+            </div>
+            <div className="left-text" onClick={() => setActive("2")}>
+              Change password
+            </div>
+            <div className="left-text" onClick={() => setActive("3")}>
+              Help
+            </div>
+            <div className="left-text" onClick={() => setActive("4")}>
+              Email from Heaven
+            </div>
             <div className="left-textarea">
               <h4 className="textarea-logo"> Heaven</h4>
               <span className="textarea-span">
@@ -63,73 +40,13 @@ export default function UpdateProfile() {
               </span>
             </div>
           </div>
-          <div className="setting-right"></div>
+          <div className="setting-right">
+            {active === "1" && <Settings />}
+            {active === "2" && <ChangePassword />}
+            {active === "3" && <Help />}
+            {active === "4" && <Email />}
+          </div>
         </div>
-
-        {/* <form>
-          <div className="profile-edit">
-            <label className="label-edit"> Full Name:</label>
-            <input
-              type="text"
-              className="input-edit"
-              name="fullName"
-              placeholder={user.fullName}
-              value={inputField.fullName}
-              onChange={InputHandler}
-            />
-          </div>
-          <div className="profile-edit">
-            <label className="label-edit"> Description:</label>
-            <input
-              type="text"
-              className="input-edit"
-              name="desc"
-              placeholder={user.desc}
-              value={inputField.desc}
-              onChange={InputHandler}
-            />
-          </div>
-          <div className="profile-edit">
-            <label className="label-edit"> City:</label>
-            <input
-              type="text"
-              className="input-edit"
-              name="city"
-              placeholder={user.city}
-              value={inputField.city}
-              onChange={InputHandler}
-            />
-          </div>
-          <div className="profile-edit">
-            <label className="label-edit"> From:</label>
-            <input
-              type="text"
-              className="input-edit"
-              name="from"
-              placeholder={user.from}
-              value={inputField.from}
-              onChange={InputHandler}
-            />
-          </div>
-          <div className="profile-edit">
-            <label className="label-edit">Relationship:</label>
-            <input
-              type="text"
-              className="input-edit"
-              name="relationship"
-              placeholder={user.relationship}
-              value={inputField.relationship}
-              onChange={InputHandler}
-            />
-          </div>
-          <button
-            className="button-update"
-            type="submit"
-            onClick={submitUpdate}
-          >
-            Update profile
-          </button>
-        </form>  */}
       </div>
     </div>
   );

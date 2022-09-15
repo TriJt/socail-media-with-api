@@ -1,0 +1,21 @@
+.help{ 
+    margin: 50px;
+}
+.top-help{ 
+    padding: 10px;
+    font-size: 20px;
+    font-weight: 300;
+}
+.bottom-help{ 
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    color: gray ;
+}
+.span-help{ 
+    padding: 10px 0px 10px 0px;
+}
+.hr-help{ 
+    border: none;
+    border-bottom: 0.2px solid gray;
+}

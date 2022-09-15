@@ -16,8 +16,6 @@ export default function Profile() {
   const { user: currentUser } = useContext(AuthContext);
   const [user, setUser] = useState(currentUser);
   const username = useParams().username;
-
-  const [buttonPopup, setButtonPopup] = useState(false);
   const [popupCover, setPopupCover] = useState(false);
   const [avatar, setAvatar] = useState(false);
 

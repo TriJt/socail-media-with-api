@@ -1,0 +1,18 @@
+.email{ 
+    margin: 50px;
+}
+.top-email{ 
+    padding: 10px;
+    font-size: 20px;
+    font-weight: 300;
+}
+.bottom-email{ 
+    padding: 10px;
+    font-weight: 400;
+    font-size: 14px;
+    color: gray ;
+}
+.hr-email{ 
+    border: none;
+    border-bottom: 0.2px solid gray;
+}
