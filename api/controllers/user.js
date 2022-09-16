@@ -12,16 +12,24 @@ export const UpdateUser = async (req, res) => {
   if (req.body.userId === req.params.id) {
     const user = await User.findByIdAndUpdate(req.params.id, {
       $set: req.body,
+    }, {
+      new: true
     });
-    user.save();
+    await user.save();
     responseType.statusText = 'Success';
     responseType.message = 'Update successfully';
+    responseType.status = 200;
+    responseType.value = user;
+    console.log(user)
   } else {
     responseType.statusText = 'Error';
     responseType.message = 'Update Failed ';
+    responseType.status = 404;
   }
-  res.status(200).json(responseType);
+
+  res.json(responseType);
 };
+
 
 
 
@@ -99,11 +107,13 @@ export const GetFriends = async (req, res) => {
       const {
         _id,
         username,
+        fullName,
         profilePicture
       } = friend;
       friendList.push({
         _id,
         username,
+        fullName,
         profilePicture
       })
     });

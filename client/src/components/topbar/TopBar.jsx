@@ -20,11 +20,13 @@ export default function Topbar() {
   const [wordEntered, setWordEntered] = useState("");
   const [data, setData] = useState([]);
   const history = useNavigate();
+
   useEffect(() => {
     const loadData = async () => {
       const res = await axios.get("http://localhost:8800/api/users/search");
       setData(res.data);
     };
+
     loadData();
   }, []);
 
@@ -45,9 +47,10 @@ export default function Topbar() {
 
   // Log out button
   const LogoutHandle = () => {
-    localStorage.clear();
+    window.sessionStorage.clear();
+    window.location.reload(); 
     history("/login");
-    window.location.reload();
+
   };
 
   return (
@@ -110,15 +113,7 @@ export default function Topbar() {
         <div className="top-dropdown">
           <div className="top-dropdown-select">
             <Link to={`profile/${user.username}`}>
-              <img
-                src={
-                  user.profilePicture
-                    ? user.profilePicture
-                    : "https://docsach24.co/no-avatar.png"
-                }
-                className="icon-button"
-                alt=""
-              />
+              <img src={user.profilePicture} className="icon-button" alt="" />
             </Link>
           </div>
           <ul className="top-dropdown-list">

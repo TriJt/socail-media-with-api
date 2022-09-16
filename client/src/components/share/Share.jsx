@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import "./share.css";
 import {
   PermMedia,
@@ -11,26 +11,20 @@ import { AuthContext } from "../../context/AuthContext";
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router";
 
 export default function Share() {
   const { user: currentUser } = useContext(AuthContext);
   const [user, setUser] = useState(currentUser);
   const desc = useRef();
   const [files, setFiles] = useState("");
+  const username = useParams().username;
 
   //link to profile
   const LinktoProfile = () => {
     return (
       <Link to={`profile/${user.username}`}>
-        <img
-          src={
-            user.profilePicture
-              ? user.profilePicture
-              : "https://docsach24.co/no-avatar.png"
-          }
-          alt=""
-          className="postProfileImg"
-        />
+        <img src={user.profilePicture} alt="" className="postProfileImg" />
       </Link>
     );
   };

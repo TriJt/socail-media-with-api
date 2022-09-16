@@ -66,11 +66,7 @@ export default function Profile() {
     return (
       <div className="avatarProfile">
         <img
-          src={
-            user.profilePicture
-              ? user.profilePicture
-              : "https://docsach24.co/no-avatar.png"
-          }
+          src={user.profilePicture}
           alt=""
           className="profileUserImg"
           onClick={() => setAvatar(true)}

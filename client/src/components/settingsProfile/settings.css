@@ -58,6 +58,7 @@
     border: 0.2px solid gray;
     border-radius: 4px;
     background-color: #FAFAFA;
+    color: black;
 }
 .button-send{ 
     background-color: #0095F6;

@@ -6,20 +6,20 @@ const UserSchema = new mongoose.Schema({
     },
     username: {
         type: String,
-        required: [true, "Please enter your username!!"],
+        required: true,
         min: 8,
         max: 50,
         unique: true
     },
     email: {
         type: String,
-        required: [true, "Please enter your email!!"],
+        required: true,
         max: 50,
         unique: true
     },
     password: {
         type: String,
-        required: [true, "Please enter your password!!"],
+        required: true,
         min: 8
     },
     profilePicture: {
@@ -38,28 +38,30 @@ const UserSchema = new mongoose.Schema({
         type: Array,
         default: []
     },
+    telephone: {
+        type: String,
+    },
     isAdmin: {
         type: Boolean,
         default: false
     },
     desc: {
         type: String,
-        max: 100
+        max: 100,
     },
     sex: {
-        type: String
+        type: String,
     },
     city: {
         type: String,
-        max: 50
+        max: 50,
     },
     from: {
         type: String,
-        max: 50
+        max: 50,
     },
     relationship: {
         type: String,
-
     }
 
 }, {

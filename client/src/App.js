@@ -22,13 +22,13 @@ function App() {
     <Router> 
       <Routes> 
         <Route exact path="/" element ={ user ? <Home />: <Register/>} />
-        <Route path="/profile/:username" element ={ <Profile />}/>
+        <Route path="/profile/:username" element ={ user ? <Profile />: <Login/>}/>
         <Route path="/login" element ={user ? <Navigate to="/"/> :<Login />} />
-        <Route path="/register" element={ <Register />} />
-        <Route path="/forgot" element={user ? <Navigate to="/"/> :<Forgot />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgot" element={<Forgot />} />
         <Route path="/password-reset" element={user ? <Navigate to="/"/> :<PasswordForm />} />
-        <Route path="/settings" element = {<UpdateProfile/>}/>
-        <Route path="/chat" element = {<Chat/>}/>
+        <Route path="/settings" element = {user ?  <UpdateProfile/>:<Login/>}/>
+        <Route path="/chat" element = { user ?<Chat/>: <Login/>}/>
       </Routes>
     </Router>
   );

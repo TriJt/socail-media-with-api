@@ -10,6 +10,19 @@ export default function UpdateAvatar() {
   const [user, setUser] = useState(currentUser);
   const [files, setFiles] = useState("");
 
+  useEffect(() => {
+    // set sessionStorage after update
+    sessionStorage.setItem("user", JSON.stringify(user));
+
+    const userInfo = JSON.parse(sessionStorage.getItem("user"));
+
+    const newUpdatedUserInfo = {
+      ...userInfo,
+    };
+
+    sessionStorage.setItem("user", JSON.stringify(newUpdatedUserInfo));
+  });
+
   const UpdateAvatar = async (e) => {
     e.preventDefault();
     // up load file to cloudinary and update coverPicture in database
@@ -37,7 +50,6 @@ export default function UpdateAvatar() {
         "http://localhost:8800/api/users/" + currentUser._id,
         data
       );
-      user.profilePicture = list[0];
       setUser({ ...user });
       const record = response.data;
       if (record.statusText === "Success") {

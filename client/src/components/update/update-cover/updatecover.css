@@ -2,7 +2,7 @@
 
 .update-cover-image{
     width: 100%;
-    max-height: 300px;
+    height: 100%;
     object-fit: cover;
     border-radius: 10px;
   }
@@ -12,28 +12,21 @@
       display: flex;
       flex-direction: column;
   }
+.cover-div{ 
+  width: 100%;
+  height: 180px;
+  margin-top: 10px;
+}
 .table-update-cover{ 
-    margin-top: 30px;
-      width: 100%;
-      height: 100%;
-      overflow-y:scroll;
+    width: 100%;
+    height: 250px;
   }
   
-::-webkit-scrollbar{ 
-      width: 5px; 
-  }
-::-webkit-scrollbar-track{ 
-      background-color: #f1f1f1;
-  }
-::-webkit-scrollbar-thumb{ 
-      background-color: rgb(179, 179, 179);
-  }
 .update-cover-label{ 
     cursor: pointer;
-    position: absolute;
-    top: 74px;
-    right: 40px;
     color: blue;
+    margin-bottom: 5px;
+    padding: 10px;
 }
 .update-cover-label:hover{ 
     text-decoration: underline;
@@ -42,16 +35,13 @@
     display: none;
 }
 .update-cover-button{ 
-    position: absolute;
-    bottom: 30px;
-    right: 60px;
-    float: right;
-    background-color: blue;
     border: none;
     height: 30px;
     border-radius: 5px;
-    align-items: flex-end;
+    background-color: transparent;
+    font-size: 20px;
+    align-items: center;
     width: 60px;
-    color: white;
+    color: black;
     cursor: pointer;
 }

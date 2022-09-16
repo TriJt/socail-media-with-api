@@ -1,13 +1,12 @@
 import { useState, useEffect, useContext } from "react";
 import "./updateProfile.css";
-import axios from "axios";
-import { AuthContext } from "../../context/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
 import TopBar from "../../components/topbar/TopBar";
 import ChangePassword from "../../components/changePassword/ChangePassword";
 import Email from "../../components/email/Email";
 import Settings from "../../components/settingsProfile/Settings";
 import Help from "../../components/help/Help";
+import Address from "../../components/Address/Address";
 
 export default function UpdateProfile() {
   // render different component with click
@@ -22,6 +21,9 @@ export default function UpdateProfile() {
           <div className="setting-left">
             <div className="left-title" onClick={() => setActive("1")}>
               Edit your profile
+            </div>
+            <div className="left-title" onClick={() => setActive("5")}>
+              Address
             </div>
             <div className="left-text" onClick={() => setActive("2")}>
               Change password
@@ -45,6 +47,7 @@ export default function UpdateProfile() {
             {active === "2" && <ChangePassword />}
             {active === "3" && <Help />}
             {active === "4" && <Email />}
+            {active === "5" && <Address />}
           </div>
         </div>
       </div>
