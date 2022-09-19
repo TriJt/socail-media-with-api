@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import "./post.css";
-import { MoreVert } from "@mui/icons-material";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import axios from "axios";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
@@ -9,12 +9,14 @@ import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import Popup from "../Popup/Popup";
 
 export default function Post({ post }) {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState({});
   const { user: currentUser } = useContext(AuthContext);
   const [user, setUser] = useState(currentUser);
+  const [postPopup, setPostPopup] = useState(false);
 
   useEffect(() => {
     setIsLiked(post.likes.includes(currentUser._id));
@@ -35,15 +37,7 @@ export default function Post({ post }) {
   const LinktoProfile = () => {
     return (
       <Link to={`profile/${user.username}`}>
-        <img
-          src={
-            user.profilePicture
-              ? user.profilePicture
-              : "https://docsach24.co/no-avatar.png"
-          }
-          alt=""
-          className="postProfileImg"
-        />
+        <img src={user.profilePicture} alt="" className="postProfileImg" />
       </Link>
     );
   };
@@ -71,22 +65,22 @@ export default function Post({ post }) {
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
           {/* show button update and delete post */}
-          {/* need setting dropdown button in here */}
+          {/* need setting popup button in here */}
           <div className="postTopRight">
             <div className="dropdown-select-post">
-              <MoreVert />
+              <MoreHorizIcon onClick={() => setPostPopup(true)} />
             </div>
-            <ul className="dropdown-list">
-              <li className="dropdown-item-post">
-                <label htmlFor="dropdown-label">
-                  <input type="text" style={{ display: "none" }} />
-                  Update
-                </label>
-              </li>
-              <li className="dropdown-item-post">Remove</li>
-            </ul>
+            <Popup trigger={postPopup} setTrigger={setPostPopup}>
+              <div className="div-edit">
+                <span className="delete-post">Delete</span>
+                <hr className="hr-popup" />
+                <span className="edit-post">Edit</span>
+                <hr className="hr-popup" />
+              </div>
+            </Popup>
           </div>
         </div>
+
         <div className="postCenter">
           <span className="postText">{post?.desc}</span>
           <img src={post.img} alt="" className="postImg" />

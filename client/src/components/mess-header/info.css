@@ -1,0 +1,32 @@
+.info{ 
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    padding-top: 7px;
+}
+.info-top{ 
+    display: flex;
+    align-items: center;
+}
+
+.info-img{ 
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+
+}
+.info-info{ 
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+}
+.info-name{ 
+    font-weight: 500;
+    font-size: 18px;
+}
+.info-active{ 
+    font-weight: 400;
+    font-size: 13px;
+    color: gray;
+}

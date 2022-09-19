@@ -1,0 +1,25 @@
+.conversation{ 
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+}
+.conversation:hover{ 
+    background-color: rgb(231, 231, 231);
+}
+.conversation-img{ 
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    padding: 10px;
+    object-fit: cover;
+}
+.conversation-name{ 
+    display: flex;
+    font-weight: 400;
+    font-size: 18px;
+    flex-direction: column;
+    padding: 10px 0px 10px 0px   ;
+}
+.hour{ 
+    color: gray;
+}

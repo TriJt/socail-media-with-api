@@ -1,0 +1,35 @@
+.messenger{ 
+    display: flex;
+    cursor: pointer;
+    flex-direction: column;
+    padding-top: 15px;
+    margin: 10px;
+}
+.messenger-top{ 
+    display: flex;
+}
+
+.messenger-img{ 
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-top: 10px;
+}
+
+.messenger-text{ 
+    background-color: #EFEFEF;
+    padding: 10px;
+    margin-left: 10px;
+    border-radius: 20px ;
+    color: black;
+    max-width: 250px ;
+}
+.messenger-bottom{ 
+    font-weight: 400;
+    font-size: 13px;
+    color: gray;
+}
+.messenger.own { 
+    align-items: flex-end;
+}

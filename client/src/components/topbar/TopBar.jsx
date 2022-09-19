@@ -48,9 +48,8 @@ export default function Topbar() {
   // Log out button
   const LogoutHandle = () => {
     window.sessionStorage.clear();
-    window.location.reload(); 
+    window.location.reload();
     history("/login");
-
   };
 
   return (
@@ -142,49 +141,7 @@ export default function Topbar() {
             </li>
           </ul>
         </div>
-
-        {/* <Navbar>
-            <li className='nav-item'> 
-                <Link  to={`/`}>
-                  <ControlPointOutlinedIcon  className='icon-button'/>
-                </Link>
-            </li>
-            <li className='nav-item'> 
-                <Link  to={`/`}>
-                  <MailOutlinedIcon  className='icon-button'/>
-                </Link>
-            </li>
-            <li className='nav-item'> 
-                <Link  to={`/`}>
-                  <NotificationsNoneIcon  className='icon-button'/>
-                </Link>
-            </li>
-            <li className='nav-item'> 
-            <Link  to={`profile/${user.username}`}
-                      
-                      > 
-                      <img src={user.profilePicture 
-                        ? user.profilePicture 
-                        : "https://docsach24.co/no-avatar.png"} className="icon-button" 
-                          alt='topbarimage' />
-                      </Link>
-            </li>
-
-            <li className='nav-item'> 
-              <button onClick={LogoutHandle} className = "button-logout"><LogoutOutlinedIcon className='icon-button' /></button>  
-            </li>
-          </Navbar> */}
       </div>
     </div>
   );
 }
-
-// function Navbar(props){
-//   return (
-//     <nav className='navbar'>
-//       <ul className='navbar-nav'>
-//         {props.children}
-//       </ul>
-//     </nav>
-//   )
-// }
