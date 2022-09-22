@@ -1,21 +1,15 @@
 import React from "react";
 import "./messenger.css";
+import { format } from "timeago.js";
 
-export default function Messenger({ own }) {
+export default function Messenger({ message, own, userinfo }) {
   return (
     <div className={own ? "messenger own" : "messenger"}>
       <div className="messenger-top">
-        <img
-          src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
-          alt=""
-          className="messenger-img"
-        />
-        <span className="messenger-text">
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry.
-        </span>
+        <img src={userinfo.profilePicture} alt="" className="messenger-img" />
+        <span className="messenger-text">{message.text}</span>
       </div>
-      <div className="messenger-bottom">2 hour ago </div>
+      <div className="messenger-bottom">{format(message.createdAt)}</div>
     </div>
   );
 }

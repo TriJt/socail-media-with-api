@@ -45,9 +45,9 @@ app.use("/api/users", UserRoute);
 //route for post 
 app.use("/api/posts", PostRoute);
 //route for conversation
-app.use("/api/conversation", ConversationRoute)
+app.use("/api/conversations", ConversationRoute)
 //route for message
-app.use("/api/message", MessageRoute)
+app.use("/api/messages", MessageRoute)
 
 
 app.listen(8800, () => {

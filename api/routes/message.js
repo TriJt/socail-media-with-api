@@ -8,6 +8,6 @@ const router = express.Router();
 //create Message
 router.post("/", CreateMessage);
 // get Message 
-router.get("/", GetMessage)
+router.get("/:conversationId", GetMessage)
 
 export default router;

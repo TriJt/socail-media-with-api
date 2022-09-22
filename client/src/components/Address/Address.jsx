@@ -18,6 +18,7 @@ export default function Settings() {
     };
     sessionStorage.setItem("user", JSON.stringify(newUpdatedUserInfo));
   });
+
   //declaration fields in form
   const [inputField, setInputField] = useState({
     city: user.city,
@@ -62,7 +63,7 @@ export default function Settings() {
             <div className="right">
               <input
                 type="text"
-                name="username"
+                name="city"
                 className="input-info"
                 placeholder={user.city}
                 autoComplete="off"
