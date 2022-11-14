@@ -158,8 +158,8 @@ export default function Login() {
             </button>
 
             {/* Link to forgot page */}
-            <Link to={"/forgot"} className="forgotPass">
-              <p className="loginForgot">Forgot Password? </p>{" "}
+            <Link to={"/forgot"} className="forgot-content">
+              <span>Forgot Password? </span>{" "}
             </Link>
 
             <hr className="hr-login" />

@@ -1,167 +1,151 @@
-
-.forgotTop{ 
-    height: 56px;
-    width: 100%;
-    background-color: white;
-
-}
-/* phần này là đăng nhập khi muốn */
-.forgotTop{ 
-    display: flex;
-    width: 100%;
-}
-.forgotTopLeft{ 
-    flex: 3;
+.forgotDiv {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  background-color: var(--color-back);
 }
 
-.forgotTopRight{ 
-    flex: 9;
-    display: flex;
-    align-items: center;
+.forgotTop {
+  padding: 30px;
+  height: auto;
+  width: 100%;
+  background-color: white;
 }
-.inputLoginEmail{ 
-    height: 26px;
-    max-width: 188px;
-    margin-left: 50px;
-    border-radius: 8px;
-    padding: 8px 12px 10px;
-    border: 0.5px solid rgb(199, 195, 195);
-    font-size: 15px;
-}
-.inputLoginEmail:hover{ 
-    border: 0.5px solid #1877F2;
-}
-.inputLoginEmail:focus{ 
-    outline: none;
-}
-.inputLoginPass{ 
-    height: 26px;
-    max-width: 188px;
-    margin-left: 10px;
-    border-radius: 8px;
-    padding: 8px 12px 10px;
-    border: 0.5px solid rgb(199, 195, 195);
-    font-size: 15px;
-}
-.inputLoginPass:hover{ 
-    border: 0.5px solid #1877F2;
-}
-.inputLoginPass:focus{ 
-    outline: none;
-}
-.buttonLoginForgot{ 
-    height: 40px;
-    width: 60px;
-    margin-left: 10px;
-    border: none;
-    border-radius: 8px;
-    color: white;
-    background-color: #1877F2;
-    font-weight: 500;
-    font-size: 15px;
+.forgot-logo {
+  font-weight: 600;
+  color: var(--color-logo);
+  font-size: 28px;
 }
 
-.linkForgot{ 
-    margin-left: 10px;
-    color: #1877F2;
+.forgotTopLeft {
+  flex: 3;
 }
 
+.forgotTopRight {
+  flex: 9;
+  display: flex;
+  align-items: center;
+}
+.inputLoginEmail {
+  height: 26px;
+  max-width: 188px;
+  margin-left: 50px;
+  border-radius: 8px;
+  padding: 8px 12px 10px;
+  border: 0.5px solid rgb(199, 195, 195);
+  font-size: 15px;
+}
+.inputLoginEmail:hover {
+  border: 0.5px solid #1877f2;
+}
+.inputLoginEmail:focus {
+  outline: none;
+}
+.inputLoginPass {
+  height: 26px;
+  max-width: 188px;
+  margin-left: 10px;
+  border-radius: 8px;
+  padding: 8px 12px 10px;
+  border: 0.5px solid rgb(199, 195, 195);
+  font-size: 15px;
+}
+.inputLoginPass:hover {
+  border: 0.5px solid #1877f2;
+}
+.inputLoginPass:focus {
+  outline: none;
+}
+.buttonLoginForgot {
+  height: 40px;
+  width: 60px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  background-color: #1877f2;
+  font-weight: 500;
+  font-size: 15px;
+}
 
+.linkForgot {
+  margin-left: 10px;
+  color: #1877f2;
+}
 
 /* phần này là để css của form lấy lại mật khẩu  */
 
-.forgotBottom{ 
-    background-color: rgb(214, 202, 202);
-    width: 100%;
-    height: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.forgotBottom {
+  background-color: rgb(214, 202, 202);
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.forgotBox{ 
-    -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
-    box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
-    max-width: 500px;
-    height: auto;
-    margin: 80px 0 100px 0 ;
-    background-color: white;
-    border: none;
-    border-radius: 10px;
+.forgotBox {
+  width: 40%;
+  -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+  box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+  max-width: 500px;
+  height: auto;
+  margin: 80px 0 100px 0;
+  background-color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 20px;
 }
-.forgotHeader{ 
-    width: 100%;
-    font-weight: 900px;
-    font-size: 20px;
-    margin: 18px 16px 18px 18px;
+.forgotHeader {
+  width: 100%;
+  font-weight: 900px;
+  font-size: 20px;
+  margin: 18px 16px 18px 18px;
 }
-.forgotContent{ 
-    padding: 18px 16px 18px 18px;
-    font-size: 16px;
+.forgotContent {
+  padding: 18px 16px 18px 0px;
+  font-size: 16px;
 }
-.InputForgot{ 
-    height: auto;
-    width: 430px;
-    border: 1px solid rgba(154, 153, 153, 0.3) ;
-    border-radius: 10px;
-    padding: 18px 16px 18px 18px;
-    margin: 0 0 20px 16px;
-    
+.InputForgot {
+  height: auto;
+  width: 430px;
+  border: 1px solid rgba(154, 153, 153, 0.3);
+  border-radius: 10px;
+  padding: 18px 16px 18px 18px;
+  margin: 0 0 20px 16px;
 }
-.InputForgot:hover{ 
-    border: 0.5px solid #1877F2;
-}
-
-.InputForgot:focus{ 
-    outline: none; 
-}
-.error_msg, .success_msg{ 
-    width: 380px;
-    padding: 18px;
-    margin: 5px 0 ;
-    font-size: 15px;
-    background-color: red;
-    color: white;
-    border-radius: 5px;
-    text-align: center;
-}
-.success_msg{ 
-    background-color: green;
+.InputForgot:hover {
+  border: 0.5px solid #1877f2;
 }
 
+.InputForgot:focus {
+  outline: none;
+}
+.error_msg,
+.success_msg {
+  width: 380px;
+  padding: 18px;
+  margin: 5px 0;
+  font-size: 15px;
+  background-color: red;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+}
+.success_msg {
+  background-color: green;
+}
 
+.hrForgot {
+  border: none;
+  border-bottom: 0.5px solid rgb(187, 181, 181, 0.3);
+}
+.buttonForgot {
+  display: flex;
+  float: right;
+  margin: 20px 20px 20px 20px;
+}
 
-.hrForgot{ 
-    border: none ;
-    border-bottom: 0.5px solid rgb(187, 181, 181, 0.3);
-}
-.buttonForgot{ 
-    display: flex;
-    float: right;
-    margin: 20px 20px 20px 20px ;
-}
-.Exit{ 
-   width: 68px;
-   height: 36px;
-   text-align: center;
-   border: none;
-   border-radius: 8px;
-}
-.linkExit{ 
-    text-decoration: none ;
-    color: gray;
-    font-weight: 500;
-    font-size: 15px;
-}
-.Find{
-    width: 80px;
-    height: 36px;
-    text-align: center;
-    border: none;
-    border-radius: 8px;
-    margin: 0 0 0 8px ;
-    font-weight: 500;
-    font-size: 15px;
-    color: white;
-    cursor: pointer;
-    background-color: #1877F2 ;
+.linkExit {
+  text-decoration: none;
 }

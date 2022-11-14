@@ -1,86 +1,65 @@
-
 /* phần này là để css của form lấy lại mật khẩu  */
 
-.passForm{ 
-
-    width: 100%;
-    height: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.passForm {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-
-.FormPass{ 
-    -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
-    box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
-    width: 500px;
-    height: auto;
-    margin: 80px 0 100px 0 ;
-    background-color: white;
-    border: none;
-    align-items: center;
-    border-radius: 10px;
-}
-.content-pass{ 
-    width: 100%;
-    font-weight: 900px;
-    font-size: 20px;
-    margin: 18px 16px 18px 18px;
+.content-pass {
+  width: 100%;
+  font-weight: 600;
+  font-size: 20px;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.passInput{ 
-    height: auto;
-    width: 430px;
-    border: 1px solid rgba(154, 153, 153, 0.3) ;
-    border-radius: 10px;
-    padding: 18px 16px 18px 18px;
-    margin: 18px 16px 18px 18px;
-    
-}
-.passInput:hover{ 
-    border: 0.5px solid #1877F2;
+.hrForgot {
+  border: none;
+  border-bottom: 0.5px solid rgb(187, 181, 181, 0.3);
 }
 
-.passInput:focus{ 
-    outline: none; 
+.button-exit {
+  width: 68px;
+  height: 36px;
+  text-align: center;
+  border: none;
+  border-radius: 8px;
+  color: gray;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease-in-out;
+}
+.button-exit:hover {
+  background-color: red;
+  color: white;
 }
 
-
-.hrForgot{ 
-    border: none ;
-    border-bottom: 0.5px solid rgb(187, 181, 181, 0.3);
+.button-submit {
+  width: auto;
+  height: 36px;
+  text-align: center;
+  border: none;
+  border-radius: 8px;
+  margin: 0 0 0 8px;
+  font-weight: 500;
+  font-size: 15px;
+  color: gray;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.button-submit:hover {
+  background-color: green;
+  color: white;
 }
 
-.Exit{ 
-   width: 68px;
-   height: 36px;
-   text-align: center;
-   border: none;
-   border-radius: 8px;
-}
-.linkExit{ 
-    text-decoration: none ;
-    color: gray;
-    font-weight: 500;
-    font-size: 15px;
-}
-.Find{
-    width: auto;
-    height: 36px;
-    text-align: center;
-    border: none;
-    border-radius: 8px;
-    margin: 0 0 0 8px ;
-    font-weight: 500;
-    font-size: 15px;
-    color: white;
-    cursor: pointer;
-    background-color:  green;
-}
-.error-pass{ 
-    margin: 18px 16px 18px 18px;
-    color: red;
-    font-size: 14px;
-    text-align: left;
+.error {
+  color: red;
+  font-size: 14px;
+  text-align: left;
+  padding: 5px 0px;
 }

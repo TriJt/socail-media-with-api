@@ -129,7 +129,7 @@ export default function Register() {
         <div className="loginLeft">
           <h3 className="loginLogo">heaven</h3>
           <span className="loginDesc">
-            Connect with friends and the world around you on heaven.
+            Connect with friends and the world around you on Heaven.
           </span>
         </div>
         <div className="loginRight">

@@ -52,6 +52,7 @@
   align-items: center;
   border: 1px solid gray;
   border-radius: 10px;
+  margin: 10px 0px;
 }
 
 .input-login {
@@ -88,32 +89,23 @@
   font-size: 20px;
   font-weight: 500;
   cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 .loginButton:disabled {
   cursor: not-allowed;
 }
 
-.loginForgot {
-  text-align: center;
-  color: #1775ee;
-}
-.forgotPass {
+.forgot-content {
   text-decoration: none;
   text-align: center;
+  padding: 10px;
+  color: #1775ee;
 }
-.forgotPass .loginForgot:hover {
+.forgot-content span:hover {
   text-decoration: solid;
 }
-.loginRegisterButton {
-  border: none;
-  height: 50px;
-  border-radius: 10px;
-  background-color: #42b72a;
-  color: white;
-  font-size: 20px;
-  font-weight: 500;
-  cursor: pointer;
-}
+
 .hr-login {
   border: none;
   border-bottom: 1px solid gray;

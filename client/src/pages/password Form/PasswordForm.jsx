@@ -96,9 +96,10 @@ export default function PasswordForm(props) {
   return (
     <form autoComplete="false" id="OtpForm">
       <ToastContainer />
-      <h4 className="forgotHeader">Change Password</h4>
+      <h4 className="content-pass">Change Password</h4>
       <hr className="hrForgot" />
-      <div className="passDiv">
+
+      <div className="item-login">
         <input
           type="number"
           name="otpCode"
@@ -107,13 +108,14 @@ export default function PasswordForm(props) {
           maxLength={4}
           onChange={InputHandler}
           value={inputField.otpCode}
-          className="passInput"
+          className="input-login"
         />
-        {errField.otpCodeErr.length > 0 && (
-          <span className="error-pass">{errField.otpCodeErr} </span>
-        )}
       </div>
-      <div className="passDiv">
+
+      {errField.otpCodeErr.length > 0 && (
+        <span className="error">{errField.otpCodeErr} </span>
+      )}
+      <div className="item-login">
         <input
           type="password"
           name="password"
@@ -121,13 +123,14 @@ export default function PasswordForm(props) {
           autoComplete="off"
           onChange={InputHandler}
           value={inputField.password}
-          className="passInput"
+          className="input-login"
         />
-        {errField.otpCodeErr.length > 0 && (
-          <span className="error-pass">{errField.passwordErr} </span>
-        )}
       </div>
-      <div className="passDiv">
+
+      {errField.otpCodeErr.length > 0 && (
+        <span className="error">{errField.passwordErr} </span>
+      )}
+      <div className="item-login">
         <input
           type="password"
           name="repass"
@@ -135,21 +138,22 @@ export default function PasswordForm(props) {
           autoComplete="off"
           onChange={InputHandler}
           value={inputField.repass}
-          className="passInput"
+          className="input-login"
         />
-        {errField.repassErr.length > 0 && (
-          <span className="error-pass">{errField.repassErr} </span>
-        )}
       </div>
+
+      {errField.repassErr.length > 0 && (
+        <span className="error">{errField.repassErr} </span>
+      )}
 
       <div className="buttonForgot">
         {/* Link to login page */}
-        <button className="Exit">
+        <button className="button-exit">
           <Link to={"/login"} className="linkExit">
             Back
           </Link>
         </button>
-        <button className="Find" type="submit" onClick={submitButton}>
+        <button className="button-submit" type="submit" onClick={submitButton}>
           Change Password
         </button>
       </div>

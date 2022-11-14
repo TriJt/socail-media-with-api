@@ -7,44 +7,64 @@ import "react-toastify/dist/ReactToastify.css";
 import PasswordForm from "../password Form/PasswordForm";
 
 export default function Forgot() {
-  // phần này là các biến để đăng nhập vào trong form đăng nhập
-  const emailRef = useRef();
+  const [email, setEmail] = useState("");
   const [OtpForm, showForm] = useState(true);
-  // phần này là để gửi Otp về gmail
+  const [errField, setErrField] = useState({
+    EmailErr: "",
+  });
+
+  const onChangeEmail = (e) => {
+    setEmail(e.target.value);
+  };
 
   const sendOtp = async (e) => {
     e.preventDefault();
-    try {
-      const data = { email: emailRef.current.value };
-      const response = await axios.post(
-        "http://localhost:8800/api/users/send_email",
-        data
-      );
-      const record = response.data;
+    if (validateForm()) {
+      try {
+        const data = { email: email };
+        const response = await axios.post(
+          "http://localhost:8800/api/users/send_email",
+          data
+        );
+        const record = response.data;
 
-      if (record.statusText === "Success") {
-        toast.success("Record Successfully !");
-        showForm(false);
-      } else {
-        toast.error(record.message);
+        if (record.statusText === "Success") {
+          toast.success("Record Successfully !");
+          showForm(false);
+        } else {
+          toast.error(record.message);
+        }
+      } catch (e) {
+        toast.error("Somethings went wrong");
       }
-    } catch (e) {
-      toast.error("Somethings went wrong");
     }
+  };
+
+  const validateForm = () => {
+    let formValid = true;
+
+    if (email === "") {
+      formValid = false;
+      setErrField((prevState) => ({
+        ...prevState,
+        EmailErr: "Please Enter Email  !!",
+      }));
+    }
+
+    return formValid;
   };
 
   return (
     <div className="forgotDiv">
-      {/* Phần đăng nhập vào trang */}
       <div className="forgotTop">
         <div className="forgotTopLeft">
           <Link to="/" style={{ textDecoration: "none" }}>
-            <span className="logo">Heaven</span>
+            <span className="forgot-logo">heaven</span>
           </Link>
         </div>
         <ToastContainer />
       </div>
-      {/* Phần này là phần quên mật khẩu  */}
+
       <div className="forgotBottom">
         <div className="forgotBox">
           {OtpForm ? (
@@ -54,30 +74,36 @@ export default function Forgot() {
               <p className="forgotContent">
                 Please enter your email to find your account{" "}
               </p>
-              <input
-                type="email"
-                autoComplete="off"
-                name="email"
-                ref={emailRef}
-                className="InputForgot"
-                placeholder="Email"
-              />
+              <div className="item-login">
+                <input
+                  type="email"
+                  name="email"
+                  value={email}
+                  onChange={onChangeEmail}
+                  className="input-login"
+                  placeholder="Email"
+                />
+              </div>
+              {errField.EmailErr.length > 0 && (
+                <span className="error">{errField.EmailErr} </span>
+              )}
               <hr className="hrForgot" />
               <div className="buttonForgot">
                 {/* Link to login page */}
-                <button className="Exit">
-                  <Link to={"/login"} className="linkExit">
-                    {" "}
-                    Exit
-                  </Link>
-                </button>
-                <button className="Find" type="submit" onClick={sendOtp}>
-                  Send OTP{" "}
+                <Link to={"/login"} className="linkExit">
+                  <button className="button-exit">Exit</button>
+                </Link>
+                <button
+                  className="button-submit"
+                  type="submit"
+                  onClick={sendOtp}
+                >
+                  Send OTP
                 </button>
               </div>
             </form>
           ) : (
-            <PasswordForm email={emailRef.current.value} />
+            <PasswordForm email={email} />
           )}
         </div>
       </div>
