@@ -149,30 +149,35 @@ export default function Register() {
             {errField.fullNameErr.length > 0 && (
               <span className="error">{errField.fullNameErr} </span>
             )}
-            <input
-              type="text"
-              placeholder="Username"
-              minLength={8}
-              name="username"
-              value={inputField.username}
-              onChange={InputHandler}
-              className="loginInput"
-            />
+            <div className="item-login">
+              <input
+                type="text"
+                placeholder="Username"
+                minLength={8}
+                name="username"
+                value={inputField.username}
+                onChange={InputHandler}
+                className="input-login"
+              />
+            </div>
+
             {errField.usernameErr.length > 0 && (
               <span className="error">{errField.usernameErr} </span>
             )}
-            <input
-              type="email"
-              placeholder="Email"
-              name="email"
-              value={inputField.email}
-              onChange={InputHandler}
-              className="loginInput"
-            />
+            <div className="item-login">
+              <input
+                type="email"
+                placeholder="Email"
+                name="email"
+                value={inputField.email}
+                onChange={InputHandler}
+                className="input-login"
+              />
+            </div>
             {errField.emailErr.length > 0 && (
               <span className="error">{errField.emailErr} </span>
             )}
-            <div className="passwordDiv">
+            <div className="item-login">
               <input
                 type={pass ? "text" : "password"}
                 minLength={8}
@@ -180,7 +185,7 @@ export default function Register() {
                 placeholder="Password"
                 value={inputField.password}
                 onChange={InputHandler}
-                className="passwordInput"
+                className="input-login"
               />
               <button className="btnPassword" onClick={toggleBtnPass}>
                 {pass ? <VisibilityOffIcon /> : <VisibilityIcon />}
@@ -189,14 +194,14 @@ export default function Register() {
             {errField.passwordErr.length > 0 && (
               <span className="error">{errField.passwordErr} </span>
             )}
-            <div className="passwordDiv">
+            <div className="item-login">
               <input
                 type={repass ? "text" : "password"}
                 name="repassword"
                 value={inputField.repassword}
                 onChange={InputHandler}
                 placeholder="Password Again"
-                className="passwordInput"
+                className="input-login"
               />
               <button className="btnPassword" onClick={toggleBtnRePass}>
                 {repass ? <VisibilityOffIcon /> : <VisibilityIcon />}
