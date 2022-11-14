@@ -135,14 +135,17 @@ export default function Register() {
         <div className="loginRight">
           <ToastContainer />
           <form className="loginBox">
-            <input
-              type="text"
-              placeholder="Full Name"
-              name="fullName"
-              value={inputField.fullName}
-              onChange={InputHandler}
-              className="loginInput"
-            />
+            <div className="item-login">
+              <input
+                type="text"
+                placeholder="Full Name"
+                name="fullName"
+                value={inputField.fullName}
+                onChange={InputHandler}
+                className="input-login"
+              />
+            </div>
+
             {errField.fullNameErr.length > 0 && (
               <span className="error">{errField.fullNameErr} </span>
             )}

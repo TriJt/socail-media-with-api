@@ -9,7 +9,6 @@ import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 import Popup from "../../components/Popup/Popup";
 import { ToastContainer, toast } from "react-toastify";
-import UpdateCover from "../../components/update/update-cover/UpdateCover";
 import UpdateAvatar from "../../components/update/update-avatar/UpdateAvatar";
 
 export default function Profile() {
@@ -18,45 +17,89 @@ export default function Profile() {
   const username = useParams().username;
   const [popupCover, setPopupCover] = useState(false);
   const [avatar, setAvatar] = useState(false);
+  const [files, setFiles] = useState("");
+  const [count, setCount] = useState();
+  const [step1, setStep1] = useState(false);
+  const [step2, setStep2] = useState(false);
+
+  // update session storage
+  useEffect(() => {
+    // set locaL storage after update
+    sessionStorage.setItem("user", JSON.stringify(user));
+
+    const userInfo = JSON.parse(sessionStorage.getItem("user"));
+
+    const newUpdatedUserInfo = {
+      ...userInfo,
+    };
+
+    sessionStorage.setItem("user", JSON.stringify(newUpdatedUserInfo));
+  });
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const res = await axios.get(
-        `http://localhost:8800/api/users?username=${username}`
+    const Count = async () => {
+      const data = {
+        UserId: user._id,
+      };
+      const res = await axios.post(
+        "http://localhost:8800/api/posts/count",
+        data
       );
-      setUser(res.data);
+      setCount(res.data);
     };
-    fetchUser();
-  }, [username]);
+    Count();
+  });
 
-  //cover picture
-  const CoverPicture = () => {
-    return (
-      <>
-        <img src={user.coverPicture} alt="" className="profileCoverImg" />
-      </>
-    );
+  const Close = () => {
+    setFiles(null);
+    setStep1(false);
   };
 
-  // button update cover picture
+  const HandleCover = async (e) => {
+    e.preventDefault();
+    // up load file to cloudinary and update coverPicture in database
+    try {
+      const list = await Promise.all(
+        Object.values(files).map(async (file) => {
+          const data = new FormData();
+          data.append("file", file);
+          data.append("upload_preset", "social0722");
+          const uploadRes = await axios.post(
+            "https://api.cloudinary.com/v1_1/johnle/image/upload",
+            data
+          );
+          const { url } = uploadRes.data;
+          return url;
+        })
+      );
+      const newCoverPicture = {
+        coverPicture: list,
+      };
+
+      const response = await axios.put(
+        "http://localhost:8800/api/users/" + user._id,
+        newCoverPicture
+      );
+      const record = response.data;
+      if (record.status === 200) {
+        toast.success(record.message);
+      } else {
+        toast.error(record.message);
+      }
+      setUser(record.value);
+      setStep1(false);
+    } catch (err) {
+      toast.error("Somethings went wrong");
+    }
+  };
+
   // change span to button in className dropdown-text
   const ButtonCoverPicture = () => {
     return (
       <div className="dropdown">
-        <div className="dropdown-select">
+        <div className="dropdown-select" onClick={() => setStep1(true)}>
           <span> Edit cover photo</span>
         </div>
-        <ul className="dropdown-list">
-          <li className="dropdown-item">
-            <label className="choose-image">
-              <input
-                style={{ display: "none" }}
-                onClick={() => setPopupCover(true)}
-              />
-              Choose Image
-            </label>
-          </li>
-        </ul>
       </div>
     );
   };
@@ -71,11 +114,6 @@ export default function Profile() {
           className="profileUserImg"
           onClick={() => setAvatar(true)}
         />
-        {/* <div>
-          <button className="buttonImageProfile">
-            <LocalSeeSharpIcon />
-          </button>
-        </div> */}
       </div>
     );
   };
@@ -88,20 +126,50 @@ export default function Profile() {
         <ToastContainer />
         <div className="profileRightTop">
           {/* image cover  */}
-          <div className="profileCover">
-            <CoverPicture />
-            <ButtonCoverPicture />
-          </div>
+
+          {step1 ? (
+            <div className="profileCover">
+              <img
+                src={files ? URL.createObjectURL(files[0]) : user.coverPicture}
+                alt=""
+                className="profileCoverImg"
+              />
+              <div className="close" onClick={Close}>
+                <span>Exit</span>
+              </div>
+              <div className="update-action">
+                <form action="" className="form">
+                  <div className="dropdown-select">
+                    <label htmlFor="file">
+                      <input
+                        type="file"
+                        id="file"
+                        multiple
+                        className="update-cover-input"
+                        onChange={(e) => setFiles(e.target.files)}
+                      />
+                      Choose image
+                    </label>
+                  </div>
+                  <div className="dropdown-select" onClick={HandleCover}>
+                    <span> Save</span>
+                  </div>
+                </form>
+              </div>
+            </div>
+          ) : (
+            <div className="profileCover">
+              <img src={user.coverPicture} alt="" className="profileCoverImg" />
+              <ButtonCoverPicture />
+            </div>
+          )}
+
           {/* image avatar */}
           <div className="profileInfo">
             <div className="avatar-profile">
               <ProfilePicture />
             </div>
 
-            {/* popup for cover picture */}
-            <Popup trigger={popupCover} setTrigger={setPopupCover}>
-              <UpdateCover />
-            </Popup>
             {/* popup for update profile */}
             <Popup trigger={avatar} setTrigger={setAvatar}>
               <UpdateAvatar />
@@ -116,12 +184,12 @@ export default function Profile() {
                   </Link>
                 </button>
               </div>
-              {/* Full name and bio */}
+
               <div className="info-profile-f1">
                 <h4 className="info-fullName"> {user.fullName}</h4>
                 <span className="info-desc"> {user.desc}</span>
               </div>
-              <div className="info-profile-f1">51 posts</div>
+              <div className="info-profile-f1">{count} post</div>
             </div>
             {/* for count a post  */}
           </div>

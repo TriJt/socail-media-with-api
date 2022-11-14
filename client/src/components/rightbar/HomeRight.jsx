@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { Users } from "../../dummyData";
+import React, { useState, useEffect, useContext } from "react";
+
 import Online from "../online/Online";
 import "./rightbar.css";
 import axios from "axios";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function HomeRight({ onlineUser, currentId, setCurrentChat }) {
+  const { user: currentUser } = useContext(AuthContext);
+  const [user, setUser] = useState(currentUser);
   const [friends, setFriends] = useState([]);
   const [onlineFriends, setOnlineFriends] = useState([]);
 
   useEffect(() => {
     const getFriends = async () => {
       const res = await axios.get(
-        "http://localhost:8800/api/users/friends/" + currentId
+        "http://localhost:8800/api/users/friends/" + user._id
       );
       setFriends(res.data);
     };

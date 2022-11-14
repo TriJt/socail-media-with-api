@@ -2,13 +2,13 @@ import React, { useState, useRef, useContext } from "react";
 import "./login.css";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { loginCall } from "../../apiCalls";
 import { AuthContext } from "../../context/AuthContext";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router";
+import axios from "axios";
 
 export default function Login() {
   // check show password text
@@ -28,58 +28,77 @@ export default function Login() {
     setInputField({ ...inputField, [e.target.name]: e.target.value });
   };
 
-  const history = useNavigate();
-  //declaration field error of form
   const [errField, setErrField] = useState({
     emailErr: "",
     passwordErr: "",
   });
 
-  const { user, isFetching, error, dispatch } = useContext(AuthContext);
+  const { isFetching, dispatch } = useContext(AuthContext);
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      try {
-        loginCall(
-          {
-            email: inputField.email,
-            password: inputField.password,
-          },
-          dispatch
-        );
-      } catch (err) {
-        toast.error("Something went wrong!");
-      }
-    } else {
-      toast.error("Form Invalid!");
-    }
-  };
-
-  // validate form before handClick action
-  const validateForm = () => {
-    let formValid = true;
-    setInputField({
-      emailErr: "",
-      passwordErr: "",
+    dispatch({
+      type: "LOGIN_START",
     });
-    if (inputField.email === "") {
-      formValid = false;
-      setErrField((prevState) => ({
-        ...prevState,
-        emailErr: "Please Enter Your Email !!",
-      }));
-    }
 
-    if (inputField.password === "") {
-      formValid = false;
-      setErrField((prevState) => ({
-        ...prevState,
-        passwordErr: "Please Enter Your Password !!",
-      }));
+    const data = {
+      email: inputField.email,
+      password: inputField.password,
+    };
+    try {
+      const response = await axios.post(
+        "http://localhost:8800/api/auth/login",
+        data
+      );
+      if (response.data.status === 300) {
+        setErrField((prevState) => ({
+          ...prevState,
+          emailErr: response.data.message,
+        }));
+        setTimeout(() => {
+          setErrField({
+            emailErr: "",
+            passwordErr: "",
+          });
+          setInputField({
+            email: "",
+            password: "",
+          });
+        }, 3000);
+      } else {
+        if (response.data.status === 301) {
+          // check password
+          setErrField((prevState) => ({
+            ...prevState,
+            passwordErr: response.data.message,
+          }));
+          setTimeout(() => {
+            setErrField({
+              emailErr: "",
+              passwordErr: "",
+            });
+            setInputField({
+              email: "",
+              password: "",
+            });
+          }, 3000);
+        } else {
+          toast.success(response.data.message);
+          dispatch({
+            type: "LOGIN_SUCCESS",
+            payload: response.data.value,
+          });
+        }
+      }
+    } catch (err) {
+      dispatch({
+        type: "LOGIN_FAILURE",
+        payload: err,
+      });
+      throw err;
     }
-    return formValid;
   };
+
   return (
     <div className="login">
       <div className="loginWrapper">
@@ -92,19 +111,22 @@ export default function Login() {
         <div className="loginRight">
           <ToastContainer />
           <form className="loginBox">
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              autoComplete="off"
-              onChange={InputHandler}
-              value={inputField.email}
-              className="loginInput"
-            />
+            <div className="item-login">
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                autoComplete="off"
+                onChange={InputHandler}
+                value={inputField.email}
+                className="input-login"
+              />
+            </div>
+
             {errField.emailErr.length > 0 && (
               <span className="error">{errField.emailErr} </span>
             )}
-            <div className="passwordDiv">
+            <div className="item-login">
               <input
                 type={pass ? "text" : "password"}
                 name="password"
@@ -112,7 +134,7 @@ export default function Login() {
                 onChange={InputHandler}
                 value={inputField.password}
                 placeholder="Password"
-                className="passwordInput"
+                className="input-login"
               />
 
               <button className="btnPassword" onClick={toggleBtn}>

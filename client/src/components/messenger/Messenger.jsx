@@ -1,6 +1,6 @@
 import React from "react";
 import "./messenger.css";
-import { format } from "timeago.js";
+import moment from "moment";
 
 export default function Messenger({ message, own, userinfo }) {
   return (
@@ -9,7 +9,9 @@ export default function Messenger({ message, own, userinfo }) {
         <img src={userinfo.profilePicture} alt="" className="messenger-img" />
         <span className="messenger-text">{message.text}</span>
       </div>
-      <div className="messenger-bottom">{format(message.createdAt)}</div>
+      <div className="messenger-bottom">
+        {moment(message.createdAt).fromNow()}
+      </div>
     </div>
   );
 }

@@ -1,6 +1,12 @@
-.homeContainer{ 
-    display: flex;
-    width: 100%;
-    margin: 0px 200px 0px 200px ;
+.homeContainer {
+  display: flex;
+  width: 100%;
+  margin: 0px 200px 0px 200px;
 }
 
+:root {
+  --color-hover: #393e46;
+  --black: #393e46;
+  --radius: 5px;
+  --color-back: #dadce1;
+}

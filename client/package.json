@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
     "install": "^0.13.0",
+    "moment": "^2.29.4",
     "npm": "^8.13.1",
     "react": "^18.2.0",
     "react-avatar-editor": "^13.0.0",
@@ -23,8 +24,6 @@
     "react-toastify": "^9.0.8",
     "reactjs-popup": "^2.0.5",
     "socket.io-client": "^4.5.2",
-    "timeago": "^1.6.7",
-    "timeago.js": "^4.0.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

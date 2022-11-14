@@ -2,14 +2,14 @@ import { useState, useEffect, useContext } from "react";
 import "./post.css";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import axios from "axios";
-import { format } from "timeago.js";
+
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
-import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
-import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import Popup from "../Popup/Popup";
+import moment from "moment";
+import { AiFillLike, AiOutlineComment } from "react-icons/ai";
+import { FcLike } from "react-icons/fc";
 
 export default function Post({ post }) {
   const [like, setLike] = useState(post.likes.length);
@@ -62,7 +62,7 @@ export default function Post({ post }) {
           <div className="postTopLeft">
             <LinktoProfile />
             <span className="postUsername">{user.fullName} </span>
-            <span className="postDate">{format(post.createdAt)}</span>
+            <span className="postDate">{moment(post.createdAt).fromNow()}</span>
           </div>
           {/* show button update and delete post */}
           {/* need setting popup button in here */}
@@ -87,8 +87,8 @@ export default function Post({ post }) {
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">
-            <ThumbUpOutlinedIcon onClick={likeHandler} className="likeIcon" />
-            <FavoriteIcon onClick={likeHandler} className="likeIcon" />
+            <AiFillLike onClick={likeHandler} className="likeIcon" />
+            <FcLike onClick={likeHandler} className="heartIcon" />
             <span className="postLikeCounter"> {like} people like it</span>
           </div>
           <div className="postBottomRight">
@@ -98,11 +98,11 @@ export default function Post({ post }) {
         <hr className="hrPost" />
         <div className="likeAndCommentPost">
           <div className="likePostIcon" onClick={likeHandler}>
-            <ThumbUpOutlinedIcon className="likeIcon" />
+            <AiFillLike className="likeIcon" />
             Like
           </div>
           <div className="likePostIcon">
-            <ChatBubbleOutlineOutlinedIcon className="likeIcon" />
+            <AiOutlineComment className="likeIcon" />
             Comment
           </div>
         </div>
