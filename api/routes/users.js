@@ -13,6 +13,7 @@ import {
   ChangePassword,
 } from "../controllers/user.js";
 
+router.get("/friends/:userId", GetFriends);
 //Send email
 router.post("/send_email", SendEmail);
 //Change password
@@ -25,8 +26,7 @@ router.put("/:id", UpdateUser);
 router.delete("/:id", DeleteUser);
 // Get user
 router.get("/", GetUser);
-//get friends
-router.get("/friends/:userId", GetFriends);
+
 // follow a user
 router.put("/:id/follow", FollowUser);
 //un follow a user

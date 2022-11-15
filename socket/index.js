@@ -23,7 +23,6 @@ const getUsers = (userId) => {
 };
 
 io.on("connection", (socket) => {
-  //when ceonnect
   console.log("a user connected.");
 
   //take userId and socketId from user

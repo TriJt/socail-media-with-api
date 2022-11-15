@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import axios from "axios";
 import TopBar from "../../components/topbar/TopBar";
-import HomeRightBar from "../../components/rightbar/HomeRight";
+import ChatRightBar from "../../components/rightbar/ChatRight";
 import "./chat.css";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import PersonSearchOutlinedIcon from "@mui/icons-material/PersonSearchOutlined";
@@ -196,7 +196,7 @@ export default function Chat() {
             </div>
           </div>
           <div className="chat-online">
-            <HomeRightBar
+            <ChatRightBar
               onlineUser={onlineUsers}
               currentId={user._id}
               setCurrentChat={setCurrentChat}

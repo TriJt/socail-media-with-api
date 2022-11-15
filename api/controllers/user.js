@@ -88,11 +88,11 @@ export const GetFriends = async (req, res) => {
     );
     let friendList = [];
     friends.map((friend) => {
-      const { _id, username, fullName, profilePicture } = friend;
+      const { _id, username, profilePicture } = friend;
       friendList.push({
         _id,
         username,
-        fullName,
+
         profilePicture,
       });
     });

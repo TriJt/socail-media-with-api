@@ -1,9 +1,7 @@
 import React from "react";
 import "./home.css";
 import TopBar from "../../components/topbar/TopBar";
-
 import Feed from "../../components/feed/Feed";
-import HomeRight from "../../components/rightbar/HomeRight";
 
 const Home = () => {
   return (
@@ -12,7 +10,6 @@ const Home = () => {
       <div className="homeContainer">
         {/* <SideBar/> */}
         <Feed />
-        <HomeRight />
       </div>
     </>
   );
