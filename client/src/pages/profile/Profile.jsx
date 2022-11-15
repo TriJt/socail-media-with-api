@@ -9,37 +9,42 @@ import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 import Popup from "../../components/Popup/Popup";
 import { ToastContainer, toast } from "react-toastify";
-import UpdateAvatar from "../../components/update/update-avatar/UpdateAvatar";
 
 export default function Profile() {
   const { user: currentUser } = useContext(AuthContext);
   const [user, setUser] = useState(currentUser);
   const username = useParams().username;
-  const [popupCover, setPopupCover] = useState(false);
   const [avatar, setAvatar] = useState(false);
   const [files, setFiles] = useState("");
+  const [file2, setFile2] = useState("");
   const [count, setCount] = useState();
   const [step1, setStep1] = useState(false);
-  const [step2, setStep2] = useState(false);
 
   // update session storage
   useEffect(() => {
-    // set locaL storage after update
     sessionStorage.setItem("user", JSON.stringify(user));
-
     const userInfo = JSON.parse(sessionStorage.getItem("user"));
 
     const newUpdatedUserInfo = {
       ...userInfo,
     };
-
     sessionStorage.setItem("user", JSON.stringify(newUpdatedUserInfo));
   });
 
   useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get(
+        "http://localhost:8800/api/users?username=" + username
+      );
+      setUser(res.data);
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
     const Count = async () => {
       const data = {
-        UserId: user._id,
+        username: username,
       };
       const res = await axios.post(
         "http://localhost:8800/api/posts/count",
@@ -118,6 +123,42 @@ export default function Profile() {
     );
   };
 
+  const UpdateAvatar = async (e) => {
+    e.preventDefault();
+    try {
+      const list = await Promise.all(
+        Object.values(file2).map(async (file2) => {
+          const data = new FormData();
+          data.append("file", file2);
+          data.append("upload_preset", "social0722");
+          const uploadRes = await axios.post(
+            "https://api.cloudinary.com/v1_1/johnle/image/upload",
+            data
+          );
+          const { url } = uploadRes.data;
+          return url;
+        })
+      );
+
+      const newProfile = {
+        profilePicture: list,
+      };
+
+      const response = await axios.put(
+        "http://localhost:8800/api/users/" + user._id,
+        newProfile
+      );
+
+      if (response.data.status === 200) {
+        toast.success(response.data.message);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (err) {
+      toast.error("Somethings went wrong");
+    }
+  };
+
   return (
     <>
       <TopBar />
@@ -146,6 +187,7 @@ export default function Profile() {
                         id="file"
                         multiple
                         className="update-cover-input"
+                        style={{ display: "none" }}
                         onChange={(e) => setFiles(e.target.files)}
                       />
                       Choose image
@@ -172,7 +214,48 @@ export default function Profile() {
 
             {/* popup for update profile */}
             <Popup trigger={avatar} setTrigger={setAvatar}>
-              <UpdateAvatar />
+              <div className="table-update">
+                <h3> Update Avatar</h3>
+                <span style={{ color: "gray", fontSize: "13px" }}> Heaven</span>
+                <hr className="hr-popup" />
+                <div className="table-update-avatar">
+                  <form>
+                    <label
+                      htmlFor="file2"
+                      className="profile-update-avatar-label"
+                    >
+                      <input
+                        type="file"
+                        id="file2"
+                        multiple
+                        style={{ display: "none" }}
+                        onChange={(e) => setFile2(e.target.files)}
+                      ></input>
+                      Choose image
+                    </label>
+                  </form>
+
+                  <div className="profile-update-avatar-div">
+                    <img
+                      src={
+                        file2
+                          ? URL.createObjectURL(file2[0])
+                          : user.profilePicture
+                      }
+                      alt=""
+                      className="profile-update-avatar-image"
+                    />
+                  </div>
+
+                  <hr className="hr-popup" />
+                  <button
+                    className="update-avatar-button"
+                    onClick={UpdateAvatar}
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
             </Popup>
 
             <div className="info-profile">

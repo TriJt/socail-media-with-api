@@ -10,13 +10,14 @@ import Popup from "../Popup/Popup";
 import moment from "moment";
 import { AiFillLike, AiOutlineComment } from "react-icons/ai";
 import { FcLike } from "react-icons/fc";
+import { useParams } from "react-router";
 
 export default function Post({ post }) {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState({});
   const { user: currentUser } = useContext(AuthContext);
-  const [user, setUser] = useState(currentUser);
   const [postPopup, setPostPopup] = useState(false);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     setIsLiked(post.likes.includes(currentUser._id));
@@ -24,7 +25,6 @@ export default function Post({ post }) {
 
   useEffect(() => {
     const fetchUser = async () => {
-      // Get data from Api timeline
       const res = await axios.get(
         `http://localhost:8800/api/users?userId=${post.userId}`
       );

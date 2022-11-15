@@ -1,47 +1,51 @@
-.settings-container{ 
-    width: 100%;
-    height: 800px;
-    background-color: rgb(250, 250, 250)  ;
-    position: relative;
+.settings-container {
+  width: 100%;
+  height: auto;
+  background-color: rgb(250, 250, 250);
+  position: relative;
 }
-.setting{ 
-    width: 70%;
-    display: flex;
-    position: absolute;
-    height:600px;
-    margin-top: 40px;
-    margin-left: 15%;
-    margin-right: 15%;
-    background-color: white;
-    border: 0.1px solid rgb(191, 191, 191);
-    border-radius: 2px;
+.setting {
+  height: auto;
+  width: 70%;
+  display: flex;
+  position: absolute;
+  height: 600px;
+  margin-top: 40px;
+  margin-left: 15%;
+  margin-right: 15%;
+  background-color: white;
+  border: 0.1px solid rgb(191, 191, 191);
+  border-radius: 2px;
 }
-.setting-left{ 
-    width: 30%;
-    border-right: 0.1px solid rgb(191, 191, 191) ;
+.setting-left {
+  width: 30%;
+  height: auto;
+  border-right: 0.1px solid rgb(191, 191, 191);
 }
-.left-title, .left-text, .left-textarea{ 
-    padding: 16px 16px 16px 30px ;
-    cursor: pointer;
+.left-title,
+.left-text,
+.left-textarea {
+  padding: 16px 16px 16px 30px;
+  cursor: pointer;
 }
-.left-title:hover, .left-text:hover{ 
-    background-color: rgb(250, 250, 250);
+.left-title:hover,
+.left-text:hover {
+  background-color: rgb(250, 250, 250);
 }
-.left-textarea{ 
-    border-top: 0.1px solid rgb(191, 191, 191);
+.left-textarea {
+  border-top: 0.1px solid rgb(191, 191, 191);
 }
-.textarea-logo{ 
-    font-family: 'Courier New', Courier, monospace;
-    padding-bottom: 10px;
+.textarea-logo {
+  font-family: "Courier New", Courier, monospace;
+  padding-bottom: 10px;
 }
-.textarea-span{ 
-    font-size: 11px;
-    color: gray;
-    padding: 10px 0px 10px 0px ;
+.textarea-span {
+  font-size: 11px;
+  color: gray;
+  padding: 10px 0px 10px 0px;
+}
 
+.setting-right {
+  width: 70%;
+  height: auto;
 }
-
-.setting-right{ 
-    width: 70%;
-}
-

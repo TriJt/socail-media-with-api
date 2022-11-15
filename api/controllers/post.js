@@ -127,11 +127,12 @@ export const GetProfilePost = async (req, res) => {
 };
 
 export const CountPost = async (req, res) => {
-  const user = req.body.UserId;
-  try {
-    const count = await Post.find({ userId: user }).count();
+  const userName = req.body.username;
+  const user = await User.findOne({ username: userName });
+  if (user !== null) {
+    const count = await Post.find({ userId: user._id }).count();
     res.status(200).json(count);
-  } catch (error) {
-    res.status(404).json(error);
+  } else {
+    res.status(404).json("something wrong");
   }
 };

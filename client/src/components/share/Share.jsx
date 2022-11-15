@@ -11,14 +11,12 @@ import { AuthContext } from "../../context/AuthContext";
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { useParams } from "react-router";
 
 export default function Share() {
   const { user: currentUser } = useContext(AuthContext);
   const [user, setUser] = useState(currentUser);
   const desc = useRef();
   const [files, setFiles] = useState("");
-  const username = useParams().username;
 
   //link to profile
   const LinktoProfile = () => {

@@ -6,18 +6,14 @@ import Post from "../post/Post";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 
-export default function Feed() {
+export default function Feed({ username }) {
   const [posts, setPosts] = useState([]);
-  const { user: currentUser } = useContext(AuthContext);
-  const [user, setUser] = useState(currentUser);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchPosts = async () => {
-      // Lấy dữ liệu bài post từ API timeline
-      const res = user.username
-        ? await axios.get(
-            "http://localhost:8800/api/posts/profile/" + user.username
-          )
+      const res = username
+        ? await axios.get("http://localhost:8800/api/posts/profile/" + username)
         : await axios.get(
             "http://localhost:8800/api/posts/timeline/" + user._id
           );
@@ -28,12 +24,12 @@ export default function Feed() {
       );
     };
     fetchPosts();
-  }, [user.username, user._id]);
+  }, [username, user._id]);
 
   return (
     <div className="feed">
       <div className="feedWrapper">
-        {(!user.username || user.username === user.username) && <Share />}
+        {(!username || username === user.username) && <Share />}
         {posts.map((p) => (
           <Post key={p._id} post={p} />
         ))}

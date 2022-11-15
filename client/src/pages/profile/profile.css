@@ -227,12 +227,11 @@
 }
 .info-fullName {
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
 }
 .info-desc {
-  font-size: 12px;
+  font-size: 14px;
   color: gray;
-  padding-left: 10px;
 }
 
 /* popup  */
@@ -244,4 +243,56 @@
 
 .popup-avatar {
   width: 300px;
+}
+
+.profile-update-avatar {
+  height: 200px;
+  width: 100%;
+  align-items: center;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+.profile-update-avatar-label {
+  cursor: pointer;
+  position: relative;
+  font-weight: 500px;
+  color: blue;
+}
+.profile-update-avatar-label:hover {
+  text-decoration: underline;
+}
+.profile-update-avatar-div {
+  width: 100%;
+  height: 180px;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
+}
+.profile-update-avatar-image {
+  height: 180px;
+  width: 180px;
+  margin: auto;
+  padding: auto;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid rgb(234, 228, 228);
+  transform: filter 300ms;
+}
+.profile-update-avatar-image:hover {
+  filter: brightness(1.1);
+}
+.profile-edit {
+  display: flex;
+  margin: 10px;
+  padding: 10px;
+  text-align: left;
+  justify-content: space-between;
+}
+.update-avatar-button {
+  background-color: transparent;
+  border: none;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
 }

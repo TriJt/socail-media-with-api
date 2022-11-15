@@ -41,22 +41,23 @@ export default function UpdateAvatar() {
         })
       );
 
-      const data = {
-        userId: currentUser._id,
+      const newProfile = {
         profilePicture: list,
       };
 
       const response = await axios.put(
-        "http://localhost:8800/api/users/" + currentUser._id,
-        data
+        "http://localhost:8800/api/users/" + user._id,
+        newProfile
       );
-      setUser({ ...user });
+
       const record = response.data;
-      if (record.statusText === "Success") {
+
+      if (record.status === 200) {
         toast.success(record.message);
       } else {
         toast.error(record.message);
       }
+      setUser(record.value);
     } catch (err) {
       toast.error("Somethings went wrong");
     }
@@ -80,15 +81,15 @@ export default function UpdateAvatar() {
             Choose image
           </label>
         </form>
-        {files && (
-          <div className="profile-update-avatar-div">
-            <img
-              src={URL.createObjectURL(files[0])}
-              alt=""
-              className="profile-update-avatar-image"
-            />
-          </div>
-        )}
+
+        <div className="profile-update-avatar-div">
+          <img
+            src={files ? URL.createObjectURL(files[0]) : user.profilePicture}
+            alt=""
+            className="profile-update-avatar-image"
+          />
+        </div>
+
         <hr className="hr-popup" />
         <button className="update-avatar-button" onClick={UpdateAvatar}>
           Save

@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState } from "react";
 import "./updateProfile.css";
 import { ToastContainer, toast } from "react-toastify";
 import TopBar from "../../components/topbar/TopBar";

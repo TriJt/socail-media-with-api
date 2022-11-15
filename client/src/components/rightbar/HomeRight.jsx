@@ -25,7 +25,6 @@ export default function HomeRight({ onlineUser, currentId, setCurrentChat }) {
     setOnlineFriends(friends.filter((f) => onlineUser.includes(f._id)));
   }, [friends, onlineUser]);
 
-  console.log(onlineUser);
   return (
     <div className="home-right">
       <h4 className="rightbarTitle">Online Friend</h4>

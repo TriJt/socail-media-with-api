@@ -30,6 +30,16 @@ export default function Topbar() {
     loadData();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get(
+        "http://localhost:8800/api/users?userId=" + user._id
+      );
+      setUser(res.data);
+    };
+    fetchData();
+  }, []);
+
   // search user with filter search words
 
   const handleFilter = async (e) => {

@@ -7,21 +7,25 @@ import "react-toastify/dist/ReactToastify.css";
 import PasswordForm from "../password Form/PasswordForm";
 
 export default function Forgot() {
-  const [email, setEmail] = useState("");
   const [OtpForm, showForm] = useState(true);
+
+  const [inputField, setInputField] = useState({
+    email: "",
+  });
+
   const [errField, setErrField] = useState({
     EmailErr: "",
   });
 
-  const onChangeEmail = (e) => {
-    setEmail(e.target.value);
+  const InputHandler = (e) => {
+    setInputField({ ...inputField, [e.target.name]: e.target.value });
   };
 
   const sendOtp = async (e) => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        const data = { email: email };
+        const data = { email: inputField.email };
         const response = await axios.post(
           "http://localhost:8800/api/users/send_email",
           data
@@ -42,8 +46,11 @@ export default function Forgot() {
 
   const validateForm = () => {
     let formValid = true;
+    setInputField({
+      EmailErr: "",
+    });
 
-    if (email === "") {
+    if (inputField.email === "") {
       formValid = false;
       setErrField((prevState) => ({
         ...prevState,
@@ -78,8 +85,8 @@ export default function Forgot() {
                 <input
                   type="email"
                   name="email"
-                  value={email}
-                  onChange={onChangeEmail}
+                  value={inputField.email}
+                  onChange={InputHandler}
                   className="input-login"
                   placeholder="Email"
                 />
@@ -103,7 +110,7 @@ export default function Forgot() {
               </div>
             </form>
           ) : (
-            <PasswordForm email={email} />
+            <PasswordForm email={inputField.email} />
           )}
         </div>
       </div>

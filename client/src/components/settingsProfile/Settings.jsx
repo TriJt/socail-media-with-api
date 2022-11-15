@@ -3,7 +3,6 @@ import "./settings.css";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
-import { useParams } from "react-router";
 
 // complete setting front-end
 // need connect back-end and update
@@ -24,7 +23,6 @@ export default function Settings() {
   const [inputField, setInputField] = useState({
     fullName: user.fullName,
     username: user.username,
-    userId: user._id,
     email: user.email,
     desc: user.desc,
     sex: user.sex,
@@ -44,7 +42,7 @@ export default function Settings() {
       );
       const record = response.data;
       setUser(record.value);
-      if (record.statusText === "Success") {
+      if (record.status === 200) {
         toast.success(record.message);
       } else {
         toast.error(record.message);
@@ -58,16 +56,20 @@ export default function Settings() {
     <div className="settings">
       <ToastContainer />
       {/* for avatar */}
+
       <div className="top">
         <div className="left">
-          <img src={user.profilePicture} alt="" className="avatar-setting" />
+          <div className="image-container">
+            <img src={user.profilePicture} alt="" className="avatar-setting" />
+          </div>
         </div>
         <div className="right">
-          <span className="span-username">{user.username} </span>
-          {/*  add submit avatar*/}
-          <button className="button-right"> Change your avatar</button>
+          <div className="change-container">
+            <span className="span-username">{user.username} </span>
+          </div>
         </div>
       </div>
+
       <div className="bottom">
         <form>
           <div className="setting-info">
