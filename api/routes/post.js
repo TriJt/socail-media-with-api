@@ -10,6 +10,7 @@ import {
   GetProfilePost,
   GetProfile,
   CountPost,
+  GetAllPost,
 } from "../controllers/post.js";
 
 router.post("/count", CountPost);
@@ -28,5 +29,8 @@ router.get("/:id", GetPost);
 router.get("/timeline/:userId", GetTimLinePost);
 // get a post of user with username
 router.get("/profile/:username", GetProfile);
+
+// get all post
+router.get("/", GetAllPost);
 
 export default router;

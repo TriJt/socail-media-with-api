@@ -15,6 +15,8 @@ import {
 } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
 import "./app.css";
+import Friend from "./pages/Friend/Friend.jsx";
+import SinglePost from "./pages/singlePost/SinglePost";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -30,6 +32,8 @@ function App() {
         <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot" element={<Forgot />} />
+        <Route path="/friend" element={<Friend />} />
+        <Route path="/post/:id" element={<SinglePost />} />
         <Route
           path="/password-reset"
           element={user ? <Navigate to="/" /> : <PasswordForm />}

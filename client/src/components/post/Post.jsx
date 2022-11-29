@@ -2,15 +2,13 @@ import { useState, useEffect, useContext } from "react";
 import "./post.css";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import axios from "axios";
-
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import Popup from "../Popup/Popup";
 import moment from "moment";
 import { AiFillLike, AiOutlineComment } from "react-icons/ai";
-import { FcLike } from "react-icons/fc";
-import { useParams } from "react-router";
+import { FiHeart } from "react-icons/fi";
 
 export default function Post({ post }) {
   const [like, setLike] = useState(post.likes.length);
@@ -42,6 +40,62 @@ export default function Post({ post }) {
     );
   };
 
+  const deleteSubmit = async (e) => {
+    try {
+      await axios.delete("http://localhost:8800/api/posts/" + post._id, {
+        data: { userId: currentUser._id },
+      });
+      setTimeout(() => {
+        setPostPopup(false);
+        window.location.reload(false);
+      }, 1000);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const Update = () => {
+    if (currentUser._id !== post.userId)
+      return (
+        <Popup trigger={postPopup} setTrigger={setPostPopup}>
+          <div className="div-edit">
+            <Link to={`/post/${post._id}`} style={{ textDecoration: "none" }}>
+              <span className="edit-post">Go to post</span>
+            </Link>
+
+            <hr className="hr-popup" />
+            <span className="edit-post" onClick={() => setPostPopup(false)}>
+              Cancel
+            </span>
+          </div>
+        </Popup>
+      );
+    else
+      return (
+        <Popup trigger={postPopup} setTrigger={setPostPopup}>
+          <div className="div-edit">
+            <span
+              className="delete-post"
+              onClick={() => {
+                if (window.confirm("are you sure to delete this post?"))
+                  deleteSubmit();
+              }}
+            >
+              Delete
+            </span>
+            <hr className="hr-popup" />
+            <Link to={`/post/${post._id}`} style={{ textDecoration: "none" }}>
+              <span className="edit-post">Edit</span>
+              <hr className="hr-popup" />
+            </Link>
+            <span className="edit-post" onClick={() => setPostPopup(false)}>
+              Cancel
+            </span>
+          </div>
+        </Popup>
+      );
+  };
+
   // Like post
   const likeHandler = () => {
     try {
@@ -64,20 +118,14 @@ export default function Post({ post }) {
             <span className="postUsername">{user.fullName} </span>
             <span className="postDate">{moment(post.createdAt).fromNow()}</span>
           </div>
-          {/* show button update and delete post */}
-          {/* need setting popup button in here */}
           <div className="postTopRight">
             <div className="dropdown-select-post">
-              <MoreHorizIcon onClick={() => setPostPopup(true)} />
+              <MoreHorizIcon
+                style={{ cursor: "pointer" }}
+                onClick={() => setPostPopup(true)}
+              />
             </div>
-            <Popup trigger={postPopup} setTrigger={setPostPopup}>
-              <div className="div-edit">
-                <span className="delete-post">Delete</span>
-                <hr className="hr-popup" />
-                <span className="edit-post">Edit</span>
-                <hr className="hr-popup" />
-              </div>
-            </Popup>
+            <Update />
           </div>
         </div>
 
@@ -87,8 +135,7 @@ export default function Post({ post }) {
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">
-            <AiFillLike onClick={likeHandler} className="likeIcon" />
-            <FcLike onClick={likeHandler} className="heartIcon" />
+            <FiHeart onClick={likeHandler} className="likeIcon" />
             <span className="postLikeCounter"> {like} people like it</span>
           </div>
           <div className="postBottomRight">

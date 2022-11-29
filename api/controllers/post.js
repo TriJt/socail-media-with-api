@@ -34,7 +34,7 @@ export const DeletePost = async (req, res) => {
       await post.deleteOne({
         $set: req.body,
       });
-      res.status(200).json("Deleted post  success");
+      res.status(200).json("Deleted post success");
     } else {
       res.status(403).json(" You can delete only your post!");
     }
@@ -69,6 +69,16 @@ export const LikePost = async (req, res) => {
 export const GetPost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
+    res.status(200).json(post);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+// get all post
+export const GetAllPost = async (req, res) => {
+  try {
+    const post = await Post.find();
     res.status(200).json(post);
   } catch (err) {
     res.status(500).json(err);

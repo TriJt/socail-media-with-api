@@ -18,7 +18,6 @@ export default function ChatRight({ onlineUser, currentId, setCurrentChat }) {
     };
     getFriends();
   }, [currentId]);
-  console.log(friends);
 
   useEffect(() => {
     setOnlineFriends(friends.filter((f) => onlineUser.includes(f._id)));
@@ -34,7 +33,6 @@ export default function ChatRight({ onlineUser, currentId, setCurrentChat }) {
       console.log(err);
     }
   };
-  console.log(onlineFriends);
 
   return (
     <div className="home-right">

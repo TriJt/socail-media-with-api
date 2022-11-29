@@ -24,6 +24,7 @@ export default function Chat() {
   const [onlineUsers, setOnlineUsers] = useState([]);
   const socket = useRef();
   const scrollRef = useRef();
+  const [friend, setFriends] = useState([]);
 
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
@@ -35,6 +36,16 @@ export default function Chat() {
       });
     });
   }, []);
+
+  useEffect(() => {
+    const getFriends = async () => {
+      const res = await axios.get(
+        "http://localhost:8800/api/users/friends/" + user._id
+      );
+      setFriends(res.data);
+    };
+    getFriends();
+  }, [user._id]);
 
   useEffect(() => {
     arrivalMessage &&
@@ -145,7 +156,6 @@ export default function Chat() {
           </div>
           {/* Chat box main */}
           <div className="chat-box">
-            {/* for main chat box */}
             <div className="chat-box-main">
               {currentChat ? (
                 <>
@@ -194,13 +204,6 @@ export default function Chat() {
                 </div>
               )}
             </div>
-          </div>
-          <div className="chat-online">
-            <ChatRightBar
-              onlineUser={onlineUsers}
-              currentId={user._id}
-              setCurrentChat={setCurrentChat}
-            />
           </div>
         </div>
       </div>

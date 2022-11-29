@@ -11,6 +11,7 @@ import {
   SearchUser,
   SendEmail,
   ChangePassword,
+  GetLimits,
 } from "../controllers/user.js";
 
 router.get("/friends/:userId", GetFriends);
@@ -24,6 +25,9 @@ router.get("/search", SearchUser);
 router.put("/:id", UpdateUser);
 // Delete user
 router.delete("/:id", DeleteUser);
+
+router.get("/limit", GetLimits);
+
 // Get user
 router.get("/", GetUser);
 

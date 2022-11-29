@@ -91,9 +91,6 @@
   margin-right: 5px;
   cursor: pointer;
 }
-.likeIcon {
-  color: blue;
-}
 
 .postLikeCounter {
   font-size: 14px;
@@ -162,6 +159,7 @@
 .dropdown-select-post {
   border-radius: 5px;
   padding: 10px;
+  cursor: pointer;
 }
 
 .reposition,

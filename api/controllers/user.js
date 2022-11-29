@@ -131,6 +131,15 @@ export const FollowUser = async (req, res) => {
   }
 };
 
+export const GetLimits = async (req, res) => {
+  try {
+    const find = await User.find().limit(5);
+    res.status(200).json(find);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
 //unfollow user
 export const UnFollowUser = async (req, res) => {
   if (req.body.userId !== req.params.id) {

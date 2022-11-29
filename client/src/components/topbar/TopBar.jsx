@@ -112,12 +112,6 @@ export default function Topbar() {
             <MailOutlinedIcon className="icon-button" />
           </Link>
         </div>
-        {/* hiển thị thông báo từ các hoạt động  */}
-        <div className="div-icon">
-          <Link to={`/`}>
-            <NotificationsNoneIcon className="icon-button" />
-          </Link>
-        </div>
         {/* dropdown button  */}
         <div className="top-dropdown">
           <div className="top-dropdown-select">

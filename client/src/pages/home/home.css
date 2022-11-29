@@ -1,3 +1,11 @@
+:root {
+  --color-hover: #393e46;
+  --black: #393e46;
+  --radius: 5px;
+  --color-back: #dadce1;
+  --color-logo: #1877f2;
+}
+
 .homeContainer {
   display: flex;
   width: 1024px;
@@ -5,10 +13,71 @@
   height: auto;
 }
 
-:root {
-  --color-hover: #393e46;
-  --black: #393e46;
-  --radius: 5px;
-  --color-back: #dadce1;
-  --color-logo: #1877f2;
+.new-friend {
+  width: 30%;
+  height: auto;
+  padding: 20px;
+}
+.top-friend {
+  width: 100%;
+  height: auto;
+}
+.item-new {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-friends {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px 0px;
+}
+
+.image-home {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.image-friend {
+  width: 35px;
+  height: 35px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.text-item {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  width: 60%;
+}
+.name {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.text {
+  color: gray;
+  font-size: 14px;
+}
+
+.bottom-friend {
+  margin-top: 10px;
+}
+.header-home {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.items-home {
+  display: flex;
+  flex-direction: column;
+}
+.button-follow {
+  color: #1877f2;
+  cursor: pointer;
 }
