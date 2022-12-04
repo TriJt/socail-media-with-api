@@ -1,5 +1,6 @@
 import Post from "../models/Post.js";
 import User from "../models/User.js";
+import Comment from "../models/Comment.js";
 //create  a post
 export const CreatePost = async (req, res) => {
   const newPost = new Post(req.body);
@@ -144,5 +145,15 @@ export const CountPost = async (req, res) => {
     res.status(200).json(count);
   } else {
     res.status(404).json("something wrong");
+  }
+};
+
+export const GetComment = async (req, res) => {
+  const post = await Post.findById(req.params.id);
+  try {
+    const comment = await Comment.find({ _id: post.comment });
+    res.status(200).json(comment);
+  } catch (error) {
+    res.status(500).json(error);
   }
 };

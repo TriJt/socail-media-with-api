@@ -13,6 +13,7 @@ import SendIcon from "@mui/icons-material/Send";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import { AuthContext } from "../../context/AuthContext";
 import { io } from "socket.io-client";
+import { Search } from "@mui/icons-material";
 
 export default function Chat() {
   const { user } = useContext(AuthContext);
@@ -25,6 +26,32 @@ export default function Chat() {
   const socket = useRef();
   const scrollRef = useRef();
   const [friend, setFriends] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [wordEntered, setWordEntered] = useState("");
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      const res = await axios.get(
+        "http://localhost:8800/api/users/friends/" + user._id
+      );
+      setData(res.data);
+    };
+    loadData();
+  }, []);
+
+  const handleFilter = async (e) => {
+    const searchWord = e.target.value;
+    setWordEntered(searchWord);
+    const newFilter = data.filter((value) => {
+      return value.username.toLowerCase().includes(searchWord.toLowerCase());
+    });
+    if (searchWord === "") {
+      setFilteredData([]);
+    } else {
+      setFilteredData(newFilter);
+    }
+  };
 
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
@@ -76,6 +103,25 @@ export default function Chat() {
     };
     getConversation();
   }, [user._id]);
+
+  const CreateConversation = async (id) => {
+    try {
+      const data = {
+        senderId: user._id,
+        receiverId: id,
+      };
+      console.log("data", data);
+      const res = await axios.post(
+        "http://localhost:8800/api/conversations/",
+        data
+      );
+      console.log(res.data);
+
+      // setConversations(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // get message from data
   useEffect(() => {
@@ -136,19 +182,42 @@ export default function Chat() {
           <div className="chat-menu">
             {/* header for chat menu */}
             <div className="chat-menu-wrapper">
-              <div className="chat-username">
-                <span>{user.username} </span>
-                <ExpandMoreIcon />
+              <div className="topbarCenter">
+                <div className="searchbar">
+                  <Search className="searchIcon" />
+                  <input
+                    type="text"
+                    placeholder="Search for friend, post"
+                    className="searchInput"
+                    value={wordEntered}
+                    onChange={handleFilter}
+                  />
+                </div>
+                {filteredData.length !== 0 && (
+                  <div className="dataResult chatSearch">
+                    {filteredData.map((value, key) => {
+                      return (
+                        <div
+                          key={key}
+                          className="search-link"
+                          onClick={() => CreateConversation(value._id)}
+                        >
+                          <img
+                            className="img-search"
+                            src={value.profilePicture}
+                            alt=""
+                          />
+                          <p className="data">{value.username} </p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
-              {/* button to show popup and find new friend to text mess */}
-              <div className="chat-popup-find">
-                <PersonSearchOutlinedIcon />
-              </div>
-              {/* For main menu mess */}
             </div>
             <div className="chat-menu-main">
-              {conversations.map((c) => (
-                <div onClick={() => setCurrentChat(c)}>
+              {conversations.map((c, index) => (
+                <div onClick={() => setCurrentChat(c)} key={index}>
                   <Conversation conversation={c} currentUser={user} />
                 </div>
               ))}

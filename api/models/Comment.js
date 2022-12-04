@@ -16,7 +16,11 @@ const CommentSchema = new mongoose.Schema(
       type: String,
     },
     image: {
-      type: String,
+      type: [String],
+    },
+    like: {
+      type: Array,
+      default: [],
     },
     text: {
       type: String,

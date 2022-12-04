@@ -37,8 +37,13 @@
   height: 10%;
   display: flex;
   padding: 10px 20px;
+  justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid rgb(222, 215, 215);
+}
+.profile-single {
+  display: flex;
+  align-items: center;
 }
 .avatar-single {
   width: 40px;
@@ -50,6 +55,7 @@
 .name-single {
   font-size: 16px;
   display: flex;
+  margin-left: 10px;
 }
 .name {
   font-weight: 500;
@@ -57,13 +63,15 @@
 }
 .center-single {
   display: flex;
+  flex-direction: column;
   width: auto;
   height: 70%;
   padding: 10px 20px;
-  overflow-y: scroll;
+  overflow: hidden;
   border-bottom: 1px solid rgb(222, 215, 215);
 }
 .item-single {
+  width: 80%;
   padding: 10px;
 }
 .time-single {
@@ -71,4 +79,63 @@
 }
 .bottom-single {
   padding: 10px;
+}
+.update-div {
+  width: 70%;
+  height: 120px;
+}
+.input-update {
+  height: 100px;
+  width: 100%;
+}
+.input-update:focus {
+  outline: none;
+}
+.div-button {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.div-button button {
+  background-color: transparent;
+  color: blue;
+  border: none;
+  cursor: pointer;
+}
+.div-button button:hover {
+  text-decoration: underline;
+}
+.item-center {
+  display: flex;
+}
+.comment-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: auto;
+}
+.item-comment-post {
+  display: flex;
+}
+.item-comment {
+  display: flex;
+  justify-content: space-between;
+}
+.update-comment {
+  display: flex;
+  width: 90%;
+  align-items: center;
+  margin-top: 5px;
+}
+.update-comment span {
+  padding: 0px 4px;
+  font-size: 13px;
+}
+.name-container-comment {
+  display: flex;
+  width: 80%;
+}
+.img-comment {
+  display: flex;
+  height: 50px;
 }

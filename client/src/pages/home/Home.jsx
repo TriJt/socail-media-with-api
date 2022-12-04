@@ -5,6 +5,7 @@ import Feed from "../../components/feed/Feed";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 const Home = () => {
   const { user: currentUser, dispatch } = useContext(AuthContext);
@@ -14,6 +15,8 @@ const Home = () => {
     currentUser.followings.includes(user?.id)
   );
 
+  const history = useNavigate();
+
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get("http://localhost:8800/api/users/limit");
@@ -21,6 +24,13 @@ const Home = () => {
     };
     fetchData();
   }, []);
+
+  // Log out button
+  const LogoutHandle = () => {
+    window.sessionStorage.clear();
+    window.location.reload();
+    history("/login");
+  };
 
   return (
     <>
@@ -35,7 +45,10 @@ const Home = () => {
                 <span className="name">{user.username}</span>
                 <span className="text">{user.fullName}</span>
               </div>
-              <div className="button-follow"> Log out</div>
+              <div className="button-follow" onClick={LogoutHandle}>
+                {" "}
+                Log out
+              </div>
             </div>
           </div>
           <div className="bottom-friend">

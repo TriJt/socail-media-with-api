@@ -92,7 +92,6 @@ export const GetFriends = async (req, res) => {
       friendList.push({
         _id,
         username,
-
         profilePicture,
       });
     });

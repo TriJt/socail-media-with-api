@@ -1,6 +1,5 @@
 import "./topbar.css";
 import { Search } from "@mui/icons-material";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import { Link } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";

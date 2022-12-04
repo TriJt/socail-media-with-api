@@ -109,7 +109,10 @@
 }
 .likeAndCommentPost {
   display: flex;
-  height: 30px;
+  height: auto;
+  max-height: 100px;
+  flex-direction: column;
+  margin-bottom: 20px;
 }
 .likePostIcon:hover {
   background-color: rgb(219, 216, 216);
@@ -167,4 +170,30 @@
   border: none;
   background-color: transparent;
   cursor: pointer;
+}
+.comment-div-post {
+  padding: 5px 10px;
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+}
+.comment-div {
+  padding: 5px 10px;
+  display: flex;
+  width: 90%;
+  height: auto;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.small {
+  font-size: 13px !important;
+  cursor: pointer;
+}
+.small:hover {
+  opacity: 0.7;
+}
+.name-comment {
+  font-weight: 500;
+  padding-right: 5px;
 }

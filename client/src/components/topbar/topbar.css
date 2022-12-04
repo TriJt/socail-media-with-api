@@ -157,6 +157,7 @@
   background-color: #e5e7eb;
   padding-inline-start: 0;
 }
+
 .top-dropdown-list:before {
   content: "";
   height: 30px;
@@ -165,6 +166,9 @@
   right: 0;
   background-color: transparent;
   transform: translateY(-100%);
+}
+.right:before {
+  transform: translateX(-100%) !important;
 }
 .top-dropdown-item {
   width: 200px;
